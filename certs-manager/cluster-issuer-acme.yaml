@@ -15,5 +15,5 @@ spec:
           email: gcp2.sujangurung@gmail.com
 
           apiKeySecretRef:
-            name: sujantechden-cloudflare-api-key-secret
+            name: reef-forge-cloudflare-api-key-secret
             key: api-key
