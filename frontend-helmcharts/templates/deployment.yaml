@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name}}-deployment
+  namespace: {{ .Values.namespace.name}}
+  labels:
+    app: {{ .Values.app.name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name}}
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: {{ .Values.app.name}}
+        image: {{ .Values.app.image.name}}:{{.Values.app.image.tag}}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+
