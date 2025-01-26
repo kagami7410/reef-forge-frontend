@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace.name}}
 spec:
   hosts:
-  - "sujantechden.uk"
+  - "squidcorals.sujantechden.uk"
   gateways:
   - istio-system/sujantechden-istio-ingress-gateway 
   http:
