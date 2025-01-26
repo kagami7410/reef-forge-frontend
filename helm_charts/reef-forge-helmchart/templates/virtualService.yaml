@@ -7,7 +7,7 @@ spec:
   hosts:
   - "reef-forge.uk"
   gateways:
-  - istio-system/sujantechden-istio-ingress-gateway 
+  - istio-system/reef-forge-istio-ingress-gateway 
   http:
   - match:
     - uri:
