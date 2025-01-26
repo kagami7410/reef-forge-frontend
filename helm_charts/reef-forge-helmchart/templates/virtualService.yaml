@@ -5,9 +5,9 @@ metadata:
   namespace: {{ .Values.namespace.name}}
 spec:
   hosts:
-  - "reef-forge.uk"
+  - "sujantechden.uk"
   gateways:
-  - istio-system/reef-forge-istio-ingress-gateway 
+  - istio-system/sujantechden-istio-ingress-gateway 
   http:
   - match:
     - uri:
