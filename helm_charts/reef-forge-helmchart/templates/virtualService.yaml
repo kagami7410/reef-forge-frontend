@@ -5,9 +5,9 @@ metadata:
   namespace: {{ .Values.namespace.name}}
 spec:
   hosts:
-  - "squidcorals.sujantechden.uk"
+  - "reef-forge.uk"
   gateways:
-  - istio-system/sujantechden-istio-ingress-gateway 
+  - istio-system/reef-forge-istio-ingress-gateway 
   http:
   - match:
     - uri:
