@@ -4,7 +4,7 @@ metadata:
   name: reef-forge-cloudflare-cert
   namespace: istio-system
 spec:
-  secretName: sujantechden-cloudflare-cert
+  secretName: reef-forge-acme-issuer
   issuerRef:
     name: sujantechden-acme-issuer
     kind: ClusterIssuer
