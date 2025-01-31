@@ -27,7 +27,7 @@ interface BasketItem {
 
 
 const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
-  const image_url = 'https://storage.googleapis.com/fragracks-web-images/test'
+  const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L'
   const [itemQuantity, setItemQuanity] = useState<number>(0);
 
   // asynchronous access of `params.id`.
