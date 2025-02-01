@@ -58,7 +58,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   }, [])
 
   useEffect(() => {
-    setCurrentImage(`${image_url}/${item?.photoUrls[0]}.jpg`)
+    setCurrentImage(`${image_url}/${item?.photoUrls[0]}.png`)
   }, [item])
 
   function getItems() {
@@ -129,7 +129,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
                 {item?.photoUrls.map(eachurl => {
                   return (
                     <div key={eachurl} className='flex  border w-full'>
-                      <img key={eachurl} src={`${image_url}/${eachurl}.jpg`} className='border bg-slate-400   cursor-pointer' onClick={changeImageView}></img>
+                      <img key={eachurl} src={`${image_url}/${eachurl}.png`} className='border   cursor-pointer' onClick={changeImageView}></img>
 
                     </div>
                   )
