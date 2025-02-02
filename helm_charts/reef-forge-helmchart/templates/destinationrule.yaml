@@ -1,0 +1,10 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name:  {{ .Values.app.name}}-backend-destinationrule
+  namespace: {{ .Values.namespace.name}}
+spec:
+  host: reef-forge-backend-service.reef-forge-backend.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
