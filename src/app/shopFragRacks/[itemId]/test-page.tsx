@@ -119,19 +119,19 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   return (
     <>
 
-      <div className='flex-col w-full border rounded-md justify-items-center  md:p-2 '>
-        {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6  p-4'>
+      <div className='flex-col w-full border justify-items-center  bg-slate-500 md:p-2 '>
+        {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6 bg-orange-600 p-4'>
           {/* <Loading/> */}
-          <div className='flex rounded-md border flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
-            <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-2/5 rounded-md   border  '>
-              <div className='flex h-full aspect-square w-full'>
-                <img  className='flex   p-1  w-full  h-full object-cover' src={currentImage} />
+          <div className='flex border flex-col md:flex-row  justify-center  my-4 w-full md:w-full bg-lime-500 p-2'>
+            <div className='flex flex-col h-full w-full md:m-4 items-center bg-red-800 md:p-2 md:w-2/5   border  '>
+              <div className='flex h-full aspect-square w-full bg-yellow-400 border'>
+                <img  className='flex  border p-1  bg-slate-500 w-full  h-full object-cover' src={currentImage} />
 
               </div>
-              <div key={item?.id} className='flex  items-center justify-center  w-full   '>
+              <div key={item?.id} className='flex  items-center justify-center  w-full border bg-yellow-400  '>
                 {item?.photoUrls.map(eachurl => {
                   return (
-                    <div key={eachurl} className='flex h-full aspect-square w-full '>
+                    <div key={eachurl} className='flex h-full aspect-square w-full bg-yellow-400 border'>
                       <img key={eachurl} src={`${image_url}/${eachurl}.png`} className='border cursor-pointer w-full h-full object-cover ' onClick={changeImageView}></img>
 
                     </div>
@@ -140,11 +140,12 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               </div>
 
             </div>
-            <div className='flex flex-col w-full  p-2  lg:w-3/6 md:mt-2'>
-              <h1 className='flex    justify-center p-2 text-2xl md:text-3xl font-semibold'>{item?.title}</h1>
-              <h3 className='flex    p-4 text-2xl font-semibold'>£{item?.price}</h3>
-              <div className='flex justify-center items-center  w-full md:w-4/6'>
-                <div className='flex w-full h-full  items-center justify-center  mr-4 md:mr-8'>
+            <div className='flex flex-col w-full border p-2  lg:w-3/6 bg-amber-400 md:mt-2'>
+              <h1 className='flex  border  justify-center p-2 text-2xl md:text-3xl font-semibold'>{item?.title}</h1>
+              <h3 className='flex  border  p-6 text-2xl font-semibold'>£{item?.price}</h3>
+              <h4 className='border w-1/4 text-center m-1 text-stone-100 text-xs'>{item?.code}</h4>
+              <div className='flex justify-center items-center bg-orange-900 w-full md:w-4/6'>
+                <div className='flex w-full h-full bg-slate-400 items-center justify-center  mr-4 md:mr-8'>
                   <button onClick={decreaseQuantity} className=' text-2xl  rounded-md  w-2/6 border' >-</button>
                   <h1 className='flex text-md w-2/6 justify-center'>{itemQuantity}</h1>
                   <button onClick={increaseQuantity} className=' text-2xl rounded-md w-2/6 border' >+</button>
@@ -156,16 +157,16 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
 
 
-              <div className='flex flex-col w-full  p-2  lg:w-full md:mt-1'>
-                <div className='my-2  flex-col  w-full ' >
-                  <h1 className=' text-center text-lg md:text-2xl mt-6'> Description </h1>
-                  <div className='flex  justify-center items-center  p-2 md:p-4'>
+              <div className='flex flex-col w-full border p-2  lg:w-full bg-slate-400 md:mt-1'>
+                <div className='my-2  flex-col border w-full ' >
+                  <h1 className=' text-center text-xl md:text-3xl'> Description </h1>
+                  <div className='flex  justify-center items-center border p-2 md:p-4'>
                     {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"
           loop
           autoPlay
           controls/> */}
-                    <div className='mt-4 '>
+                    <div className='mt-4 border'>
                       <h1>🚨 Transform Your Reef Tank with the Ultimate Coral Frag Rack! 🚨</h1>
                       <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
                       <h1>💎 Available Now at Kraken Corals & Aquatics 💎</h1>
@@ -198,7 +199,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           </div>
 
 
-          <div className='flex w-full md:min-h-screen  bg-slate-100'></div>
+          <div className='flex w-full md:min-h-screen border bg-blue-900'></div>
 
         </div>}
 

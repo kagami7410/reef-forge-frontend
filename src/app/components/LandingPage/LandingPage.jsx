@@ -125,15 +125,15 @@ const LandingPage = () => {
       </div>
 
 
-      <div className='my-40  flex-col border w-5/6 ' ref={observedElement} >
+      <div className='my-40  flex-col border p-4 rounded-md w-5/6 ' ref={observedElement} >
         <h1 className=' text-center text-xl md:text-3xl'> Story | Problem | Solution </h1>
-        <div className='my-5 flex  justify-center items-center border'>
+        <div className='my-5 flex  justify-center items-center '>
           {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"
           loop
           autoPlay
           controls/> */}
-          <div className='mt-4 border'>
+          <div className='mt-4 '>
             <h1>🚨 Transform Your Reef Tank with the Ultimate Coral Frag Rack! 🚨</h1>
             <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
             <h1>💎 Available Now at Kraken Corals & Aquatics 💎</h1>
@@ -168,14 +168,10 @@ const LandingPage = () => {
         </div>
 
       </div>
-      <div className='my-40  flex-col ' ref={observedElement} >
+      {/* <div className='my-40  flex-col ' ref={observedElement} >
         <h1 className=' text-center text-xl md:text-3xl'> Benifits </h1>
         <div className='my-5 flex  justify-center items-center'>
-          {/* <video className='w-[80%] rounded-3xl  '
-          src="http://localhost:8000/contents/video?videoName=video1"
-          loop
-          autoPlay
-          controls/> */}
+
 
         </div>
 
@@ -184,15 +180,11 @@ const LandingPage = () => {
       <div className='my-40  flex-col ' ref={observedElement} >
         <h1 className=' text-center text-xl md:text-3xl'> FAQ </h1>
         <div className='my-5 flex  justify-center items-center'>
-          {/* <video className='w-[80%] rounded-3xl  '
-          src="http://localhost:8000/contents/video?videoName=video1"
-          loop
-          autoPlay
-          controls/> */}
+
 
         </div>
 
-      </div>
+      </div> */}
 
     </div>
   )
