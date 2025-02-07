@@ -30,6 +30,8 @@ interface BasketItem {
   price: number;
   code: string;
   quantity: number;
+  photoUrls: string[];
+
 }
 // Define the provider props type
 interface BasketProviderProps {

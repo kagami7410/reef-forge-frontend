@@ -69,7 +69,7 @@ const NavBar = () => {
       </div>
 
       <div className={` ${borderVisibile} `}>
-        <Link href={'/'} className={`btn btn-ghost text-xl mr-6 md:text-2xl md:mr-10 md:w-72`}> REEFIN 3D</Link>
+        <Link href={'/'} className={`btn btn-ghost text-xl mr-6 md:text-2xl md:mr-10 md:w-72`}> REEF FORGE</Link>
       </div>
 
       <div className="flex  w-11/12 ">

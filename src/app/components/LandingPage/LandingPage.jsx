@@ -99,7 +99,7 @@ const LandingPage = () => {
 
   return (
     <div className={`${styles.landingPageContainer}`}>
-      <div className={`${styles.landingPageTopContainer} bg-slate-200 pb-10 pt-4`}>
+      <div className={`${styles.landingPageTopContainer} bg-slate-200 pb-10 pt-10 md:pt-8  md:pb-20`}>
         <div className={`${styles.landingPageDescription} transform transition-all `}
           style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(${xPosition}%)` }}>
           <div className={`${styles.mainHeadline}`}>Rock-Solid Magnetic Frag Holder</div>
@@ -113,7 +113,7 @@ const LandingPage = () => {
           <div className='card-over flex justify-center align-middle items-center'>
             <Link href='/shopFragRacks' className="mt-10 btn z-10 opacity-85 btn-lg sm:opacity-0 bg-yellow-300  hover:bg-yellow-500">Buy Now</Link>
             <div className='flex absolute'>
-            <img className='md:scale-125 scale-110' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/IMG_2303.png' />
+            <img className='md:scale-125 scale-125' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L/IMG_23032.png' />
 
             </div>
 

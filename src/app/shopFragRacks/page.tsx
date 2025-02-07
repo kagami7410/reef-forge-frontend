@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
 import Loading from '../components/Loading/Loading';
+import Link from 'next/link';
 
 
 interface BasketItem {
@@ -12,14 +13,23 @@ interface BasketItem {
   quantity: number;
 }
 
+interface FragRackItem extends BasketItem {
+  colour: string;
+  magnetNum: number;
+  size: string;
+  stockQuantity: number;
+  photoUrls: string[];
+  quantity: number;
 
+}
 
 const Page = () => {
+  const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L'
 
   // asynchronous access of `params.id`.
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [items, setItems] = useState<BasketItem[]>([]);
+  const [items, setItems] = useState<FragRackItem[]>([]);
   const { addSingleItemToBasket } = useBasket();
 
   // const vaildPaths = ["getAll", "greenBeans", "darkRoastedBeans"]
@@ -52,14 +62,21 @@ const Page = () => {
     setCurrentPage(currentSelectedPage - 1)
   }
 
+  const imageClick = () => {
+
+  }
+
 
   const jsxreturnedAllItems = items.map(eachItem => {
     return (
-      <div key={eachItem.id} className='flex flex-col w-3/4 rounded-md p-4 md:p-8 border m-4 p-3 lg:w-1/4'>
-        <a href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
-        {/* <Image src={`${title}-${code}`} alt="Example" /> */}
-        <h3>£{eachItem.price}</h3>
-        <h4 className='border w-1/4 text-center m-1 text-stone-100 text-xs'>{eachItem.code}</h4>
+      <div key={eachItem.id} className='flex flex-col w-11/12 rounded-md md:p-2 md:p-8  mt-8  lg:w-1/4'>
+        <Link href={`/shopFragRacks/${eachItem.id}`}> 
+        <img src={`${image_url}/${eachItem.photoUrls[0]}.png`} className='border rounded-md cursor-pointer' ></img>
+        
+        </Link>
+
+        <a className='p-2' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
+        <h3 className='pl-2'>£{eachItem.price}</h3>
         <button onClick={() => { addSingleItemToBasket(eachItem) }} className='btn w-1/2'> Add To Cart</button>
       </div>
     )
@@ -81,7 +98,7 @@ const Page = () => {
       </div>
 }
     </div>
-    <div className='flex justify-center mt-6 md:mt-10'>
+    <div className='flex justify-center mt-8 md:mt-20'>
       <div className="join" >
         <input className="join-item btn btn-square" type="radio" name="options" aria-label="1" value={currentPage} placeholder='1'  onChange={handlePageClick} defaultChecked />
         <input className="join-item btn btn-square" type="radio" name="options" aria-label="2" value={currentPage} placeholder='2'onChange={handlePageClick}/>

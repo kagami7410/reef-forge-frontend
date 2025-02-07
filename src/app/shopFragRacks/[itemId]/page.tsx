@@ -9,7 +9,6 @@ interface FragRackItem extends BasketItem {
   magnetNum: number;
   size: string;
   stockQuantity: number;
-  photoUrls: string[];
   quantity: number;
 
 }
@@ -21,6 +20,8 @@ interface BasketItem {
   price: number;
   code: string;
   quantity: number;
+  photoUrls: string[];
+
 }
 
 
@@ -40,6 +41,8 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
     price: 0,
     code: "",
     quantity: 0,
+    photoUrls: []
+
   });
 
   const { addItemToBasket } = useBasket();
@@ -119,17 +122,17 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
       <div className='flex-col w-full border justify-items-center  bg-slate-500 md:p-2 '>
         {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6 bg-orange-600 p-4'>
           {/* <Loading/> */}
-          <div className='flex border flex-col md:flex-row  justify-center  my-4 w-full bg-lime-500'>
-            <div className='flex flex-col w-full justify-center items-center bg-red-800 md:p-2 md:w-1/2 md:flex-row md:align-  border  '>
-              <div className='flex  border p-1  bg-slate-100 w-full'>
-                <img src={currentImage} />
+          <div className='flex border flex-col md:flex-row  justify-center  my-4 w-full md:w-full bg-lime-500 p-2'>
+            <div className='flex flex-col h-full w-full md:m-4 items-center bg-red-800 md:p-2 md:w-2/5   border  '>
+              <div className='flex h-full aspect-square w-full bg-yellow-400 border'>
+                <img  className='flex  border p-1  bg-slate-500 w-full  h-full object-cover' src={currentImage} />
 
               </div>
-              <div key={item?.id} className='flex  items-center justify-center md:flex-col  w-full border bg-yellow-400  md:w-1/4 '>
+              <div key={item?.id} className='flex  items-center justify-center  w-full border bg-yellow-400  '>
                 {item?.photoUrls.map(eachurl => {
                   return (
-                    <div key={eachurl} className='flex  border w-full'>
-                      <img key={eachurl} src={`${image_url}/${eachurl}.png`} className='border   cursor-pointer' onClick={changeImageView}></img>
+                    <div key={eachurl} className='flex h-full aspect-square w-full bg-yellow-400 border'>
+                      <img key={eachurl} src={`${image_url}/${eachurl}.png`} className='border cursor-pointer w-full h-full object-cover ' onClick={changeImageView}></img>
 
                     </div>
                   )
@@ -143,9 +146,9 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               <h4 className='border w-1/4 text-center m-1 text-stone-100 text-xs'>{item?.code}</h4>
               <div className='flex justify-center items-center bg-orange-900 w-full md:w-4/6'>
                 <div className='flex w-full h-full bg-slate-400 items-center justify-center  mr-4 md:mr-8'>
-                  <button onClick={decreaseQuantity} className=' text-2xl  w-2/6 border' >-</button>
+                  <button onClick={decreaseQuantity} className=' text-2xl  rounded-md  w-2/6 border' >-</button>
                   <h1 className='flex text-md w-2/6 justify-center'>{itemQuantity}</h1>
-                  <button onClick={increaseQuantity} className=' text-2xl  w-2/6 border' >+</button>
+                  <button onClick={increaseQuantity} className=' text-2xl rounded-md w-2/6 border' >+</button>
                 </div>
                 <button onClick={() => { handleAddToBasket(basketItem) }} className=' btn w-1/2'> Add To Cart</button>
               </div>
@@ -185,7 +188,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
                       <ul className='list-disc list-inside mt-4'>
                         <strong>🌊 Stylish, Durable, and Functional</strong>
-                        <li>Polyreef frag racks combine aesthetics with performance to give your tank a professional edge.</li>
+                        <li>Reef Forge frag racks combine aesthetics with performance to give your tank a professional edge.</li>
                       </ul>
 
                     </div>
