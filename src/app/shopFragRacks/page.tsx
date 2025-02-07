@@ -62,9 +62,7 @@ const Page = () => {
     setCurrentPage(currentSelectedPage - 1)
   }
 
-  const imageClick = () => {
 
-  }
 
 
   const jsxreturnedAllItems = items.map(eachItem => {
