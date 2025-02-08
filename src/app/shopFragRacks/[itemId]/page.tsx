@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
 import Loading from '@/src/app/components/Loading/Loading';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 
 interface FragRackItem extends BasketItem {
@@ -28,9 +30,11 @@ interface BasketItem {
 
 
 const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
+  const router = useRouter() // may be null or a NextRouter instance
   const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L'
   const [itemQuantity, setItemQuanity] = useState<number>(0);
-
+  const [showModal, setShowModal] = useState(false);
+  const [showModalNoQuantity, setShowModalNoQuantity] = useState(false);
   // asynchronous access of `params.id`.
   const [loading, setLoading] = useState(true);
   const [currentImage, setCurrentImage] = useState('')
@@ -49,9 +53,13 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   const { itemId } = React.use(params)
   const handleAddToBasket = (item: BasketItem) => {
     if (itemQuantity > 0) {
+      setShowModal(!showModal)
       addItemToBasket(item);
-      setItemQuanity(0)
     }
+    else {
+      setShowModalNoQuantity(!showModalNoQuantity)
+
+    } 
 
   };
   // const vaildPaths = ["getAll", "greenBeans", "darkRoastedBeans"]
@@ -201,6 +209,54 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           <div className='flex w-full md:min-h-screen  bg-slate-100'></div>
 
         </div>}
+
+
+
+        
+      {showModal ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+        <h3 className="font-bold text- md:text-lg">✅ Added to basket!</h3>
+
+        <h3 className="font-bold text-lg mt-4">{item?.title}</h3>
+        <h3 className="font-bold text-lg">Quantity: {itemQuantity}</h3>
+
+        <div key={item?.id} className='flex flex-col w-1/2  rounded-md md:p-2 md:p-2   mt-1  lg:w-1/3'>
+
+        <Link href={`/shopFragRacks/${item?.id}`}>
+          <img src={`${image_url}/${item?.photoUrls[0]}.png`} className='border rounded-md cursor-pointer' ></img>
+
+        </Link>         
+        </div> 
+        <h3 className="font-bold text-lg">£{item?.price}</h3>
+
+        <div className="modal-action">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button onClick={() => {
+              router.push(`/shopFragRacks/${item?.id}`)
+              setShowModal(!showModal)
+              setItemQuanity(0)
+
+            }}
+              className="btn">Close</button>
+          </form>
+        </div>
+      </div> : <></>}
+
+
+      {showModalNoQuantity ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+        <h3 className="font-bold text- md:text-lg"> Please select quantity!</h3>
+
+
+        <div className="modal-action">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button onClick={() => {
+              setShowModalNoQuantity(!showModalNoQuantity)
+            }}
+              className="btn">Cose</button>
+          </form>
+        </div>
+      </div> : <></>}
 
       </div>
 

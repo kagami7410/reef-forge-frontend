@@ -99,7 +99,7 @@ const LandingPage = () => {
 
   return (
     <div className={`${styles.landingPageContainer}`}>
-      <div className={`${styles.landingPageTopContainer} bg-slate-200 pb-10 pt-10 md:pt-8  md:pb-20`}>
+      <div className={`${styles.landingPageTopContainer} bg-slate-200 pb-24 pt-10 md:pt-8  md:pb-20`}>
         <div className={`${styles.landingPageDescription} transform transition-all `}
           style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(${xPosition}%)` }}>
           <div className={`${styles.mainHeadline}`}>Rock-Solid Magnetic Frag Holder</div>
@@ -111,29 +111,31 @@ const LandingPage = () => {
 
         <div className={`${styles.landingPageImageMainContainer} card `} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(-${xPosition}%)` }}>
           <div className='card-over flex justify-center align-middle items-center'>
-            <Link href='/shopFragRacks' className="mt-10 btn z-10 opacity-85 btn-lg sm:opacity-0 bg-yellow-300  hover:bg-yellow-500">Buy Now</Link>
             <div className='flex absolute'>
-            <img className='md:scale-125 scale-125' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L/IMG_23032.png' />
+            <img className='md:scale-125 scale-110' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L/IMG_23032.png' />
 
             </div>
 
 
           </div>
+          
 
 
         </div>
+        <Link href='/shopFragRacks' className="btn z-10 opacity-100 btn-lg sm:opacity-0 mt-6 border-none bg-yellow-300  hover:bg-yellow-500">Buy Now</Link>
+
       </div>
 
 
-      <div className='my-40  flex-col border p-4 rounded-md w-5/6 ' ref={observedElement} >
-        <h1 className=' text-center text-xl md:text-3xl'> Story | Problem | Solution </h1>
+      <div className='my-4 mt-20 bg-slate-100  flex-col border p-6 rounded-md w-11/12 md:w-1/2' ref={observedElement} >
+        <h1 className=' text-center text-xl font-bold md:text-3xl'> Reef Forge Magnetic Frag holder </h1>
         <div className='my-5 flex  justify-center items-center '>
           {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"
           loop
           autoPlay
           controls/> */}
-          <div className='mt-4 '>
+          <div className='mt-4 text-xs md:text-sm'>
             <h1>🚨 Transform Your Reef Tank with the Ultimate Coral Frag Rack! 🚨</h1>
             <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
             <h1>💎 Available Now at Kraken Corals & Aquatics 💎</h1>
@@ -168,6 +170,9 @@ const LandingPage = () => {
         </div>
 
       </div>
+
+
+        
       {/* <div className='my-40  flex-col ' ref={observedElement} >
         <h1 className=' text-center text-xl md:text-3xl'> Benifits </h1>
         <div className='my-5 flex  justify-center items-center'>

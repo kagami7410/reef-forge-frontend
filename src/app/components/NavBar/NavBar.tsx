@@ -41,7 +41,7 @@ const NavBar = () => {
         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
+            className="h-6 w-6"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -100,13 +100,13 @@ const NavBar = () => {
         <div className="navbar">
         </div>
       </div>
-      <div className="flex-none">
-        <div className="dropdown dropdown-end">
+      <div className="flex-none p-0">
+        <div className="dropdown dropdown-end  p-0">
           <div tabIndex={0} role="button" className="btn btn-ghost ">
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="md:h-6 md:w-6 h-5 w-5"
                 fill="none"
                 viewBox="0 0 21 21.5"
                 stroke="currentColor">
@@ -134,12 +134,12 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-        <div className="dropdown dropdown-end m-2">
-          <div tabIndex={0} role="button" className="btn btn-ghost">
-            <div className="w-100 rounded-full">
+        <div className="dropdown dropdown-end p-0 m-0 mr-2">
+          <div tabIndex={0} role="button" className="btn btn-ghost p-0 m-0">
+            <div className=" rounded-full">
               <CiUser style={{
                 display: "flex",
-                fontSize: "2.3em",
+                fontSize: "2.1em",
                 justifyContent: "center",
                 alignItems: "center"
 
