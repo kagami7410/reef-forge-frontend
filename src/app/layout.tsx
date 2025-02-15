@@ -26,7 +26,7 @@ export default function RootLayout({
         </header>
         <BasketProvider> 
         <NavBar/>
-        <h2 className='flex justify-center pb-2 pt-2 mt-2 bg-orange-300'>Free Delivery on order over £50</h2>
+        <h2 className='flex justify-center pb-2 pt-1 bg-orange-300'>Free Delivery on order over £50</h2>
         {children}
         </BasketProvider>
         <Footer/>

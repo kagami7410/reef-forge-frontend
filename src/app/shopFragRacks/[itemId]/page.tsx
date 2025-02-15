@@ -127,11 +127,11 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   return (
     <>
 
-      <div className='flex-col w-full border rounded-md justify-items-center  md:p-2 '>
-        {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6  p-4'>
+      <div className='flex-col w-full border rounded-md justify-items-center   md:p-2 '>
+        {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6 bg- p-4'>
           {/* <Loading/> */}
           <div className='flex rounded-md border flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
-            <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-2/5 rounded-md   border  '>
+            <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-1/2 rounded-md   border  '>
               <div className='flex h-full aspect-square w-full'>
                 <img  className='flex   p-1  w-full  h-full object-cover' src={currentImage} />
 
@@ -148,26 +148,26 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               </div>
 
             </div>
-            <div className='flex flex-col w-full  p-2  lg:w-3/6 md:mt-2'>
-              <h1 className='flex    justify-center p-2 text-2xl md:text-3xl font-semibold'>{item?.title}</h1>
+            <div className='flex flex-col w-full  p-2 md:p-6 md:pl-8 md:w-1/2 md:mt-2'>
+              <h1 className='flex  p-2 text-2xl md:text-3xl font-semibold'>{item?.title}</h1>
               <h3 className='flex    p-4 text-2xl font-semibold'>£{item?.price}</h3>
-              <div className='flex justify-center items-center  w-full md:w-4/6'>
-                <div className='flex w-full h-full  items-center justify-center  mr-4 md:mr-8'>
+              <div className='flex  justify-center items-center  w-full md:w-1/2 mt-1 mb-1 md:mt-2 md:mb-2'>
+                <div className='flex w-full h-full  items-center justify-center'>
                   <button onClick={decreaseQuantity} className=' text-2xl  rounded-md  w-2/6 border' >-</button>
-                  <h1 className='flex text-md w-2/6 justify-center'>{itemQuantity}</h1>
+                  <h1 className='flex text-md w-2/6 justify-center border rounded-md h-8  md:h-full  items-center w-1/2'>{itemQuantity}</h1>
                   <button onClick={increaseQuantity} className=' text-2xl rounded-md w-2/6 border' >+</button>
                 </div>
-                <button onClick={() => { handleAddToBasket(basketItem) }} className=' btn w-1/2'> Add To Cart</button>
               </div>
 
+              <button onClick={() => { handleAddToBasket(basketItem) }} className=' mt-1 mb-1 md:mt-2 md:mb-2 btn w-1/2'> Add To Cart</button>
 
 
 
 
-              <div className='flex flex-col w-full  p-2  lg:w-full md:mt-1'>
+              <div className='flex flex-col w-full  p-2 md:w-full md:mt-1'>
                 <div className='my-2  flex-col  w-full ' >
-                  <h1 className=' text-center text-lg md:text-2xl mt-6'> Description </h1>
-                  <div className='flex  justify-center items-center  p-2 md:p-4'>
+                  <h1 className='  text-lg md:text-2xl mt-6'> Description </h1>
+                  <div className='flex items-center  p-2 md:p-4'>
                     {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"
           loop
