@@ -1,5 +1,4 @@
 'use client'
-import { CiUser } from "react-icons/ci";
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useBasket } from "../BasketContext/BasketContext";
