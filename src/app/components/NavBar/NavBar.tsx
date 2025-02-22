@@ -35,7 +35,7 @@ const NavBar = () => {
 
 
   return (
-    <div className={`navbar h-8 md:h-10 border m-auto pr-5 pl-5  md:pr-0 md:pl-0  ${borderVisibile}`}>
+    <div className={`navbar h-8 md:h-10 border m-auto pr-4 pl-4  md:pr-0 md:pl-0  ${borderVisibile}`}>
       <div className="dropdown">
         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
           <svg
@@ -68,13 +68,12 @@ const NavBar = () => {
       </div>
 
       <div className={` ${borderVisibile} `}>
-        <Link href={'/'} className={`btn btn-ghost text-xl mr-6 md:text-2xl md:mr-10 md:ml-20 md:w-72`}> REEF FORGE</Link>
+        <Link href={'/'} className={`btn btn-ghost text-xl  bg-slate-200 md:text-2xl md:ml-20 md:w-72`}> REEF FORGE</Link>
       </div>
 
-            <div className="navbar bg-base-100 h-8 opacity-0 md:opacity-100 ">
-        <div className="navbar">
-        </div>
-        <div className="navbar-center hidden lg:flex">
+            <div className="navbar flex justify-center  h-8 opacity-0 md:opacity-100 ">
+
+        <div className="navbar-center bg-base-400 hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
               <details>
@@ -97,9 +96,8 @@ const NavBar = () => {
         </div>
       </div>
 
-      <div className="flex justify-center w-full ">
 
-      <div className="flex-none  p-0">
+      <div className="flex justify-center md:mr-20 md:w-72  md:ml-20 p-0">
         <div className="dropdown dropdown-end  p-0">
           <div tabIndex={0} role="button" className="btn btn-ghost ">
             <div className="indicator">
@@ -154,7 +152,6 @@ const NavBar = () => {
             <li><a>Logout</a></li>
           </ul>
         </div>
-      </div>
       </div>
 
 

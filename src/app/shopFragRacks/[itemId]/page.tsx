@@ -127,7 +127,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   return (
     <>
 
-      <div className='flex-col w-full border rounded-md justify-items-center   md:p-2 '>
+      <div className='flex-col w-full  rounded-md justify-items-center max-w-screen-2xl m-auto  md:p-2 '>
         {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6 bg- p-4'>
           {/* <Loading/> */}
           <div className='flex rounded-md border flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
@@ -164,16 +164,16 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
 
 
-              <div className='flex flex-col w-full  p-2 md:w-full md:mt-1'>
+              <div className='flex flex-col w-full  p-1 md:w-full md:mt-1'>
                 <div className='my-2  flex-col  w-full ' >
                   <h1 className='  text-lg md:text-2xl mt-6'> Description </h1>
-                  <div className='flex items-center  p-2 md:p-4'>
+                  <div className='flex items-center  p-2 '>
                     {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"
           loop
           autoPlay
           controls/> */}
-                    <div className='mt-4 '>
+                    <div className='mt-4 text-sm '>
                       <h1>🚨 Transform Your Reef Tank with the Ultimate Coral Frag Rack! 🚨</h1>
                       <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
                       <h1>💎 Available Now at Kraken Corals & Aquatics 💎</h1>

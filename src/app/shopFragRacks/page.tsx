@@ -101,7 +101,7 @@ const Page = () => {
     <>
       <div>
         {loading ? <Loading /> : <div><div className='flex justify-center  '>
-          <div className='flex flex-wrap  justify-center max-w-7xl  my-4 w-5/6'>
+          <div className='flex flex-wrap  justify-center max-w-screen-2xl  my-4 w-5/6'>
             {jsxreturnedAllItems}
           </div>
         </div>
