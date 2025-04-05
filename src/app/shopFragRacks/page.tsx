@@ -21,7 +21,6 @@ interface FragRackItem extends BasketItem {
   magnetNum: number;
   size: string;
   stockQuantity: number;
-  quantity: number;
 
 }
 
@@ -89,7 +88,30 @@ const Page = () => {
 
         <a className='p-2' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
         <h3 className='pl-2'>£{eachItem.price}</h3>
-        <button onClick={() => { addItemToBasket(eachItem) }} className='btn w-1/2'> Add To Cart</button>
+
+
+
+
+
+
+
+
+        <div  className="mt-2 drawer-end z-20">
+          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content">
+            {/* Page content here */}
+            <label onClick={() => { addItemToBasket(eachItem) }} 
+            htmlFor="my-drawer" className="btn btn-primary drawer-button">Add To Cart</label>
+          </div>
+          <div className="drawer-side">
+            <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
+            <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+              {/* Sidebar content here */}
+              <li><a>Sidebar Item 1</a></li>
+              <li><a>Sidebar Item 2</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     )
   })
@@ -118,11 +140,11 @@ const Page = () => {
         <h3 className="font-bold text-lg mt-4">{currentlyClickedBasketItem?.title}</h3>
         <div key={currentlyClickedBasketItem?.id} className='flex flex-col w-1/2  rounded-md md:p-2 md:p-2   mt-1  lg:w-1/3'>
 
-        <Link href={`/shopFragRacks/${currentlyClickedBasketItem?.id}`}>
-          <img src={`${image_url}/${currentlyClickedBasketItem?.photoUrls[0]}.png`} className='border rounded-md cursor-pointer' ></img>
+          <Link href={`/shopFragRacks/${currentlyClickedBasketItem?.id}`}>
+            <img src={`${image_url}/${currentlyClickedBasketItem?.photoUrls[0]}.png`} className='border rounded-md cursor-pointer' ></img>
 
-        </Link>         
-        </div> 
+          </Link>
+        </div>
         <h3 className="font-bold text-lg mt-1">£{currentlyClickedBasketItem?.price}</h3>
 
         <div className="modal-action">
@@ -136,6 +158,9 @@ const Page = () => {
           </form>
         </div>
       </div> : <></>}
+
+
+      
       <div className='flex justify-center mt-8 md:mt-20'>
         <div className="join" >
           <input className="join-item btn btn-square" type="radio" name="options" aria-label="1" value={currentPage} placeholder='1' onChange={handlePageClick} defaultChecked />
@@ -146,6 +171,8 @@ const Page = () => {
 
 
       </div>
+
+
 
 
     </>
