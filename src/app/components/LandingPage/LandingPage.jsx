@@ -128,15 +128,15 @@ const LandingPage = () => {
 
 
 
-      <div className='flex  m-4 items-center align-middle justify-center'>
+      <div className='flex md:flex-row flex-col m-4 items-center align-middle justify-center'>
 
 
-        <div className='flex  items-center align-middle justify-center'>
+        <div className='flex  flex-col  mt-4 items-center align-middle justify-center'>
+        <h1 className=' text-center text-xl font-bold md:text-3xl mb-8'> Reef Forge Magnetic Frag holder </h1>
+
           <div className={`${styles.landingPageImageMainContainer} card `} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms' }}>
             <div className='card-over flex justify-center align-middle items-center'>
-              <div className='flex absolute'>
-                <img className='md:scale-150 scale-120' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/all-mangetic-frag-trays/IMG20250406095646-Photoroom.png' />
-              </div>
+                <img className='md:scale-150 scale-150' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/all-mangetic-frag-trays/IMG20250406095646-Photoroom.png' />
             </div>
 
 
@@ -144,8 +144,7 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className='my-4 mt-20 bg-slate-50  flex-col  p-6 rounded-md w-11/12 md:w-1/2' ref={observedElement}>
-          <h1 className=' text-center text-xl font-bold md:text-3xl'> Reef Forge Magnetic Frag holder </h1>
+        <div className='my-4 mt-4 bg-slate-50  flex-col  p-2 rounded-md w-full md:w-1/2' ref={observedElement}>
           <div className='my-5 flex  justify-center items-center '>
             {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"
@@ -153,13 +152,13 @@ const LandingPage = () => {
           autoPlay
           controls/> */}
             <div className='mt-4 text-xs md:text-sm'>
-              <h1>🚨 Transform Your Reef Tank with the Ultimate Coral Frag Rack! 🚨</h1>
+              <h1>🚨 Transform Your Reef Tank with Ultimate Coral Frag Rack! 🚨</h1>
               <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
-              <h1>💎 Available Now at Kraken Corals & Aquatics 💎</h1>
+              <h1>💎 Available Now at Reef-forge.uk 💎</h1>
               <ul className='list-disc list-inside mt-4'>
                 <strong>✅ Innovative Honeycomb Design</strong>
                 <li>Maximize coral placement with full usability of all frag holes!</li>
-                <li>Designed to minimize shadowing and boost upward flow, perfect for SPS coral growth.</li>
+                <li>Designed to minimize shadowing and boost upward flow, perfect for SPS, LPS coral growth.</li>
               </ul>
 
               <ul className='list-disc list-inside mt-4'>
