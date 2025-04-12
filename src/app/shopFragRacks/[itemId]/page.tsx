@@ -4,7 +4,6 @@ import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
 import Loading from '@/src/app/components/Loading/Loading';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Test from '../../components/Test/Test';
 
 
 interface BasketItem {
@@ -27,8 +26,9 @@ interface FragRackItem extends BasketItem {
 
 
 
-
 const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
+  const [isClient, setIsClient] = useState(false);
+
   const router = useRouter() // may be null or a NextRouter instance
   const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L'
   const [itemQuantity, setItemQuanity] = useState<number>(0);
@@ -37,6 +37,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   const [loading, setLoading] = useState(true);
   const [currentImage, setCurrentImage] = useState('')
   const [item, setItem] = useState<FragRackItem>();
+
   const [basketItem, setBasketItem] = useState<BasketItem>({
     id: 0,
     title: "",
@@ -47,12 +48,9 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
   });
   const [basketItems, setBasketItems] = useState<BasketItem[]>()
-  const { addSingleItemToBasket, basket, removeItemInBasket, getBasketTotal, getBasketCount } = useBasket();
+  const { addSingleItemToBasket, basket, removeItemInBasket, getBasketTotal, removeAllQuantityitem } = useBasket();
   const { itemId } = React.use(params)
-
-
   const [addToCartClicked, setAddToCart] = useState(false);
-
 
   // const handleAddToBasket = (item: BasketItem) => {
 
@@ -71,14 +69,19 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   // };
   // const vaildPaths = ["getAll", "greenBeans", "darkRoastedBeans"]
 
-  useEffect(() => {
+    useEffect(() => {
+      if (typeof window == 'object') {
+        // Safe to use window or document here
+        setIsClient(true);
+      }
     getItems()
 
   }, [])
 
 
   useEffect(() => {
-    setBasketItems(basket)
+    console.log("cart clicked!")
+    setBasketItems(basketItems)
   }, [addToCartClicked])
 
   useEffect(() => {
@@ -96,6 +99,8 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
         setBasketItem((prevItem) => ({
           ...prevItem,
           id: data.id,
+          title: data.title,
+          photoUrls: data.photoUrls,
           price: data.price,
         }));
         setLoading(false)
@@ -111,16 +116,18 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   // adds single item to basket and opens a basket drawer on right-hand side
 
   const handleBasketAdd = (basketItem: BasketItem) => {
-    addSingleItemToBasket(basketItem)
     setAddToCart(!addToCartClicked)
+    setBasketItems(basket)
+    console.log(basketItem)
+    addSingleItemToBasket(basketItem)
     setLoading(false)
   }
 
 
-  const increaseQuantity = () => {
-    setItemQuanity(itemQuantity + 1)
+  // const increaseQuantity = () => {
+  //   setItemQuanity(itemQuantity + 1)
 
-  }
+  // }
 
   useEffect(() => {
     setBasketItem((prevItem) => ({
@@ -137,47 +144,45 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
   }
 
+ //  returns all the items in the basket in drawer when users adds item to the cart
+ const returnBasketItems = basket?.map(eachItem => {
+  return <div key={eachItem.id} className='flex w-11/12  border items-center p-2 rounded-md m-3 bg-slate-100'>
+    <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
-  //  returns all the items in the basket in drawer when users adds item to the cart
-  const returnBasketItems = basketItems?.map(eachItem => {
-    if (eachItem.id) {
-      return <div key={eachItem.id} className='flex flex-col w-full   border items-center bg-slate-400 m-1 p-1'>
-        <Link href={`/shopFragRacks/${eachItem.id}`}>
+      <div className='flex h-full aspect-square items-center border rounded-md '>
 
-          <div className='flex h-full aspect-square w-full bg-yellow-400 border'>
+      <img src={`${image_url}/${eachItem.photoUrls[0]}.png`} className=' rounded-md cursor-pointer' ></img>          
+      </div>
+    </Link>
+    <div className='flex flex-col'>
+    <Link href={`/shopFragRacks/${eachItem.id}`}>
 
-            <img key={eachItem.id} src={`${image_url}/${eachItem.photoUrls[0]}.png`} className='border cursor-pointer w-full h-full object-cover ' ></img>
+      <h1 className='p-1 md:p-2 text-sm'>{eachItem.title}</h1>
+    </Link>
+
+    <h3 className='p-1'>£{eachItem.price}</h3>
+    <div className='flex h-10 text-center items-center align-middle justify-center '>
+
+    <div className='flex mt-1 md:mt-2 w-full'>
+          <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl '>
+            <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
+            <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
+            <button onClick={() => { addSingleItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
           </div>
-        </Link>
-        <Link href={`/shopFragRacks/${eachItem.id}`}>
+          <button onClick={()=>removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+          </svg> 
+          </button>
+           </div>
 
-          <h1 className='p-1 md:p-2'>{eachItem.title}</h1>
-        </Link>
 
-        <h3 className='p-1'>£{eachItem.price}</h3>
-        <div className='flex border items-center justify-center w-3/6 rounded-xl '>
-          <button onClick={() => {
-            removeItemInBasket(eachItem)
-            setAddToCart(!addToCartClicked)
+    </div>
+    </div>
 
-          }} className=' text-2xl w-1/6'>-</button>
-          <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> Quantity: {eachItem.quantity}</h4>
-          <button onClick={() => {
-            addSingleItemToBasket(eachItem)
-            setAddToCart(!addToCartClicked)
 
-          }} className=' text-2xl  w-1/6' >+</button>
-        </div>
-      </div>
-    }
-    else {
-      return <div key='' className='flex flex-col w-5/6  p-2 border items-center  lg:w-1/2 lg:p-6 m-2 md:m-4'>
-        <h2>Basket is empty</h2>
-      </div>
-    }
-
-  })
-
+  </div>
+}
+)
 
   return (
     <>
@@ -218,20 +223,31 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               {/* adding item to cart [single] */}
               
 
-              <div className="mt-2 drawer drawer-end ">
-                <input id="my-drawer2" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content">
-                  {/* Page content here */}
-                  <label onClick={() => { handleBasketAdd(basketItem) }} htmlFor="my-drawer2" className="btn btn-primary drawer-button w-full">Add To Cart</label>
-                </div>
-                <div className="drawer-side z-20">
-                  <label htmlFor="my-drawer2" aria-label="close sidebar" className="drawer-overlay"></label>
-                  <ul className="menu bg-base-200 text-base-content min-h-full w-96">
+              <div className=" drawer drawer-end">
+            <input id="my-drawer-single-item-page" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              {/* Page content here */}
+              <label onClick={() => { handleBasketAdd(item)}} 
+            htmlFor="my-drawer-single-item-page" className="btn btn-primary drawer-button">Add To Cart</label>
+            </div>
+            <div className="drawer-side z-20">
+              <label htmlFor="my-drawer-single-item-page" aria-label="close sidebar" className="drawer-overlay"></label>
+              <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
+              <h1>Your Cart</h1>
+               {returnBasketItems}
+               
+               <div className="divider"></div>
+               <div>
+                <h1>Your Total: £{isClient ? getBasketTotal() : 0}</h1>
+               </div>
+               <div className='flex-col flex w-5/6 mt-6'>
+               <Link href={"/basket"} className=" btn btn-primary btn-block">View cart</Link>
+               <h1 className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 text-md m-1'>Checkout</h1>
+               </div>
 
-                    {returnBasketItems}
-                  </ul>
-                </div>
-              </div>
+              </ul>
+            </div>
+          </div>
               {/* <button onClick={() => { handleAddToBasket(basketItem) }} className=' mt-1 mb-1 md:mt-2 md:mb-2 btn w-1/2'> Add To Cart</button> */}
 
 

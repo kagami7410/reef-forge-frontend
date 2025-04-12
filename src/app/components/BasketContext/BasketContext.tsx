@@ -7,10 +7,10 @@ interface BasketContextData {
   basket: BasketItem[];
   removeItemInBasket: (item: BasketItem) => void;
   addItemToBasket: (item: BasketItem) => void;
-  removeBasketState: () => void;
   getBasketCount: () => number;
   getBasketTotal: () => number;
   addSingleItemToBasket: (item: BasketItem) => void;
+  removeAllQuantityitem: (item: BasketItem) => void;
 }
 
 
@@ -71,7 +71,7 @@ const BasketProvider = ({ children }: BasketProviderProps) => {
         );
       }
       // Add new item if it doesn't exist in the basket
-      return [...prevBasket, { ...item, quantity: item.quantity }];
+      return [...prevBasket, { ...item, photoUrls:item.photoUrls, quantity: item.quantity }];
     });
   }
 
@@ -88,7 +88,7 @@ const BasketProvider = ({ children }: BasketProviderProps) => {
         );
       }
       // Add new item if it doesn't exist in the basket
-      return [...prevBasket, { ...item, quantity: 1 }];
+      return [...prevBasket, { ...item,  photoUrls:item.photoUrls, quantity: 1 }];
     });
   }
 
@@ -117,9 +117,21 @@ const BasketProvider = ({ children }: BasketProviderProps) => {
     });
   };
 
-  const removeBasketState = () => {
-    setBasket([]);
+
+  const removeAllQuantityitem = (item: BasketItem)=>{
+    setBasket((currentBasket) => {
+      const existingItem = currentBasket.find((basketItem) => basketItem.id === item.id);
+
+
+        const filteredItems = currentBasket.filter(eachItem => eachItem !== item);
+        if(filteredItems.length < 1){
+          localStorage.removeItem('basket')
+        }
+        return filteredItems
+      // Add new item if it doesn't exist in the basket
+    });
   }
+
 
     // Function to get basket count (total number of items)
     const getBasketCount = () => {
@@ -146,7 +158,7 @@ const BasketProvider = ({ children }: BasketProviderProps) => {
     
 
   return (
-    <BasketContext.Provider value={{ basket,addSingleItemToBasket, removeBasketState, addItemToBasket, getBasketCount, getBasketTotal, removeItemInBasket}}>
+    <BasketContext.Provider value={{ basket,removeAllQuantityitem, addSingleItemToBasket, addItemToBasket, getBasketCount, getBasketTotal, removeItemInBasket}}>
       <div>
         {children}
       </div>

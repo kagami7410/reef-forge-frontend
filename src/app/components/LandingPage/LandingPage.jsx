@@ -112,13 +112,13 @@ const LandingPage = () => {
         <div className={`${styles.landingPageImageMainContainer} card `} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(-${xPosition}%)` }}>
           <div className='card-over flex justify-center align-middle items-center'>
             <div className='flex absolute'>
-            <img className='md:scale-125 scale-110' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L/IMG_23032.png' />
+              <img className='md:scale-125 scale-110' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/all-mangetic-frag-trays/IMG20250406102345-Photoroom.png' />
 
             </div>
 
 
           </div>
-          
+
 
 
         </div>
@@ -127,52 +127,70 @@ const LandingPage = () => {
       </div>
 
 
-      <div className='my-4 mt-20 bg-slate-100  flex-col border p-6 rounded-md w-11/12 md:w-1/2' ref={observedElement} >
-        <h1 className=' text-center text-xl font-bold md:text-3xl'> Reef Forge Magnetic Frag holder </h1>
-        <div className='my-5 flex  justify-center items-center '>
-          {/* <video className='w-[80%] rounded-3xl  '
-          src="http://localhost:8000/contents/video?videoName=video1"
-          loop
-          autoPlay
-          controls/> */}
-          <div className='mt-4 text-xs md:text-sm'>
-            <h1>🚨 Transform Your Reef Tank with the Ultimate Coral Frag Rack! 🚨</h1>
-            <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
-            <h1>💎 Available Now at Kraken Corals & Aquatics 💎</h1>
-            <ul className='list-disc list-inside mt-4'>
-              <strong>✅ Innovative Honeycomb Design</strong>
-              <li>Maximize coral placement with full usability of all frag holes!</li>
-              <li>Designed to minimize shadowing and boost upward flow, perfect for SPS coral growth.</li>
-            </ul>
 
-            <ul className='list-disc list-inside mt-4'>
-              <strong>✅ Heavy-Duty Magnets Included</strong>
-              <li>Attach securely to glass up to 20mm thick—no slipping, no worries!</li>
-              <li>Single magnet is all you need for a strong and sturdy hold but hey if you want two go for it!</li>
-            </ul>
+      <div className='flex  m-4 items-center align-middle justify-center'>
 
-            <ul className='list-disc list-inside mt-4'>
-              <strong>🌊 Stylish, Durable, and Functional</strong>
-              <li>Polyreef frag racks combine aesthetics with performance to give your tank a professional edge.</li>
-            </ul>
 
-            <div className='mt-4'>
-            <h1 className='text-sm'>📢 Grab yours now at the best price!</h1>
-            <h1 className='text-sm'>👉 Visit REEFIN 3D to upgrade your reef tank today! </h1>
-            <h1 className='text-sm'>✨ Do not miss out! Your reef deserves the best! ✨</h1>
-
+        <div className='flex  items-center align-middle justify-center'>
+          <div className={`${styles.landingPageImageMainContainer} card `} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms' }}>
+            <div className='card-over flex justify-center align-middle items-center'>
+              <div className='flex absolute'>
+                <img className='md:scale-150 scale-120' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/all-mangetic-frag-trays/IMG20250406095646-Photoroom.png' />
+              </div>
             </div>
 
 
 
           </div>
+        </div>
+
+        <div className='my-4 mt-20 bg-slate-50  flex-col  p-6 rounded-md w-11/12 md:w-1/2' ref={observedElement}>
+          <h1 className=' text-center text-xl font-bold md:text-3xl'> Reef Forge Magnetic Frag holder </h1>
+          <div className='my-5 flex  justify-center items-center '>
+            {/* <video className='w-[80%] rounded-3xl  '
+          src="http://localhost:8000/contents/video?videoName=video1"
+          loop
+          autoPlay
+          controls/> */}
+            <div className='mt-4 text-xs md:text-sm'>
+              <h1>🚨 Transform Your Reef Tank with the Ultimate Coral Frag Rack! 🚨</h1>
+              <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
+              <h1>💎 Available Now at Kraken Corals & Aquatics 💎</h1>
+              <ul className='list-disc list-inside mt-4'>
+                <strong>✅ Innovative Honeycomb Design</strong>
+                <li>Maximize coral placement with full usability of all frag holes!</li>
+                <li>Designed to minimize shadowing and boost upward flow, perfect for SPS coral growth.</li>
+              </ul>
+
+              <ul className='list-disc list-inside mt-4'>
+                <strong>✅ Heavy-Duty Magnets Included</strong>
+                <li>Attach securely to glass up to 20mm thick—no slipping, no worries!</li>
+                <li>Single magnet is all you need for a strong and sturdy hold but hey if you want two go for it!</li>
+              </ul>
+
+              <ul className='list-disc list-inside mt-4'>
+                <strong>🌊 Stylish, Durable, and Functional</strong>
+                <li>Polyreef frag racks combine aesthetics with performance to give your tank a professional edge.</li>
+              </ul>
+
+              <div className='mt-4'>
+                <h1 className='text-sm'>📢 Grab yours now at the best price!</h1>
+                <h1 className='text-sm'>👉 Visit REEFIN 3D to upgrade your reef tank today! </h1>
+                <h1 className='text-sm'>✨ Do not miss out! Your reef deserves the best! ✨</h1>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
+
 
       </div>
 
 
-        
+
       {/* <div className='my-40  flex-col ' ref={observedElement} >
         <h1 className=' text-center text-xl md:text-3xl'> Benifits </h1>
         <div className='my-5 flex  justify-center items-center'>

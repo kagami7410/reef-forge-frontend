@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { useBasket } from '../components/BasketContext/BasketContext';
 import { useRouter } from 'next/navigation'
 import Loading from '../components/Loading/Loading';
+import Basket from '../basket/page';
+import BasketComponent from '../components/BasketComponent/BasketComponent';
 
 const Page = () => {
   const router = useRouter() // may be null or a NextRouter instance
@@ -82,12 +84,13 @@ const Page = () => {
   };
 
   return (
-    <div>
-      <div className={showModal ? 'flex-col flex border items-center blur-sm' : 'flex-col flex border items-center'}>
+    <div className=' flex items-center align-middle justify-center'>
+      <div className=' w-5/6 flex md:flex-row flex-col  align-middle justify-center'>
+
+      <div className={showModal ? 'bg-slate-700 flex-col flex border items-center blur-sm' : 'flex-col flex border items-center md:w-3/6'}>
         <h1 className='text-2xl m-4'>Personal Details</h1>
 
-        <form className='flex flex-col w-5/6  items-center md:w-2/5  md:p-4 rounded-md bg-slate-100 md:items-start' >
-          <div className='flex flex-col md:flex-row  w-full items-center'>
+        <form className='flex flex-col w-5/6  items-center md:w-3/4 align-middle justify-center flex flex-col p-4 rounded-t-2xl bg-slate-100 md:items-start' >
             <label className="form-control w-full max-w-xs mr-0 md:mr-2">
               <div className="label">
                 <span className="label-text"> First Name*  </span>
@@ -101,7 +104,6 @@ const Page = () => {
               <input name="lastName" value={userDetails.lastName} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={handleChange} />
             </label>
 
-          </div>
 
           <label className="form-control w-full max-w-xs">
             <div className="label">
@@ -145,6 +147,11 @@ const Page = () => {
           <button onClick={handleSubmit} className=' btn m-2 text-xl'> Checkout </button>
         </div>
       </div>
+
+      <div className='md:w-2/5 flex flex-col  items-center md:align-middle md:items-center md:ml-10'>
+      <h1 className='m-4 md:m-3 text-lg font-bold'>Order Summary</h1>
+        <BasketComponent allowEditQuantity={false}/>
+      </div>
       <div>
         {showModal ? <div className=" modal-box fixed top-1/3 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
           <h3 className="font-bold text-lg">Thank you!</h3>
@@ -164,6 +171,8 @@ const Page = () => {
       <div>
        {loading?<Loading/>:<></>} 
       </div>
+      </div>
+
     </div>
 
 
