@@ -27,7 +27,7 @@ interface FragRackItem extends BasketItem {
 const Page = () => {
   const router = useRouter() // may be null or a NextRouter instance
   const [isClient, setIsClient] = useState(false);
-  const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L'
+  const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images'
   const [showModal, setShowModal] = useState(false);
 
   // asynchronous access of `params.id`.

@@ -113,34 +113,21 @@ const LandingPage = () => {
           <div className='card-over flex justify-center align-middle items-center'>
             <div className='flex absolute'>
               <img className='md:scale-125 scale-110' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/all-mangetic-frag-trays/IMG20250406102345-Photoroom.png' />
-
             </div>
-
-
           </div>
-
-
-
         </div>
         <Link href='/shopFragRacks' className="btn z-10 opacity-100 btn-lg sm:opacity-0 mt-6 border-none bg-yellow-300  hover:bg-yellow-500">Buy Now</Link>
-
       </div>
 
 
 
       <div className='flex   md:w-4/6 md:flex-row flex-col m-4 items-center align-middle justify-center'>
-
-
         <div className='flex  flex-col  md:mr-20 mt-4 items-center align-middle justify-center'>
           <h1 className={`text-center text-xl  w-full mb-8 md:mb-0 ${styles.otherHeadline} md:text-2xl`}> Reef Forge Magnetic Frag holder </h1>
-
           <div className={`${styles.landingPageImageMainContainer} card `} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms' }}>
             <div className='card-over flex justify-center align-middle items-center'>
                 <img className='md:scale-150 scale-150' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/all-mangetic-frag-trays/IMG20250406095646-Photoroom.png' />
             </div>
-
-
-
           </div>
         </div>
 
@@ -189,6 +176,13 @@ const LandingPage = () => {
       </div>
 
       <div className='divider mt-20 z-50 mr-5 ml-5'> </div>
+
+      <div className='flex flex-col'>
+        <div className='flex'>
+        <h1 className={`text-center text-xl  w-full mb-8 md:mb-0 ${styles.otherHeadline} md:text-2xl`}> Reef Forge Products </h1>
+        </div>
+
+      </div>
 
 
 

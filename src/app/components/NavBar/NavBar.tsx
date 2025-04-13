@@ -126,8 +126,8 @@ const NavBar = () => {
 
   })
   return (
-    <div className={`navbar h-8 md:h-10 border m-auto pr-4 pl-4  md:pr-0 md:pl-0  ${borderVisibile}`}>
-      <div className="dropdown">
+    <div className={`navbar h-6 md:h-8 border m-auto pr-4 pl-4  bg-slate-200  md:pr-0 md:pl-0  ${borderVisibile}`}>
+      {/* <div className="dropdown">
         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -156,10 +156,10 @@ const NavBar = () => {
           </li>
           <li><a>Item 3</a></li>
         </ul>
-      </div>
+      </div> */}
 
       <div className={` ${borderVisibile} `}>
-        <Link href={'/'} className={`btn btn-ghost text-xl  bg-slate-200 md:text-2xl md:ml-20 md:w-72`}> REEF FORGE</Link>
+        <Link href={'/'} className={`btn btn-ghost text-xl md:text-2xl md:ml-20 md:w-72`}> REEF FORGE</Link>
       </div>
 
       <div className="navbar flex justify-center  h-8 opacity-0 md:opacity-100 ">
@@ -195,7 +195,7 @@ const NavBar = () => {
             <input id="my-drawer-navbar" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
               {/* Page content here */}
-              <label onClick={handleBasketClicked} htmlFor="my-drawer-navbar" className="btn  bg-white border-none drawer-button w-full">
+              <label onClick={handleBasketClicked} htmlFor="my-drawer-navbar" className="btn  bg-slate-200  border-none drawer-button w-full">
 
                 <div className="indicator">
                   <svg
@@ -270,8 +270,6 @@ const NavBar = () => {
           </ul>
         </div>
       </div>
-
-
     </div>
 
 
