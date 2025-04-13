@@ -46,6 +46,15 @@
 
 }
 
+
+.otherHeadline{
+    width: 100%;
+    color: rgb(61, 79, 95);
+    /* border: solid 3px rgb(209, 208, 206); */
+    font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
 .border {
     /* border: 3px solid aliceblue; */
 }
@@ -229,6 +238,18 @@
         font-weight: 900;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     }
+
+    .otherHeadline{
+        padding: 0rem;
+        width: 100%;
+        color: rgb(61, 79, 95);
+        font-size: 2rem;
+        line-height: 1.9rem;
+        /* border: solid 3px rgb(209, 208, 206); */
+        font-weight: 900;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
 
 
 

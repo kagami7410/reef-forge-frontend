@@ -98,7 +98,7 @@ const LandingPage = () => {
   // }, []);
 
   return (
-    <div className={`${styles.landingPageContainer}`}>
+    <div className={`${styles.landingPageContainer} w-full`}>
       <div className={`${styles.landingPageTopContainer} bg-slate-200 pb-24 pt-10 md:pt-8  md:pb-20`}>
         <div className={`${styles.landingPageDescription} transform transition-all `}
           style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(${xPosition}%)` }}>
@@ -128,11 +128,11 @@ const LandingPage = () => {
 
 
 
-      <div className='flex md:flex-row flex-col m-4 items-center align-middle justify-center'>
+      <div className='flex   md:w-4/6 md:flex-row flex-col m-4 items-center align-middle justify-center'>
 
 
-        <div className='flex  flex-col  mt-4 items-center align-middle justify-center'>
-        <h1 className=' text-center text-xl font-bold md:text-3xl mb-8'> Reef Forge Magnetic Frag holder </h1>
+        <div className='flex  flex-col  md:mr-20 mt-4 items-center align-middle justify-center'>
+          <h1 className={`text-center text-xl  w-full mb-8 md:mb-0 ${styles.otherHeadline} md:text-2xl`}> Reef Forge Magnetic Frag holder </h1>
 
           <div className={`${styles.landingPageImageMainContainer} card `} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms' }}>
             <div className='card-over flex justify-center align-middle items-center'>
@@ -151,7 +151,7 @@ const LandingPage = () => {
           loop
           autoPlay
           controls/> */}
-            <div className='mt-4 text-xs md:text-sm'>
+            <div className='mt-4 md:mt-10 text-xs md:text-sm'>
               <h1>🚨 Transform Your Reef Tank with Ultimate Coral Frag Rack! 🚨</h1>
               <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
               <h1>💎 Available Now at Reef-forge.uk 💎</h1>
@@ -187,6 +187,8 @@ const LandingPage = () => {
 
 
       </div>
+
+      <div className='divider mt-20 z-50 mr-5 ml-5'> </div>
 
 
 
