@@ -115,7 +115,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
   // adds single item to basket and opens a basket drawer on right-hand side
 
-  const handleBasketAdd = (basketItem: BasketItem) => {
+  const handleBasketAdd = (basketItem: FragRackItem) => {
     setAddToCart(!addToCartClicked)
     setBasketItems(basket)
     console.log(basketItem)
@@ -137,12 +137,12 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
     console.log(basketItem)
   }, [itemQuantity])
 
-  const decreaseQuantity = () => {
-    if (itemQuantity > 0) {
-      setItemQuanity(itemQuantity - 1)
-    }
+  // const decreaseQuantity = () => {
+  //   if (itemQuantity > 0) {
+  //     setItemQuanity(itemQuantity - 1)
+  //   }
 
-  }
+  // }
 
  //  returns all the items in the basket in drawer when users adds item to the cart
  const returnBasketItems = basket?.map(eachItem => {
@@ -227,7 +227,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
             <input id="my-drawer-single-item-page" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
               {/* Page content here */}
-              <label onClick={() => { handleBasketAdd(item)}} 
+              <label onClick={() => { if(item !==undefined){handleBasketAdd(item)}}} 
             htmlFor="my-drawer-single-item-page" className="btn btn-primary drawer-button">Add To Cart</label>
             </div>
             <div className="drawer-side z-20">

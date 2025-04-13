@@ -120,9 +120,6 @@ const BasketProvider = ({ children }: BasketProviderProps) => {
 
   const removeAllQuantityitem = (item: BasketItem)=>{
     setBasket((currentBasket) => {
-      const existingItem = currentBasket.find((basketItem) => basketItem.id === item.id);
-
-
         const filteredItems = currentBasket.filter(eachItem => eachItem !== item);
         if(filteredItems.length < 1){
           localStorage.removeItem('basket')

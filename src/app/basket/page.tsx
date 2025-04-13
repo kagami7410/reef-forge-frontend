@@ -1,9 +1,4 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
-import { useRouter } from 'next/navigation'
-import Loading from '../components/Loading/Loading';
-import Link from 'next/link';
 import BasketComponent from '../components/BasketComponent/BasketComponent';
 
 

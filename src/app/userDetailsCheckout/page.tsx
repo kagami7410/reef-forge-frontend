@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { useBasket } from '../components/BasketContext/BasketContext';
 import { useRouter } from 'next/navigation'
 import Loading from '../components/Loading/Loading';
-import Basket from '../basket/page';
 import BasketComponent from '../components/BasketComponent/BasketComponent';
 
 const Page = () => {
@@ -15,7 +14,7 @@ const Page = () => {
     itemQuantity: number
   }
   const [loading, setLoading] = useState(false);
-  const { basket, removeBasketState } = useBasket();
+  const { basket } = useBasket();
   const [showModal, setShowModal] = useState(false);
 
   const [userDetails, setUserDetails] = useState({
@@ -67,7 +66,6 @@ const Page = () => {
       if (response.status === 202) {
         localStorage.setItem('basket', JSON.stringify([]))
         // setShowModal(!showModal)
-        removeBasketState()
   
       }
     }
