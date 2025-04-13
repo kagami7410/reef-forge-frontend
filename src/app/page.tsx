@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
 
-    <main>
+    <main className='flex overflow-x-hidden w-full'>
         <LandingPage />
     </main>
 

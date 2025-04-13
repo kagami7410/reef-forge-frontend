@@ -98,7 +98,7 @@ const LandingPage = () => {
   // }, []);
 
   return (
-    <div className={`${styles.landingPageContainer} w-full`}>
+    <div className={`${styles.landingPageContainer}`}>
       <div className={`${styles.landingPageTopContainer} bg-slate-200 pb-24 pt-10 md:pt-8  md:pb-20`}>
         <div className={`${styles.landingPageDescription} transform transition-all `}
           style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(${xPosition}%)` }}>
