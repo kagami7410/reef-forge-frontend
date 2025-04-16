@@ -20,6 +20,7 @@ const LandingPage = () => {
 
   const [isMobile, setIsMobile] = useState(false)
   const [screenSize, setScreenSize] = useState(0);
+  const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
 
   useEffect(() => {
     const handleResize = () => {
@@ -98,8 +99,8 @@ const LandingPage = () => {
   // }, []);
 
   return (
-    <div className={`${styles.landingPageContainer}`}>
-      <div className={`${styles.landingPageTopContainer} bg-slate-200 pb-24 pt-10 md:pt-8  md:pb-20`}>
+    <div className={` ${styles.landingPageContainer}`}>
+      <div className={`max-w-screen-2xl ${styles.landingPageTopContainer} bg-slate-200 pb-24 pt-10 md:pt-8  md:pb-20`}>
         <div className={`${styles.landingPageDescription} transform transition-all `}
           style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(${xPosition}%)` }}>
           <div className={`${styles.mainHeadline}`}>Rock-Solid Magnetic Frag Holder</div>
@@ -112,7 +113,7 @@ const LandingPage = () => {
         <div className={`${styles.landingPageImageMainContainer} card `} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(-${xPosition}%)` }}>
           <div className='card-over flex justify-center align-middle items-center'>
             <div className='flex absolute'>
-              <img className='md:scale-125 scale-110' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/all-mangetic-frag-trays/IMG20250406102345-Photoroom.png' />
+              <img className='md:scale-125 scale-110 pb-32' src={`${image_url}/Large/IMG20250406195739.png`} />
             </div>
           </div>
         </div>
@@ -121,24 +122,24 @@ const LandingPage = () => {
 
 
 
-      <div className='flex   md:w-4/6 md:flex-row flex-col m-4 items-center align-middle justify-center'>
+      <div className='flex  md:w-5/6 md:flex-row flex-col m-4 items-center align-middle justify-center'>
         <div className='flex  flex-col  md:mr-20 mt-4 items-center align-middle justify-center'>
           <h1 className={`text-center text-xl  w-full mb-8 md:mb-0 ${styles.otherHeadline} md:text-2xl`}> Reef Forge Magnetic Frag holder </h1>
           <div className={`${styles.landingPageImageMainContainer} card `} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms' }}>
             <div className='card-over flex justify-center align-middle items-center'>
-                <img className='md:scale-150 scale-150' src='https://storage.googleapis.com/fragracks-web-images/frag-racks-images/all-mangetic-frag-trays/IMG20250406095646-Photoroom.png' />
+                <img className='scale-100' src={`${image_url}/All/IMG20250406100147.png`} />
             </div>
           </div>
         </div>
 
-        <div className='my-4 mt-4 bg-slate-50  flex-col  p-2 rounded-md w-full md:w-1/2' ref={observedElement}>
-          <div className='my-5 flex  justify-center items-center '>
+        <div className='my-4 mt-4 md:mt-20 bg-slate-100  flex-col md:p-6  p-2 rounded-md md:rounded-lg w-full md:w-full' ref={observedElement}>
+          <div className='flex  justify-center items-center '>
             {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"
           loop
           autoPlay
           controls/> */}
-            <div className='mt-4 md:mt-10 text-xs md:text-sm'>
+            <div className='mt-4 text-xs md:text-sm'>
               <h1>🚨 Transform Your Reef Tank with Ultimate Coral Frag Rack! 🚨</h1>
               <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
               <h1>💎 Available Now at Reef-forge.uk 💎</h1>
@@ -175,9 +176,9 @@ const LandingPage = () => {
 
       </div>
 
-      <div className='divider mt-20 z-50 mr-5 ml-5'> </div>
+      <div className=' bg-slate-200 w-full h-px'></div>
 
-      <div className='flex flex-col'>
+      <div className='flex flex-col mt-3 md:mt-4'>
         <div className='flex'>
         <h1 className={`text-center text-xl  w-full mb-8 md:mb-0 ${styles.otherHeadline} md:text-2xl`}> Reef Forge Products </h1>
         </div>

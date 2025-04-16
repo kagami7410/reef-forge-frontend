@@ -17,7 +17,7 @@ RUN npm install
 RUN npm run build
 
 # Stage 2: Create the production image
-FROM node:18-alpine
+FROM alpine
 
 # Set the working directory
 WORKDIR /app

@@ -19,22 +19,34 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" >
-      <body className={inter.className}>
 
-        <header>
+      <body className={`${inter.className} flex align-middle items-center justify-center bg-slate-200`}>
 
-        </header>
-        <BasketProvider> 
-        <h2 className='flex justify-center pb-1 md:pb-2 pt-1 bg-orange-300'>Free Delivery on order over £50</h2>
+        <div className='flex w-full flex-col justify-center items-center'>
+          <header>
+          <h2 className='flex w-full justify-center pb-1 md:pb-2 pt-1 bg-orange-300'>Free Delivery on order over £50</h2>
 
-        <NavBar/>
-        <div className=' bg-slate-300 w-full h-px'></div>
+          </header>
+          <BasketProvider>
+            <div>
+            <NavBar />
+            </div>
 
-        {children}
-        </BasketProvider>
-        <Footer/>
+            
+            <div className=' bg-slate-300  h-px'></div>
+            <div className='border flex flex-col bg-slate-300  max-w-screen-2xl '>
+              {children}
 
-        </body>
+
+            </div>
+          </BasketProvider>
+          <Footer />
+        </div>
+
+
+
+      </body>
+
 
     </html>
 

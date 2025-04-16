@@ -16,7 +16,7 @@ const NavBar = () => {
     photoUrls: string[];
 
   }
-  const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L'
+  const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
 
   const [basketItems, setBasketItems] = useState<BasketItem[]>()
   const [basketClicked, setBasketClicked] = useState(false);
@@ -76,7 +76,7 @@ const NavBar = () => {
 
           <div className='flex h-full aspect-square items-center border rounded-md '>
 
-            <img src={`${image_url}/${eachItem?.photoUrls[0]}.png`} className=' rounded-md cursor-pointer' ></img>
+            <img src={`${image_url}/${eachItem?.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>
           </div>
         </Link>
         <div className='flex flex-col'>
@@ -126,7 +126,7 @@ const NavBar = () => {
 
   })
   return (
-    <div className={`navbar h-6 md:h-8 border m-auto pr-4 pl-4  bg-slate-200  md:pr-0 md:pl-0  ${borderVisibile}`}>
+    <div className={`max-w-screen-2xl navbar h-6 md:h-8 border m-auto pr-4 pl-4  bg-slate-200  md:pr-0 md:pl-0  ${borderVisibile}`}>
       {/* <div className="dropdown">
         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
           <svg
@@ -159,7 +159,7 @@ const NavBar = () => {
       </div> */}
 
       <div className={` ${borderVisibile} `}>
-        <Link href={'/'} className={`btn btn-ghost text-xl md:text-2xl md:ml-20 md:w-72`}> REEF FORGE</Link>
+        <Link href={'/'} className={`btn btn-ghost text-xl md:text-2xl md:ml-0 md:w-72`}> REEF FORGE</Link>
       </div>
 
       <div className="navbar flex justify-center  h-8 opacity-0 md:opacity-100 ">
@@ -188,7 +188,7 @@ const NavBar = () => {
       </div>
 
 
-      <div className="flex justify-center md:mr-20 md:w-72  md:ml-20 p-0 w-64">
+      <div className="flex justify-center md:mr-0 md:w-72  md:ml-20 p-0 w-64">
         <div className="dropdown dropdown-end  p-0   w-1/2">
 
           <div className=" drawer drawer-end">

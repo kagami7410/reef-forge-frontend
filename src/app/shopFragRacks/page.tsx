@@ -27,7 +27,7 @@ interface FragRackItem extends BasketItem {
 const Page = () => {
   const router = useRouter() // may be null or a NextRouter instance
   const [isClient, setIsClient] = useState(false);
-  const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images'
+  const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
   const [showModal, setShowModal] = useState(false);
 
   // asynchronous access of `params.id`.
@@ -42,8 +42,6 @@ const Page = () => {
 
   useEffect(() => {
     getItems()
-    console.log(currentPage, ': page is clicked!')
-
   }, [currentPage])
 
   function getItems() {
@@ -64,6 +62,7 @@ const Page = () => {
         // Safe to use window or document here
         setIsClient(true);
       }
+      console.log("this is env:" + image_url)
     getItems()
 
   }, [])
@@ -90,7 +89,7 @@ const Page = () => {
 
       <div className='flex h-full aspect-square items-center border rounded-md '>
 
-      <img src={`${image_url}/${eachItem.photoUrls[0]}.png`} className=' rounded-md cursor-pointer' ></img>          
+      <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>          
       </div>
     </Link>
     <div className='flex flex-col'>
@@ -125,9 +124,9 @@ const Page = () => {
 
   const jsxreturnedAllItems = items.map(eachItem => {
     return (
-      <div key={eachItem.id} className='flex flex-col w-11/12 rounded-md md:p-2 md:p-8  mt-8  lg:w-1/4'>
+      <div key={eachItem.id} className=' flex flex-col w-11/12 rounded-md md:p-2 md:p-8  mt-8  lg:w-1/4'>
         <Link href={`/shopFragRacks/${eachItem.id}`}>
-          <img src={`${image_url}/${eachItem.photoUrls[0]}.png`} className='border rounded-md cursor-pointer' ></img>
+          <img src={`${image_url}/${eachItem.photoUrls[0]}`} className='border rounded-md cursor-pointer' ></img>
 
         </Link>
 
@@ -186,7 +185,7 @@ const Page = () => {
         <div key={currentlyClickedBasketItem?.id} className='flex flex-col w-1/2  rounded-md md:p-2 md:p-2   mt-1  lg:w-1/3'>
 
           <Link href={`/shopFragRacks/${currentlyClickedBasketItem?.id}`}>
-            <img src={`${image_url}/${currentlyClickedBasketItem?.photoUrls[0]}.png`} className='border rounded-md cursor-pointer' ></img>
+            <img src={`${image_url}/${currentlyClickedBasketItem?.photoUrls[0]}`} className='border rounded-md cursor-pointer' ></img>
 
           </Link>
         </div>

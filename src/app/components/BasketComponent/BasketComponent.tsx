@@ -10,7 +10,7 @@ type Props = {
   allowEditQuantity: boolean;
 };
 const BasketComponent = ({allowEditQuantity}: Props) => {
-  const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L'
+  const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
 
   // Define a type for the item
   interface BasketItem {
@@ -52,7 +52,7 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
 
             <div className='flex h-full aspect-square w-full  '>
 
-              <img key={eachItem.id} src={`${image_url}/${eachItem.photoUrls[0]}.png`} className='border  rounded-md cursor-pointer w-full h-full object-cover ' ></img>
+              <img key={eachItem.id} src={`${image_url}/${eachItem.photoUrls[0]}`} className='border  rounded-md cursor-pointer w-full h-full object-cover ' ></img>
             </div>
           </Link>
         </div>

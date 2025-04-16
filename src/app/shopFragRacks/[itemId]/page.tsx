@@ -30,7 +30,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   const [isClient, setIsClient] = useState(false);
 
   const router = useRouter() // may be null or a NextRouter instance
-  const image_url = 'https://storage.googleapis.com/fragracks-web-images/frag-racks-images/%20Magnetic-Frag-tray-L'
+  const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
   const [itemQuantity, setItemQuanity] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
   // asynchronous access of `params.id`.
@@ -85,7 +85,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   }, [addToCartClicked])
 
   useEffect(() => {
-    setCurrentImage(`${image_url}/${item?.photoUrls[0]}.png`)
+    setCurrentImage(`${image_url}/${item?.photoUrls[0]}`)
   }, [item])
 
   function getItems() {
@@ -151,7 +151,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
       <div className='flex h-full aspect-square items-center border rounded-md '>
 
-      <img src={`${image_url}/${eachItem.photoUrls[0]}.png`} className=' rounded-md cursor-pointer' ></img>          
+      <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>          
       </div>
     </Link>
     <div className='flex flex-col'>
@@ -174,12 +174,8 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           </svg> 
           </button>
            </div>
-
-
     </div>
     </div>
-
-
   </div>
 }
 )
@@ -200,7 +196,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
                 {item?.photoUrls.map(eachurl => {
                   return (
                     <div key={eachurl} className='flex h-full aspect-square w-full '>
-                      <img key={eachurl} src={`${image_url}/${eachurl}.png`} className='border cursor-pointer w-full h-full object-cover ' onClick={changeImageView}></img>
+                      <img key={eachurl} src={`${image_url}/${eachurl}`} className='border cursor-pointer w-full h-full object-cover ' onClick={changeImageView}></img>
 
                     </div>
                   )
@@ -307,7 +303,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           <div key={item?.id} className='flex flex-col w-1/2  rounded-md md:p-2 md:p-2   mt-1  lg:w-1/3'>
 
             <Link href={`/shopFragRacks/${item?.id}`}>
-              <img src={`${image_url}/${item?.photoUrls[0]}.png`} className='border rounded-md cursor-pointer' ></img>
+              <img src={`${image_url}/${item?.photoUrls[0]}`} className='border rounded-md cursor-pointer' ></img>
 
             </Link>
           </div>
