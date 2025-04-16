@@ -22,9 +22,11 @@ export default function RootLayout({
 
       <body className={`${inter.className} flex align-middle items-center justify-center bg-slate-200`}>
 
-        <div className='flex w-full flex-col justify-center items-center'>
+        <div className='flex w-full flex-col  items-center'>
+            <h2 className='flex w-full justify-center pb-1 md:pb-2 pt-1 bg-orange-300'>Free Delivery on order over £50</h2>
+
           <header>
-          <h2 className='flex w-full justify-center pb-1 md:pb-2 pt-1 bg-orange-300'>Free Delivery on order over £50</h2>
+ 
 
           </header>
           <BasketProvider>
@@ -40,7 +42,10 @@ export default function RootLayout({
 
             </div>
           </BasketProvider>
+          <div className='flex w-full  items-center'>
           <Footer />
+
+          </div>
         </div>
 
 

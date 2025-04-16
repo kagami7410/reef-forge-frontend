@@ -4,19 +4,26 @@ const Footer = () => {
   return (
     <>
 <div className=' relative bottom-0 w-full mt-96 items-center '>
-<footer className=" footer mt-6 bg-base-200 text-base-content p-10">
-  <nav>
-    <h6 className="footer-title">UK Manufactured</h6>
+<footer className="flex footer justify-center bg-slate-300 mt-6 bg-base-200 text-base-content p-10">
+  <nav className='w-1/2 flex flex-col items-center'>
+  <div className='flex flex-col '>
+  <h6 className="footer-title">UK Manufactured</h6>
     <a className="link link-hover">All of our products are proudly manufactured and put together in the UK.</a>
     <a className="link link-hover">    For further information, you can contact us at: </a>
 
+  </div>
+
   </nav>
-  <nav>
+  <nav className='w-1/2 flex flex-col items-center'>
+  <div className='flex flex-col '>
+
     <h6 className="footer-title">Help & Info</h6>
     <a className="link link-hover">Shipping Policy</a>
     <a className="link link-hover">Refund Policy</a>
     <a href='/privacyPolicy' className="link link-hover">Privacy Policy</a>
     <a className="link link-hover">Press kit</a>
+    </div>
+
   </nav>
 
 </footer>
