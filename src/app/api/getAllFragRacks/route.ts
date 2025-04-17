@@ -5,7 +5,7 @@ export async function GET(req:NextRequest) {
     const backendHostName = process.env.HIMALAYAN_COFFEE_BACKEND_HOSTNAME
 
     try{
-        console.log(`trying to getAll the beans`)
+        console.log(`trying to getAll the items`)
         const { searchParams } = new URL(req.url);
         const pageNumber = searchParams.get('pageNumber'); // Extract 'corqalType' from query   
         const pageSize = searchParams.get('pageSize'); // Extract 'corqalType' from query        console.log('pageNumber: ',  req.query)
