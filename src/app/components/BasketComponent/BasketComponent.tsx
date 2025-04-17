@@ -99,6 +99,10 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
     }
   }
 
+  const routeToMainPage = () => {
+      router.push('/')
+  }
+
   return (
     <>
       {loading ? <Loading /> : <><div className='flex flex-col   items-center justify-center  p-4 md:p-1 '>
@@ -109,7 +113,12 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
 
         </div>
         {/* <div className='flex flex-col w-full items-center p-4 md:p-6 bg-slate-100 '> */}
-          {itemExistsInBasket ? returnBasketItems : <h1 className='p-10 text-2xl md:p-20 md:text-3xl font-bold'>Your Basket is Empty!</h1>}
+          {itemExistsInBasket ? returnBasketItems : 
+          <div className='flex  flex-col items-center'>
+                      <h1 className='p-10 text-2xl md:p-20 md:text-3xl font-bold'>Your Basket is Empty!</h1>
+                      <h1 onClick={routeToMainPage} className='btn bg-indigo-600 text-cyan-50 hover:bg-indigo-800 w-48  text-md mb-4 '>Continue shopping</h1>
+
+            </div>}
         {/* </div> */}
 
         {/* <div className="border-b w-4/6 border-gray-550 m-4"></div> */}
@@ -129,6 +138,7 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
         <div>
           {noItems ? <div className=" modal-box fixed top-1/3 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
             <h3 className="font-bold text-lg">Your Basket is Empty</h3>
+
             <div className="modal-action">
               <form method="dialog">
                 {/* if there is a button in form, it will close the modal */}

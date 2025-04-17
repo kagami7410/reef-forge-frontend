@@ -202,6 +202,24 @@ const NavBar = () => {
       </div>
 
 
+            {noItems ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+        <h3 className="font-bold text- md:text-lg">Basket is Empty!</h3>
+
+
+
+        <div className="modal-action">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button onClick={() => {
+              router.push('/shopFragRacks')
+              setNoItems(!noItems)
+            }}
+              className="btn">Close</button>
+          </form>
+        </div>
+      </div> : <></>}
+
+
       <div className="flex justify-center md:mr-0 md:w-72  md:ml-20 p-0 w-64">
         <div className="dropdown dropdown-end  p-0   w-1/2">
 
