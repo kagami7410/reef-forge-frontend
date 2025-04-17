@@ -36,13 +36,15 @@ export default function RootLayout({
 
             
             <div className=' bg-slate-300  h-px'></div>
-            <div className='border flex flex-col bg-slate-300  max-w-screen-2xl '>
+            <div className='border flex flex-col bg-slate-200  max-w-screen-2xl '>
               {children}
 
 
             </div>
           </BasketProvider>
+
           <div className='flex w-full  items-center'>
+
           <Footer />
 
           </div>

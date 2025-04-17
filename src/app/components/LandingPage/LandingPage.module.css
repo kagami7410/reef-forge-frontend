@@ -23,16 +23,6 @@
 }
 
 
-.landingPageDescription{
-    /* border: solid 6px rgb(220, 247, 70); */
-    display: flex;
-    flex-direction: column;
-    width: 800px;
-    padding-top: 2rem;
-    /* padding-right: 5rem; */
-    /* align-items: center; */
-
-}
 
 .mainHeadline {
     width: 100%;
@@ -267,17 +257,6 @@
 
 
 
-    .landingPageDescription{
-        /* border: solid 6px rgb(220, 247, 70); */
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        padding-left: 4rem;
-        align-items: center;
-        padding-top: 0;
-        justify-items: center;
-    
-    }
 
     .shortDescription{
         color: rgb(244, 246, 248);

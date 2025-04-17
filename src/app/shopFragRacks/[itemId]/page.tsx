@@ -37,6 +37,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   const [loading, setLoading] = useState(true);
   const [currentImage, setCurrentImage] = useState('')
   const [item, setItem] = useState<FragRackItem>();
+  const [noItems, setNoItems] = useState(false);
 
   const [basketItem, setBasketItem] = useState<BasketItem>({
     id: 0,
@@ -107,6 +108,17 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
       })
   }
 
+
+  
+  const routeToCheckout = () => {
+    if (basket.length > 0) {
+      router.push('/userDetailsCheckout')
+    }
+    else {
+      setNoItems(true)
+    }
+  }
+
   const changeImageView = (event: React.MouseEvent<HTMLImageElement>) => {
     const imageSrc = event.currentTarget.src;
     setCurrentImage(imageSrc)
@@ -146,7 +158,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
  //  returns all the items in the basket in drawer when users adds item to the cart
  const returnBasketItems = basket?.map(eachItem => {
-  return <div key={eachItem.id} className='flex w-11/12  border items-center p-2 rounded-md m-3 bg-slate-100'>
+  return <div key={eachItem.id} className='flex flex-col'><div  className='flex w-11/12   items-center p-2 rounded-md'>
     <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
       <div className='flex h-full aspect-square items-center border rounded-md '>
@@ -174,9 +186,15 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           </svg> 
           </button>
            </div>
+
     </div>
+
     </div>
+
   </div>
+      <div className='flex w-full bg-gray-300 h-px m-1'></div>
+      </div>
+
 }
 )
 
@@ -188,14 +206,14 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           {/* <Loading/> */}
           <div className='flex rounded-md border flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
             <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-1/2 rounded-md   border  '>
-              <div className='flex h-full aspect-square w-full'>
-                <img className='flex   p-1  w-full  h-full object-cover' src={currentImage} />
+              <div className='flex h-full  border-slate-400 rounded-lg border aspect-square w-full'>
+                <img className='flex p-1  w-full h-full object-cover' src={currentImage} />
 
               </div>
               <div key={item?.id} className='flex  items-center justify-center  w-full   '>
                 {item?.photoUrls.map(eachurl => {
                   return (
-                    <div key={eachurl} className='flex h-full aspect-square w-full '>
+                    <div key={eachurl} className='flex m-1 mt-3 rounded-md border-slate-400  border  h-full aspect-square w-full '>
                       <img key={eachurl} src={`${image_url}/${eachurl}`} className='border cursor-pointer w-full h-full object-cover ' onClick={changeImageView}></img>
 
                     </div>
@@ -226,10 +244,10 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               <label onClick={() => { if(item !==undefined){handleBasketAdd(item)}}} 
             htmlFor="my-drawer-single-item-page" className="btn btn-primary drawer-button">Add To Cart</label>
             </div>
-            <div className="drawer-side z-20">
+            <div className="drawer-side z-20 items-center">
               <label htmlFor="my-drawer-single-item-page" aria-label="close sidebar" className="drawer-overlay"></label>
               <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
-              <h1>Your Cart</h1>
+              <h1 className='mt-2 mb-4'>Your Cart</h1>
                {returnBasketItems}
                
                <div className="divider"></div>
@@ -238,7 +256,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
                </div>
                <div className='flex-col flex w-5/6 mt-6'>
                <Link href={"/basket"} className=" btn btn-primary btn-block">View cart</Link>
-               <h1 className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 text-md m-1'>Checkout</h1>
+               <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-full text-md mb-4 mt-2'>Checkout</h1>
                </div>
 
               </ul>

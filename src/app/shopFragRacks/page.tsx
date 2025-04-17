@@ -29,6 +29,7 @@ const Page = () => {
   const [isClient, setIsClient] = useState(false);
   const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
   const [showModal, setShowModal] = useState(false);
+  const [noItems, setNoItems] = useState(false);
 
   // asynchronous access of `params.id`.
   const [currentPage, setCurrentPage] = useState(0);
@@ -44,10 +45,20 @@ const Page = () => {
     getItems()
   }, [currentPage])
 
+
+  const routeToCheckout = () => {
+    if (basket.length > 0) {
+      router.push('/userDetailsCheckout')
+    }
+    else {
+      setNoItems(true)
+    }
+  }
+
   function getItems() {
     setLoading(true)
 
-    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=2`)
+    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=3`)
       .then(res => res.json())
       .then(data => {
         setItems(data.data.content)
@@ -84,7 +95,7 @@ const Page = () => {
 
  //  returns all the items in the basket in drawer when users adds item to the cart
  const returnBasketItems = basket?.map(eachItem => {
-  return <div key={eachItem.id} className='flex w-11/12  border items-center p-2 rounded-md m-3 bg-slate-100'>
+  return <div key={eachItem.id} className='flex flex-col'><div  className='flex w-11/12   items-center p-2 rounded-md'>
     <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
       <div className='flex h-full aspect-square items-center border rounded-md '>
@@ -113,45 +124,46 @@ const Page = () => {
           </button>
            </div>
 
-
-    </div>
     </div>
 
+    </div>
 
   </div>
+      <div className='flex w-full bg-gray-300 h-px m-1'></div>
+      </div>
+
 }
 )
 
   const jsxreturnedAllItems = items.map(eachItem => {
     return (
-      <div key={eachItem.id} className=' flex flex-col w-11/12 rounded-md md:p-2 md:p-8  mt-8  lg:w-1/4'>
+      <div key={eachItem.id} className='border flex flex-col w-11/12 rounded-md  md:p-2 md:p-8  mt-8  md:w-1/4'>
         <Link href={`/shopFragRacks/${eachItem.id}`}>
-          <img src={`${image_url}/${eachItem.photoUrls[0]}`} className='border rounded-md cursor-pointer' ></img>
+          <img src={`${image_url}/${eachItem.photoUrls[0]}`} className='border border-slate-300 bg-slate-100 rounded-md cursor-pointer' ></img>
 
         </Link>
 
-        <a className='p-2' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
+        <a className='p-2 md:h-16 border' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
         <h3 className='pl-2'>£{eachItem.price}</h3>
-        <div  className="mt-2 drawer-end z-20">
+        <div  className="mt-2 drawer-end ">
           <input id="my-drawer-items-page" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
             {/* Page content here */}
             <label onClick={() => { addItemToBasket(eachItem) }} 
             htmlFor="my-drawer-items-page" className="btn btn-primary drawer-button">Add To Cart</label>
           </div>
-          <div className="drawer-side">
+          <div className="drawer-side z-20">
             <label htmlFor="my-drawer-items-page" aria-label="close sidebar" className="drawer-overlay"></label>
-            <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-              {/* Sidebar content here */}
+            <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
+            {/* Sidebar content here */}
               <h1>Your Cart</h1>
               {returnBasketItems}
-              <div className="divider"></div>
-               <div>
+              <div className='mt-8'></div><div>
                 <h1>Your Total: £{isClient ? getBasketTotal() : 0}</h1>
                </div>
                <div className='flex-col flex w-5/6 mt-6'>
                <Link href={"/basket"} className=" btn btn-primary btn-block">View cart</Link>
-               <h1 className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 text-md m-1'>Checkout</h1>
+               <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-full text-md mb-4 mt-2'>Checkout</h1>
                </div>
             </ul>
           </div>

@@ -8,7 +8,7 @@ const Basket = () => {
 
   return (
     <>
-    <div className='flex align-middle justify-center bg-slate-100 '>
+    <div className='flex align-middle justify-center bg-slate-100 mt-4'>
       <div className='md:w-3/4 w-full'>
       <BasketComponent allowEditQuantity={true}/>
 

@@ -77,7 +77,7 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
 
            </div>
            </div>
-           <div className='border w-full mt-2 md:mt-3 '></div>
+           <div className='bg-slate-300 w-full my-2 md:my-3 h-px'></div>
 
 
       </div>
@@ -103,10 +103,8 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
     <>
       {loading ? <Loading /> : <><div className='flex flex-col   items-center justify-center  p-4 md:p-1 '>
         <div className=' items-center w-full pt-4 rounded-t-2xl  flex-col flex p-1'>
-          <h2 className='  text-lg text-center font-semibold md:text-xl'>Your basket Total is   £{getBasketTotal()} ( {getBasketCount()} items ) </h2>
-          {/* <button onClick={routeToCheckout} className=' btn  text-xl'> Checkout </button> */}
+          <h2 className=' mb-10 text-lg text-center font-semibold md:text-xl'>Your basket Total is   £{getBasketTotal()} ( {getBasketCount()} items ) </h2>
 
-          <div className="divider"></div>
 
 
         </div>
@@ -119,11 +117,12 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
         <div className=' items-center rounded-md flex flex-col w-5/6 '>
           <div className=' items-center w-3/5 pt-2 rounded-md flex-col flex md:pt-4 md:w-full'>
             <div className='flex'>
-              <h2 className=' p-2 text-2xl text-center '>Total  </h2>
+              <h2 className=' p-2 text-xl text-center '>Total: £{getBasketTotal()} </h2>
               {/* <h2 className=' p-2 text-2xl text-center font-semibold'> £{getBasketTotal()} </h2> */}
 
             </div>
-            <button onClick={routeToCheckout} className=' btn  text-xl'> Checkout </button>
+            <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  text-md mb-4 mt-2'>Checkout</h1>
+
           </div>
         </div>
       </div>

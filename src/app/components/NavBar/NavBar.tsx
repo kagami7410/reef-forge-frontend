@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useBasket } from "../BasketContext/BasketContext";
+import { useRouter } from 'next/navigation'
 
 
 const NavBar = () => {
@@ -22,6 +23,8 @@ const NavBar = () => {
   const [basketClicked, setBasketClicked] = useState(false);
   const { addSingleItemToBasket, basket, removeItemInBasket, getBasketTotal, getBasketCount, removeAllQuantityitem } = useBasket();
   const [updatedCart, setUpdatedCart] = useState(false);
+  const router = useRouter() // may be null or a NextRouter instance
+  const [noItems, setNoItems] = useState(false);
 
   useEffect(() => {
     setBasketItems(basket)
@@ -66,12 +69,20 @@ const NavBar = () => {
 
   }
 
-
+  const routeToCheckout = () => {
+    if (basket.length > 0) {
+      router.push('/userDetailsCheckout')
+    }
+    else {
+      setNoItems(true)
+    }
+  }
 
   //  returns all the items in the basket in drawer when users adds item to the cart
   const returnBasketItems = basketItems?.map(eachItem => {
     if (eachItem.id) {
-      return <div key={eachItem.id} className='flex w-11/12  border items-center p-2 rounded-md m-3 bg-slate-100'>
+      return <div className='flex flex-col'  key={eachItem.id} >
+        <div className='flex w-11/12  items-center p-2 rounded-md '>
         <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
           <div className='flex h-full aspect-square items-center border rounded-md '>
@@ -115,6 +126,9 @@ const NavBar = () => {
           </div>
         </div>
 
+
+      </div>
+      <div className='flex w-full bg-gray-300 h-px m-1'></div>
 
       </div>
     }
@@ -220,16 +234,15 @@ const NavBar = () => {
             <div className="drawer-side z-20">
               <label htmlFor="my-drawer-navbar" aria-label="close sidebar" className="drawer-overlay"></label>
               <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
-                <h1>Your Cart</h1>
+                <h1 className='m-4'>Your Cart</h1>
                 {returnBasketItems}
-                <div className="divider"></div>
-                <div>
+                <div className='my-4'>
                   <h1>Your Total: £{isClient ? getBasketTotal() : 0}</h1>
                 </div>
                 <div className='flex-col flex w-5/6 mt-6'>
                   <Link href={"/basket"} className=" btn btn-primary btn-block">View cart</Link>
-                  <h1 className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 text-md m-1'>Checkout</h1>
-                </div>
+                  <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-full text-md mb-4 mt-2'>Checkout</h1>
+                  </div>
 
               </ul>
             </div>
