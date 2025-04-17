@@ -101,7 +101,7 @@ const LandingPage = () => {
   return (
     <div className={` ${styles.landingPageContainer}`}>
       <div className={`max-w-screen-2xl ${styles.landingPageTopContainer} bg-slate-200 pb-24 pt-10 md:pt-8  md:pb-20`}>
-        <div className={` transform transition-all px-16 md:px-4`}
+        <div className={` transform transition-all px-8 md:px-4`}
           style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(${xPosition}%)` }}>
           <div className={`${styles.mainHeadline}`}>Rock-Solid Magnetic Frag Holder</div>
           <div className={`${styles.shortDescription} ${styles.glow} ${styles.textGlow}`}>- Never worry about slipping or shifting – perfect for reef aquariums.</div>
@@ -126,7 +126,7 @@ const LandingPage = () => {
       <div className='flex w-full md:flex-row flex-col m-4 items-center align-middle md:px-5 justify-center'>
         <div className='flex  flex-col  md:mr-20 mt-4 items-center align-middle justify-center'>
           <h1 className={`text-center text-xl  w-full mb-8 md:mb-0 ${styles.otherHeadline} md:text-2xl`}> Reef Forge Magnetic Frag holder </h1>
-          <div className={`${styles.landingPageImageMainContainer} card `} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms' }}>
+          <div className={`${styles.landingPageImageMainContainer} card`} style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms' }}>
             <div className='card-over flex justify-center align-middle items-center'>
                 <img className='scale-100' src={`${image_url}/All/IMG20250406100147.png`} />
             </div>
@@ -135,7 +135,7 @@ const LandingPage = () => {
 
 
 
-        <div className='my-4 mt-4 md:mt-24 bg-slate-100  flex-col md:p-6  p-2 rounded-md md:rounded-lg w-full md:w-full' ref={observedElement}>
+        <div className='my-4 mt-4 md:mt-24 bg-slate-100  flex-col  p-6 rounded-md md:rounded-lg w-full md:w-full' ref={observedElement}>
           <div className='flex  justify-center items-center '>
             {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"
