@@ -98,7 +98,7 @@ const Page = () => {
   return <div key={eachItem.id} className='flex flex-col'><div  className='flex w-11/12   items-center p-2 rounded-md'>
     <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
-      <div className='flex h-full aspect-square items-center border rounded-md '>
+      <div className='flex h-full aspect-square items-center  rounded-md '>
 
       <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>          
       </div>
@@ -137,13 +137,16 @@ const Page = () => {
 
   const jsxreturnedAllItems = items.map(eachItem => {
     return (
-      <div key={eachItem.id} className='border flex flex-col w-11/12 rounded-md  md:p-2 md:p-8  mt-8  md:w-1/4'>
+      <div key={eachItem.id} className=' flex flex-col w-11/12 rounded-md  md:p-2 md:p-8  mt-8  md:w-1/4 '>
         <Link href={`/shopFragRacks/${eachItem.id}`}>
-          <img src={`${image_url}/${eachItem.photoUrls[0]}`} className='border border-slate-300 bg-slate-100 rounded-md cursor-pointer' ></img>
+        <div className='bg-gradient-to-r from-blue-400/20 via-pink-500/50 to-red-500/50 rounded-md '>
+        <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100    border-slate-300  cursor-pointer' ></img>
+
+        </div>
 
         </Link>
 
-        <a className='p-2 md:h-16 border' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
+        <a className='p-2 md:h-16 ' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
         <h3 className='pl-2'>£{eachItem.price}</h3>
         <div  className="mt-2 drawer-end ">
           <input id="my-drawer-items-page" type="checkbox" className="drawer-toggle" />
@@ -178,7 +181,7 @@ const Page = () => {
   return (
     <>
       <div>
-        {loading ? <Loading /> : <div><div className='flex justify-center  '>
+        {loading ? <Loading /> : <div><div className='flex justify-center'>
           <div className='flex flex-wrap  justify-center max-w-screen-2xl  my-4 w-5/6'>
             {jsxreturnedAllItems}
           </div>
@@ -190,7 +193,7 @@ const Page = () => {
       </div>
 
 
-      {noItems ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+      {noItems ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto">
         <h3 className="font-bold text- md:text-lg">Basket is Empty!</h3>
 
 

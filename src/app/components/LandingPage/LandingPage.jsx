@@ -99,8 +99,8 @@ const LandingPage = () => {
   // }, []);
 
   return (
-    <div className={` ${styles.landingPageContainer}`}>
-      <div className={`max-w-screen-2xl ${styles.landingPageTopContainer} bg-slate-200 pb-24 pt-10 md:pt-8  md:pb-20`}>
+    <div className={` ${styles.landingPageContainer} mb-96`}>
+      <div className={`max-w-screen-2xl ${styles.landingPageTopContainer}  pb-24 pt-10 md:pt-8  md:pb-20`}>
         <div className={` transform transition-all px-8 md:px-4`}
           style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(${xPosition}%)` }}>
           <div className={`${styles.mainHeadline}`}>Rock-Solid Magnetic Frag Holder</div>
@@ -120,7 +120,7 @@ const LandingPage = () => {
         <Link href='/shopFragRacks' className="btn z-10 opacity-100 btn-lg sm:opacity-0 mt-6 border-none bg-yellow-300  hover:bg-yellow-500">Buy Now</Link>
       </div>
 
-      <div className='h-px bg-slate-300 w-full '></div>
+      <div className='h-px bg-slate-200 w-full '></div>
 
 
       <div className='flex w-full md:flex-row flex-col m-4 items-center align-middle md:px-5 justify-center'>
@@ -135,7 +135,7 @@ const LandingPage = () => {
 
 
 
-        <div className='my-4 mt-4 md:mt-24 bg-slate-100  flex-col  p-6 rounded-md md:rounded-lg w-full md:w-full' ref={observedElement}>
+        <div className='my-4 mt-4 md:mt-24 bg-slate-100  flex-col  p-8  rounded-md md:rounded-lg w-full md:w-full' ref={observedElement}>
           <div className='flex  justify-center items-center '>
             {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"
@@ -179,7 +179,7 @@ const LandingPage = () => {
 
       </div>
 
-      <div className='h-px bg-slate-300 w-full mt-16'></div>
+      <div className='h-px bg-slate-200 w-full mt-16'></div>
 
       <div className='flex flex-col mt-3 md:mt-4'>
         <div className='flex'>

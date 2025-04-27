@@ -158,10 +158,11 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
  //  returns all the items in the basket in drawer when users adds item to the cart
  const returnBasketItems = basket?.map(eachItem => {
-  return <div key={eachItem.id} className='flex flex-col'><div  className='flex w-11/12   items-center p-2 rounded-md'>
+  return <div key={eachItem.id} className='flex flex-col'>
+    <div  className='flex w-11/12   items-center p-2 '>
     <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
-      <div className='flex h-full aspect-square items-center border rounded-md '>
+      <div className='flex h-full aspect-square items-center'>
 
       <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>          
       </div>
@@ -201,13 +202,13 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   return (
     <>
 
-      <div className='flex-col w-full  rounded-md justify-items-center max-w-screen-2xl m-auto  md:p-2 '>
-        {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6 bg- p-4'>
+      <div className='flex-col w-full   justify-items-center max-w-screen-2xl m-auto  md:p-2 '>
+        {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6  p-4'>
           {/* <Loading/> */}
-          <div className='flex rounded-md border flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
-            <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-1/2 rounded-md   border  '>
-              <div className='flex h-full  border-slate-400 rounded-lg border aspect-square w-full'>
-                <img className='flex p-1  w-full h-full object-cover' src={currentImage} />
+          <div className='flex rounded-md  flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
+            <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-1/2 rounded-md     '>
+              <div className='flex h-full  border-slate-400 rounded-lg  aspect-square w-full'>
+                <img className='flex p-1  w-full h-full object-cover bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-md' src={currentImage} />
 
               </div>
               <div key={item?.id} className='flex  items-center justify-center  w-full   '>

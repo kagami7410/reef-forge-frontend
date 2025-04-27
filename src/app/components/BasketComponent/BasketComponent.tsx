@@ -42,6 +42,11 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
 
   }, [basket])
 
+  const getFinalTotal = () => {
+    let finalTotal = getBasketTotal() + 2.90
+    return Number(finalTotal.toFixed(2));
+  }
+
 
   const returnBasketItems = basketItems?.map(eachItem => {
     if (eachItem.id) {
@@ -126,11 +131,22 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
         <div className=' items-center rounded-md flex flex-col w-5/6 '>
           <div className=' items-center w-3/5 pt-2 rounded-md flex-col flex md:pt-4 md:w-full'>
             <div className='flex'>
-              <h2 className=' p-2 text-xl text-center '>Total: £{getBasketTotal()} </h2>
+             
               {/* <h2 className=' p-2 text-2xl text-center font-semibold'> £{getBasketTotal()} </h2> */}
 
             </div>
-            <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  text-md mb-4 mt-2'>Checkout</h1>
+            {allowEditQuantity ? <> <h2 className=' p-2 text-xl text-center '>Subtotal: £{getBasketTotal()} </h2> <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  text-md mb-4 mt-2'>Checkout</h1> </>:
+            <>
+            <div className='flex flex-col items-start w-full m-0 p-0'>
+            <h2 className='  text-md text-center '>Subtotal: £{getBasketTotal()}</h2>
+              <h2 className='  text-md text-center '>Shipping: £2.95</h2>
+              <h2 className='  text-md text-center '>Total: £{getFinalTotal()}</h2>
+
+
+            </div>
+
+              </>}
+           
 
           </div>
         </div>

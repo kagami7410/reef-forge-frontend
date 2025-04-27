@@ -1,91 +1,69 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useBasket } from '../components/BasketContext/BasketContext';
-import { useRouter } from 'next/navigation'
 import Loading from '../components/Loading/Loading';
 import BasketComponent from '../components/BasketComponent/BasketComponent';
+import {loadStripe} from "@stripe/stripe-js";
+import {AddressElement, Elements} from "@stripe/react-stripe-js"
+import CheckoutPage from '../components/CheckoutPage/CheckoutPage';
+import convertToSubcurrency from '@/lib/convertToSubcurrency';
+import Cookies from 'js-cookie';
 
+
+if(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined){
+  throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined")
+}
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
 const Page = () => {
-  const router = useRouter() // may be null or a NextRouter instance
 
 
-  interface OrderBasketItem {
-    itemId: number,
-    itemQuantity: number
-  }
+
   const [loading, setLoading] = useState(false);
-  const { basket } = useBasket();
-  const [showModal, setShowModal] = useState(false);
-
-  const [userDetails, setUserDetails] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    postCode: "",
-    town: "",
-    phoneNumber: ""
-
-  });
+  const { basket, getBasketTotal } = useBasket();
+  const [userEmail, setUserEmail] = useState("");
 
 
-
-  const orderBasketItems: OrderBasketItem[] = [];
-
-
-  const getOrderedItems = () => {
-    basket.forEach((eachItem) => {
-      orderBasketItems.push({ itemId: eachItem.id, itemQuantity: eachItem.quantity })
-    })
-    return orderBasketItems;
+  const getFinalTotal = () => {
+    let finalTotal = getBasketTotal() + 2.95
+    return finalTotal;
   }
 
 
-  const getSubmitOrderBody = () => {
-    return {
-      registerRequest: userDetails,
-      orderedItems: getOrderedItems()
-    }
-  }
 
 
-  const handleSubmit = async () => {
-    if(basket.length > 0){
-      setLoading(true)
-      const response = await fetch("/api/postOrder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(getSubmitOrderBody()),
-      });
-      console.log('status: ', response.status)
-      setShowModal(!showModal)
-      setLoading(false)
-  
-      if (response.status === 202) {
-        localStorage.setItem('basket', JSON.stringify([]))
-        // setShowModal(!showModal)
-  
-      }
-    }
 
+
+
+  const addressOptions = {
+    mode: 'shipping',
+    allowedCountries: ['UK'],
+    fields: { phone: 'always'
+     },
+    style: {
+      variables: {
+        colorPrimary: '#000',
+        fontFamily: 'Arial, sans-serif',
+      },
+    },
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    // Update the specific field
-    setUserDetails((prevUser) => ({
-      ...prevUser, // Keep the existing fields intact
-      [name]: value, // Update the specific field
-    }));
-  };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   // Update the specific field
+  //   setUserDetails((prevUser) => ({
+  //     ...prevUser, // Keep the existing fields intact
+  //     [name]: value, // Update the specific field
+  //   }));
+  // };
+
+
 
   return (
-    <div className=' flex items-center align-middle justify-center'>
+    <div className=' flex items-center align-middle justify-center mt-6'>
       <div className=' w-5/6 flex md:flex-row flex-col  align-middle justify-center'>
 
-      <div className={showModal ? 'bg-slate-700 flex-col flex border items-center blur-sm' : 'flex-col flex border items-center md:w-3/6'}>
+      {/* <div className={showModal ? 'bg-slate-700 flex-col flex border items-center blur-sm' : 'flex-col flex border rounded-lg items-center md:w-3/6'}>
         <h1 className='text-2xl m-4'>Personal Details</h1>
 
         <form className='flex flex-col w-5/6  items-center md:w-3/4 align-middle justify-center flex flex-col p-4 rounded-t-2xl bg-slate-100 md:items-start' >
@@ -142,36 +120,65 @@ const Page = () => {
           </label>
         </form>
         <div className='flex w-full justify-center mt-2 md:mt-4'>
-          <button onClick={handleSubmit} className=' btn m-2 text-xl'> Checkout </button>
+          <button onClick={handleSubmit} className=' btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  m-2 text-xl'> Checkout </button>
         </div>
+      </div> */}
+
+
+      <div className='flex flex-col md:w-2/5 m-1 pb-8 border p-4 rounded-md justify-center shadow-lg'>
+
+
+        <Elements stripe={stripePromise}
+                options={{
+                  mode: "payment",
+                  amount: convertToSubcurrency(getFinalTotal()),
+                  currency: "gbp",
+                }}>
+      <div className='w-full'>
+        <h2 className=' text-slate-500 my-4 text-lg'>Ship to</h2>
+        <AddressElement options={addressOptions}/>
+
+              <h1 className='text-md font-sans text-slate-600 mt-3'>Email Address</h1>
+
+  <input
+        type="email"
+        required
+        value={userEmail}
+        onChange={(e) => setUserEmail(e.target.value)}
+        className="border p-2 mb-4 w-full"
+      />      </div>
+
+      <div className='w-full'>
+      <CheckoutPage userEmail={userEmail} amount={getFinalTotal()}/>
+
       </div>
 
-      <div className='md:w-2/5 flex flex-col  items-center md:align-middle md:items-center md:ml-10'>
+
+      </Elements>
+
+
+
+
+        </div>
+
+      <div className='md:w-2/5 flex flex-col md:mt-4 mt-16 items-center md:align-middle md:items-center md:ml-10'>
       <h1 className='m-4 md:m-3 text-lg font-bold'>Order Summary</h1>
         <BasketComponent allowEditQuantity={false}/>
       </div>
       <div>
-        {showModal ? <div className=" modal-box fixed top-1/3 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
-          <h3 className="font-bold text-lg">Thank you!</h3>
-          <p className="py-4">Your Order #732672 is confirmed! Confirmation has been sent to your email!</p>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button onClick={() => {
-                router.push('/')
-                setShowModal(!showModal)
-              }}
-                className="btn">Close</button>
-            </form>
-          </div>
-        </div> : <></>}
+
       </div>
       <div>
        {loading?<Loading/>:<></>} 
       </div>
+      
+
+
       </div>
 
     </div>
+
+
 
 
   )

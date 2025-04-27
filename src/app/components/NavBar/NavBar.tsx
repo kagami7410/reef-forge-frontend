@@ -140,7 +140,7 @@ const NavBar = () => {
 
   })
   return (
-    <div className={`max-w-screen-2xl navbar h-6 md:h-8 border m-auto pr-4 pl-4  bg-slate-200  md:pr-0 md:pl-0  ${borderVisibile}`}>
+    <div className={`max-w-screen-2xl navbar h-6 md:h-8  m-auto pr-4 pl-4  bg-slate-100  md:pr-0 md:pl-0  ${borderVisibile}`}>
       {/* <div className="dropdown">
         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
           <svg
@@ -183,12 +183,12 @@ const NavBar = () => {
             <li>
               <details>
                 <summary className='text-lg'>
-                  <Link href="/corals">Beans</Link>
+                  <Link href="/corals">Magnetic Frag Holder</Link>
                 </summary>
-                <ul className="p-2  z-10 flex-col">
-                  <li><a>Roasted</a></li>
-                  <li><a>Normal</a></li>
-                  <li><a>Premium</a></li>
+                <ul className="p-2 w-56 z-10 flex-col">
+                  <li><a>Single Frag</a></li>
+                  <li><a>Frag Tray</a></li>
+                  <li><a>Mushroom Holder</a></li>
                 </ul>
               </details>
             </li>
@@ -227,7 +227,7 @@ const NavBar = () => {
             <input id="my-drawer-navbar" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
               {/* Page content here */}
-              <label onClick={handleBasketClicked} htmlFor="my-drawer-navbar" className="btn  bg-slate-200  border-none drawer-button w-full">
+              <label onClick={handleBasketClicked} htmlFor="my-drawer-navbar" className="btn  bg-slate-100  border-none drawer-button w-full">
 
                 <div className="indicator">
                   <svg
@@ -242,7 +242,7 @@ const NavBar = () => {
                       strokeWidth="2"
                       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  <span className="badge badge-md indicator-item  bg-slate-300">
+                  <span className="badge badge-md indicator-item  bg-slate-200">
                     {isClient ? getBasketCount() : 0}
 
                   </span>

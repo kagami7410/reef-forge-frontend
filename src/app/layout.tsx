@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" >
 
-      <body className={`${inter.className} flex align-middle items-center justify-center bg-slate-200`}>
+      <body className={`${inter.className} flex align-middle items-center justify-center bg-slate-100`}>
 
         <div className='flex w-full flex-col  items-center'>
             <h2 className='flex w-full justify-center pb-1 md:pb-2 pt-1 bg-orange-300'>Free Delivery on order over £50</h2>
@@ -35,8 +35,8 @@ export default function RootLayout({
             </div>
 
             
-            <div className=' bg-slate-300  h-px'></div>
-            <div className='border flex flex-col bg-slate-200  max-w-screen-2xl '>
+            <div className=' bg-slate-200 shadow-2xl h-px'></div>
+            <div className=' flex flex-col bg-slate-100  max-w-screen-2xl '>
               {children}
 
 
@@ -49,12 +49,7 @@ export default function RootLayout({
 
           </div>
         </div>
-
-
-
       </body>
-
-
     </html>
 
 
