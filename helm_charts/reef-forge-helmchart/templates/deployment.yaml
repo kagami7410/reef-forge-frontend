@@ -20,7 +20,7 @@ spec:
         vault.hashicorp.com/agent-inject-secret-env: "kv/stripe/dev/secrets" # Vault secret path
 
         vault.hashicorp.com/agent-inject-template-env: |
-          {{- with secret "kv/mysql/secrets" -}}
+          {{- with secret "kv/stripe/dev/secrets" -}}
           export NEXT_PUBLIC_STRIPE_PUBLIC_KEY="{{ .Data.data.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}"
           export STRIPE_SECRET_KEY="{{ .Data.data.STRIPE_SECRET_KEY }}"
           {{- end }}
