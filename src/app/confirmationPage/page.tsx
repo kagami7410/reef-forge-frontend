@@ -3,8 +3,9 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useBasket } from '../components/BasketContext/BasketContext';
 import Cookies from 'js-cookie';
+import Loading from '../components/Loading/Loading';
 
-const page = () => {
+const Page = () => {
 
     const [showModal, setShowModal] = useState(false);
   
@@ -123,7 +124,9 @@ const page = () => {
 
   // },[])
   return (
-    <div className='flex flex-col align-middle justify-center items-center mt-20 '>
+    <>
+    {loading? <Loading/> : 
+        <div className='flex flex-col align-middle justify-center items-center mt-20 '>
         <h1 className='text-xl '>Thank you for your Order!</h1>
         <h1 className='text-md '>confirmation has been sent to your email.</h1>
 
@@ -133,8 +136,11 @@ const page = () => {
         </Link>  
         {/* <div onClick={handleSubmitPost} className='btn  bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  text-md mb-4 mt-6'>TEST</div>  */}
 
-    </div>
+    </div>}
+
+    </>
+    
   )
 }
 
-export default page
+export default Page

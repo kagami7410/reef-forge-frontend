@@ -9,7 +9,6 @@ import {
 
 import convertToSubcurrency from '@/lib/convertToSubcurrency'
 import Loading from '../Loading/Loading'
-import { useRouter } from 'next/navigation'
 import { useBasket } from '../BasketContext/BasketContext'
 
 
@@ -17,23 +16,11 @@ import { useBasket } from '../BasketContext/BasketContext'
 const CheckoutPage = ( {userEmail, amount}:{userEmail: string, amount:number}) => {
     const stripe = useStripe()
     const elements = useElements()
-    const [errorMessage, setErrorMessage] = useState<String>()
+    const [errorMessage, setErrorMessage] = useState<string>()
     const [clientSecret, setClientSecret] = useState("")
     const [loading, setLoading] = useState(false)
     const { getBasketTotal} = useBasket();
-    const [addressDetails, setAddressDetails] = useState<AddressDetails | null>(null);
-    type AddressDetails = {
-        name?: string;
-        phone?: string;
-        address: {
-          city?: string;
-          country?: string;
-          line1?: string;
-          line2?: string;
-          postCode?: string;
-          state?: string;
-        };
-      };
+
 
     useEffect(() => {
         fetch('/api/create-payment-intent', {
@@ -54,8 +41,7 @@ const CheckoutPage = ( {userEmail, amount}:{userEmail: string, amount:number}) =
 
 
     const getFinalTotal = () => {
-        let finalTotal = getBasketTotal() + 2.90
-        return Number(finalTotal.toFixed(2));
+        return Number(( getBasketTotal() + 2.90).toFixed(2));
       }
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault()

@@ -43,8 +43,7 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
   }, [basket])
 
   const getFinalTotal = () => {
-    let finalTotal = getBasketTotal() + 2.90
-    return Number(finalTotal.toFixed(2));
+    return Number((getBasketTotal() + 2.90).toFixed(2));
   }
 
 

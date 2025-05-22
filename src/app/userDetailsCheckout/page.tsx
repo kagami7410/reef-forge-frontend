@@ -1,13 +1,12 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useBasket } from '../components/BasketContext/BasketContext';
-import Loading from '../components/Loading/Loading';
 import BasketComponent from '../components/BasketComponent/BasketComponent';
 import {loadStripe} from "@stripe/stripe-js";
 import {AddressElement, Elements} from "@stripe/react-stripe-js"
 import CheckoutPage from '../components/CheckoutPage/CheckoutPage';
 import convertToSubcurrency from '@/lib/convertToSubcurrency';
-import Cookies from 'js-cookie';
+import { StripeAddressElementOptions } from '@stripe/stripe-js';
 
 
 if(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined){
@@ -19,33 +18,22 @@ const Page = () => {
 
 
 
-  const [loading, setLoading] = useState(false);
-  const { basket, getBasketTotal } = useBasket();
+  const {getBasketTotal } = useBasket();
   const [userEmail, setUserEmail] = useState("");
 
 
   const getFinalTotal = () => {
-    let finalTotal = getBasketTotal() + 2.95
-    return finalTotal;
+    return getBasketTotal() + 2.95;
   }
 
 
 
 
-
-
-
-  const addressOptions = {
+  const addressOptions:StripeAddressElementOptions  = {
     mode: 'shipping',
     allowedCountries: ['UK'],
     fields: { phone: 'always'
      },
-    style: {
-      variables: {
-        colorPrimary: '#000',
-        fontFamily: 'Arial, sans-serif',
-      },
-    },
   };
 
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,7 +157,6 @@ const Page = () => {
 
       </div>
       <div>
-       {loading?<Loading/>:<></>} 
       </div>
       
 
