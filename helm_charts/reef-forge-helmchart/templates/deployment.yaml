@@ -12,7 +12,12 @@ spec:
       app: {{ .Values.app.name}}
   template:
     metadata:
+
+
+      labels:
+        app: {{ .Values.app.name}}
       annotations:
+        sidecar.istio.io/inject: "true"
         # Enable Vault Agent Injector
         vault.hashicorp.com/agent-init-first: "true"
         vault.hashicorp.com/agent-inject: "true"
@@ -25,11 +30,6 @@ spec:
           {{`export STRIPE_SECRET_KEY="{{ .Data.data.STRIPE_SECRET_KEY }}"`}}
           {{`{{- end }}`}}
         vault.hashicorp.com/agent-inject-file-env: ".env.dev"
-
-      labels:
-        app: {{ .Values.app.name}}
-      annotations:
-        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: {{ .Values.app.name}}
