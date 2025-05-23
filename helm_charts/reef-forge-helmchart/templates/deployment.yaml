@@ -28,6 +28,8 @@ spec:
           {{`STRIPE_SECRET_KEY="{{ .Data.data.STRIPE_SECRET_KEY }}"`}}
           {{`{{- end }}`}}
         vault.hashicorp.com/agent-inject-file-env: ".env.dev"
+        vault.hashicorp.com/secret-volume-path: "/app"
+
     spec:
       serviceAccountName:  {{ .Values.app.name}}-sa # Use the service account
 
