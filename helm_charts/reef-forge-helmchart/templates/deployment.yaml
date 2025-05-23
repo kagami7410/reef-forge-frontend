@@ -29,7 +29,10 @@ spec:
         #   {{`{{- end }}`}}
         # vault.hashicorp.com/agent-inject-file-env: ".env.dev"
     spec:
+      serviceAccountName:  {{ .Values.app.name}}-sa # Use the service account
+
       containers:
+
       - name: {{ .Values.app.name}}
         image: {{ .Values.app.image.name}}:{{.Values.app.image.tag}}
         imagePullPolicy: Always
