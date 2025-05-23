@@ -27,7 +27,7 @@ spec:
           {{`NEXT_PUBLIC_STRIPE_PUBLIC_KEY="{{ .Data.data.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}"`}}
           {{`STRIPE_SECRET_KEY="{{ .Data.data.STRIPE_SECRET_KEY }}"`}}
           {{`{{- end }}`}}
-        vault.hashicorp.com/secret-volume-path: "/app"
+        vault.hashicorp.com/secret-volume-path: "/"
 
     spec:
       serviceAccountName:  {{ .Values.app.name}}-sa # Use the service account
