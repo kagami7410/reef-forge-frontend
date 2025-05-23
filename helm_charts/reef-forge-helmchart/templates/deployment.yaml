@@ -15,14 +15,13 @@ spec:
       labels:
         app: {{ .Values.app.name}}
       annotations:
-      # Enable Vault Agent Injector
-        vault.hashicorp.com/agent-init-first: "true"
-        vault.hashicorp.com/agent-injection: "enabled"
-        vault.hashicorp.com/role: "reef-forge-fe-role"  # Vault role for the app
-        vault.hashicorp.com/agent-inject-secret-env: "kv/stripe/dev/secrets" # Vault secret path
         sidecar.istio.io/inject: "true"
 
-
+      # Enable Vault Agent Injector
+        vault.hashicorp.com/agent-init-first: "true"
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "reef-forge-fe-role"  # Vault role for the app
+        vault.hashicorp.com/agent-inject-secret-env: "kv/stripe/dev/secrets" # Vault secret path
         vault.hashicorp.com/agent-inject-template-env: |
           {{`{{- with secret "kv/stripe/dev/secrets" -}}`}}
           {{`NEXT_PUBLIC_STRIPE_PUBLIC_KEY="{{ .Data.data.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}"`}}
