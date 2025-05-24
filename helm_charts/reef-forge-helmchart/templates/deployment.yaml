@@ -21,17 +21,20 @@ spec:
         vault.hashicorp.com/agent-init-first: "true"
         vault.hashicorp.com/agent-inject: "true"
         vault.hashicorp.com/role: "reef-forge-fe-role"  # Vault role for the app
-        vault.hashicorp.com/agent-inject-secret-env: "kv/stripe/dev/secrets" # Vault secret path
-        vault.hashicorp.com/agent-inject-template-env: |
-          {{`{{- with secret "kv/stripe/dev/secrets" -}}`}}
-          {{`NEXT_PUBLIC_STRIPE_PUBLIC_KEY="{{ .Data.data.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}"`}}
-          {{`STRIPE_SECRET_KEY="{{ .Data.data.STRIPE_SECRET_KEY }}"`}}
+        vault.hashicorp.com/agent-inject-secret-stripe-api-key.txt: "kv/stripe/dev/secrets/stripe-api-key" # Vault secret path
+        vault.hashicorp.com/agent-inject-template-stripe-api-key.txt: |
+          {{`{{- with secret "kv/stripe/dev/secrets/stripe-api-key" -}}`}}
+          {{`{{ .Data.data.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}`}}
+          {{`{{- end }}`}}
+        vault.hashicorp.com/agent-inject-secret-stripe-api-key.txt: "kv/stripe/dev/secrets/stripe-api-secret" # Vault secret path
+        vault.hashicorp.com/agent-inject-template-stripe-api-key.txt: |
+          {{`{{- with secret "kv/stripe/dev/secrets/stripe-api-secret" -}}`}}
+          {{`{{ .Data.data.STRIPE_SECRET_KEY }}`}}
           {{`{{- end }}`}}
         # vault.hashicorp.com/secret-volume-path: "/"
 
     spec:
       serviceAccountName:  {{ .Values.app.name}}-sa # Use the service account
-
       containers:
 
       - name: {{ .Values.app.name}}
