@@ -3,8 +3,6 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2025-03-31.basil", // or the version you are using
 });
-// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
-
 export async function POST(request: NextRequest){
     try{
         console.log("requesting clientsecret.....")
