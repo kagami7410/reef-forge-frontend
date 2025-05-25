@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2025-03-31.basil", // or the version you are using
-});
+
+export const dynamic = "force-dynamic";
+
 export async function POST(request: NextRequest){
-    try{
+        try{
+            const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+    apiVersion: "2025-03-31.basil", // or the version you are using
+    });
+
+
         console.log("requesting clientsecret.....")
         const {amount} = await request.json();
         
