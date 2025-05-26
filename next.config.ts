@@ -23,10 +23,11 @@ if (fs.existsSync("vault/secrets/stripe-api-key.txt") && fs.existsSync("vault/se
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   // You can optionally expose non-sensitive env vars here
-  //   env: {
-  //     // Not secure for secrets!
-  //     PUBLIC_SOME_KEY: 'example',
-  //   },
+    env: {
+      // Not secure for secrets!
+      NEXT_PUBLIC_STRIPE_PUBLIC_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
+      STRIPE_SECRET_KEY:  process.env.STRIPE_SECRET_KEY
+    },
 };
 
 export default nextConfig;
