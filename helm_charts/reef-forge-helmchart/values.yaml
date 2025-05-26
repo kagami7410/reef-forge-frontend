@@ -6,6 +6,8 @@ app:
 namespace:
   name: reef-forge-frontend
 
+vault:
+  enabled: true
 
 ports:
   targetPort: 3000

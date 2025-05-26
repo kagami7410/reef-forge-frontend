@@ -18,6 +18,7 @@ spec:
         sidecar.istio.io/inject: "true"
 
       # Enable Vault Agent Injector
+        {{- if eq .Values.vault.enabled true}}
         vault.hashicorp.com/agent-init-first: "true"
         vault.hashicorp.com/agent-inject: "true"
         vault.hashicorp.com/role: "reef-forge-fe-role"  # Vault role for the app
@@ -32,6 +33,7 @@ spec:
           {{`{{ .Data.data.STRIPE_SECRET_KEY }}`}}
           {{`{{- end }}`}}
         vault.hashicorp.com/secret-volume-path: "/app/vault/secrets"
+        {{- end}}
 
     spec:
       serviceAccountName:  {{ .Values.app.name}}-sa # Use the service account

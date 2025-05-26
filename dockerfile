@@ -31,8 +31,18 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.cjs ./
 COPY --from=builder /app/next.config.ts ./
+COPY --from=builder /app/lib ./
 
-COPY .env.production .env
+
+# Please uncomment line below for local builds
+# RUN mkdir -p vault/secrets
+# COPY vault ./vault
+
+# COPY .env.dev ./
+
+
+
+COPY .env.production ./
 # Expose the port the app runs on
 EXPOSE 3000
 
