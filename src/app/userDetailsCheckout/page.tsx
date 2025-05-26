@@ -7,13 +7,13 @@ import {AddressElement, Elements} from "@stripe/react-stripe-js"
 import CheckoutPage from '../components/CheckoutPage/CheckoutPage';
 import convertToSubcurrency from '@/lib/convertToSubcurrency';
 import { StripeAddressElementOptions } from '@stripe/stripe-js';
-
+import { loadSecrets } from '@/lib/loadSecrets';
 
 let stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
 
 const Page = () => {
 
-
+  loadSecrets(  )
 
   console.log("Stripe API Key: " + stripePublicKey)
 
