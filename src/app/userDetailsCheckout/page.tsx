@@ -9,14 +9,20 @@ import convertToSubcurrency from '@/lib/convertToSubcurrency';
 import { StripeAddressElementOptions } from '@stripe/stripe-js';
 
 
-if(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined){
+
+const Page = () => {
+
+
+
+  const {getBasketTotal } = useBasket();
+  const [userEmail, setUserEmail] = useState("");
+
+  if(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined){
   // const stripeKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "default_key_for_dev";
 
   // throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined")
 
-
-
-   process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "default_key_for_dev";
+  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "default_key_for_dev";
   console.warn("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined")
 }
 
@@ -24,12 +30,6 @@ if(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined){
 
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
-const Page = () => {
-
-
-
-  const {getBasketTotal } = useBasket();
-  const [userEmail, setUserEmail] = useState("");
 
 
   const getFinalTotal = () => {
