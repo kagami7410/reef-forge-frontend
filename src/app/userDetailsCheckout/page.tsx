@@ -9,27 +9,29 @@ import convertToSubcurrency from '@/lib/convertToSubcurrency';
 import { StripeAddressElementOptions } from '@stripe/stripe-js';
 
 
+let stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
 
 const Page = () => {
 
 
 
+  console.log("Stripe API Key: " + stripePublicKey)
+
   const {getBasketTotal } = useBasket();
   const [userEmail, setUserEmail] = useState("");
 
-  if(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined){
+  if(stripePublicKey === undefined){
   // const stripeKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "default_key_for_dev";
-
   // throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined")
 
-  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "default_key_for_dev";
-  console.warn("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined")
+  stripePublicKey= process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "default_key_for_dev";
+  console.log("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined")
 }
 
 
 
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+const stripePromise = loadStripe(stripePublicKey)
 
 
   const getFinalTotal = () => {

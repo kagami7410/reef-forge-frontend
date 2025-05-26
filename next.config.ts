@@ -8,7 +8,7 @@ if (fs.existsSync("vault/secrets/stripe-api-key.txt") && fs.existsSync("vault/se
   process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY = stripeApiKey;
   process.env.STRIPE_SECRET_KEY = stripeApiSecret;
   if (stripeApiKey.includes("test")) {
-    console.log("Secret Injected sucessfully!");
+    console.log("Secret Injected successfully!");
   }
 } else {
   console.log("Secret not Injected!")
