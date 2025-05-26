@@ -21,10 +21,12 @@ const LandingPage = () => {
   const [isMobile, setIsMobile] = useState(false)
   const [screenSize, setScreenSize] = useState(0);
   const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
+  const stripe_public_key = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
 
 
 
-  console.log("stripe public key: " + process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+  console.log("stripe public key: " + stripe_public_key)
+ 
   useEffect(() => {
     const handleResize = () => {
       setScreenSize(window.innerWidth);
