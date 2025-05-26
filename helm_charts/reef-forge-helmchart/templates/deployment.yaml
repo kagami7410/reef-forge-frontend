@@ -31,7 +31,7 @@ spec:
           {{`{{- with secret "kv/stripe/dev/secrets/stripe-api-secret" -}}`}}
           {{`{{ .Data.data.STRIPE_SECRET_KEY }}`}}
           {{`{{- end }}`}}
-        # vault.hashicorp.com/secret-volume-path: "/"
+        vault.hashicorp.com/secret-volume-path: "/app"
 
     spec:
       serviceAccountName:  {{ .Values.app.name}}-sa # Use the service account
