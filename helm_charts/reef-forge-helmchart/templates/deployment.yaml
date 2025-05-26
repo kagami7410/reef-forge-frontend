@@ -26,8 +26,8 @@ spec:
           {{`{{- with secret "kv/stripe/dev/secrets/stripe-api-key" -}}`}}
           {{`{{ .Data.data.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}`}}
           {{`{{- end }}`}}
-        vault.hashicorp.com/agent-inject-secret-stripe-api-key.txt: "kv/stripe/dev/secrets/stripe-api-secret" # Vault secret path
-        vault.hashicorp.com/agent-inject-template-stripe-api-key.txt: |
+        vault.hashicorp.com/agent-inject-secret-stripe-api-secret.txt: "kv/stripe/dev/secrets/stripe-api-secret" # Vault secret path
+        vault.hashicorp.com/agent-inject-template-stripe-api-secret.txt: |
           {{`{{- with secret "kv/stripe/dev/secrets/stripe-api-secret" -}}`}}
           {{`{{ .Data.data.STRIPE_SECRET_KEY }}`}}
           {{`{{- end }}`}}
