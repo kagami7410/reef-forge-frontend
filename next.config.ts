@@ -19,6 +19,11 @@ if (fs.existsSync("vault/secrets/stripe-api-key.txt") && fs.existsSync("vault/se
 
 
 
+    console.log("Outside Test Public Key: " + process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY )
+    console.log("Outside Test Secret Key: " + process.env.STRIPE_SECRET_KEY )
+
+
+
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
