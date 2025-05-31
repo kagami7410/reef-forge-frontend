@@ -25,7 +25,6 @@ const LandingPage = () => {
 
 
 
-  console.log("stripe public key: " + stripe_public_key)
  
   useEffect(() => {
     const handleResize = () => {

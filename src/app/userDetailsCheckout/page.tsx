@@ -12,7 +12,7 @@ let stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
 
 const Page = () => {
 
-  console.log("Stripe API Key: " + stripePublicKey)
+
 
   const {getBasketTotal } = useBasket();
   const [userEmail, setUserEmail] = useState("");
