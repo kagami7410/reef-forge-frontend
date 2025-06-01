@@ -1,0 +1,30 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'europe-west2-docker.pkg.dev/omega-vigil-413814/reef-forge-frontend/reef-forge-frontend:latest',
+        '.'
+      ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-west2-docker.pkg.dev/omega-vigil-413814/reef-forge-frontend/reef-forge-frontend:latest']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      [
+        'run',
+        'deploy',
+        'nextjs-app',
+        '--image',
+        'europe-west2-docker.pkg.dev/omega-vigil-413814/reef-forge-frontend/reef-forge-frontend:latest',
+        '--region',
+        'europe-west2',
+        '--platform',
+        'managed',
+        '--allow-unauthenticated'
+      ]
+
+images:
+  - europe-west2-docker.pkg.dev/omega-vigil-413814/reef-forge-frontend/reef-forge-frontend:latest
