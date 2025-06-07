@@ -140,8 +140,8 @@ const NavBar = () => {
 
   })
   return (
-    <div className={`max-w-screen-2xl navbar h-6 md:h-8  m-auto pr-4 pl-4  bg-slate-100  md:pr-0 md:pl-0  ${borderVisibile}`}>
-      {/* <div className="dropdown">
+    <div className={` max-w-screen-2xl navbar h-20  m-auto pr-4 pl-4  bg-slate-100  md:pr-0 md:pl-0  ${borderVisibile}`}>
+      <div className="dropdown">
         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +170,7 @@ const NavBar = () => {
           </li>
           <li><a>Item 3</a></li>
         </ul>
-      </div> */}
+      </div>
 
       <div className={` ${borderVisibile} `}>
         <Link href={'/'} className={`btn btn-ghost text-xl md:text-2xl md:ml-0 md:w-72`}> REEF FORGE</Link>
@@ -301,6 +301,7 @@ const NavBar = () => {
           </ul>
         </div>
       </div>
+      
     </div>
 
 

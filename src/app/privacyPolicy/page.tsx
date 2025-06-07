@@ -2,17 +2,17 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className=' mt-4 md:mt-8 flex flex-col border justify-center items-center'>
-      <div className='border flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
+    <div className=' mt-4 md:mt-8 flex flex-col border rounded-lg justify-center items-center'>
+      <div className=' flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
         <h1 className='flex text-3xl font-medium justify-center p-4 '>Privacy policy </h1>
         <p  className='text-sm'>This Privacy Policy outlines how your personal data is collected, used, shared, and retained when you interact with or make purchases from www.reef-print.co.uk (the [Site]). It ensures transparency about data practices and compliance with applicable laws, like the GDPR.</p>
       </div>
-      <div className='border flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
+      <div className=' flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
         <h1 className='flex text-xl'>1. Contact Information </h1>
-        <p  className='text-sm'>If you have questions or concerns regarding your privacy or wish to file a complaint, you can reach out via email: enquiries@reef-print.co.uk.</p>
+        {/* <p  className='text-sm'>If you have questions or concerns regarding your privacy or wish to file a complaint, you can reach out via email: enquiries@reef-print.co.uk.</p> */}
         <p  className='text-sm'>Why it matters: This provides customers with a clear communication channel to address their privacy concerns</p>
       </div>
-      <div className='border flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
+      <div className=' flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
         <h1 className='flex text-xl'>2. Collecting Personal Information </h1>
         <p  className='text-sm'>The Site gathers various types of personal information depending on your interaction:</p>
         <ul className='list-disc list-inside	 '>
@@ -49,7 +49,7 @@ const page = () => {
 
 
       </div>
-      <div className='border flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
+      <div className=' flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
       <h1 className='flex text-xl'>3. Sharing Personal Information </h1>
       <p  className='text-sm'>Personal data may be shared with service providers to enable the operation of the Site, such as: Stripe who manages the processing the order postage</p>
       <ul className='list-disc list-inside	 '>
@@ -57,7 +57,7 @@ const page = () => {
       </div>
 
 
-      <div className='border flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
+      <div className=' flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
         <h1 className='flex text-xl'>4. Using Personal Information </h1>
         <ul className='list-disc list-inside	 '>
           <strong>The Site uses personal information to:</strong>
@@ -66,7 +66,7 @@ const page = () => {
            <li className='text-sm italic'>Inform you about new products, services, or promotions.</li>
         </ul>
       </div>
-      <div className='border flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
+      <div className=' flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
         <h1 className='flex text-xl'>Lawful basis </h1>
         <p  className='text-sm'>Pursuant to the General Data Protection Regulation (“GDPR”), if you are a resident of the European Economic Area (“EEA”), we process your personal information under the following lawful bases:
 
@@ -77,12 +77,12 @@ To protect your vital interests;
 To perform a task carried out in the public interest;
 For our legitimate interests, which do not override your fundamental rights and freedoms.</p>
       </div>
-      <div className='border flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
+      <div className=' flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
         <h1 className='flex text-xl'>Retention
         </h1>
         <p  className='text-sm'>When you place an order through the Site, we will retain your Personal Information for our records unless and until you ask us to erase this information. For more information on your right of erasure, please see the ‘Your rights’ section below.</p>
       </div>
-      <div className='border flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
+      <div className=' flex flex-col w-5/6 md:w-1/2  p-2 md:p-4'>
         <h1  className='flex text-xl'>Automatic decision-making</h1 >
         <p className='text-sm'>If you are a resident of the EEA, you have the right to object to processing based solely on automated decision-making (which includes profiling), when that decision-making has a legal effect on you or otherwise significantly affects you.
 

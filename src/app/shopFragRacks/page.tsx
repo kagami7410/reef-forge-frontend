@@ -160,6 +160,7 @@ const Page = () => {
             <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
             {/* Sidebar content here */}
               <h1>Your Cart</h1>
+              
               {returnBasketItems}
               <div className='mt-8'></div><div>
                 <h1>Your Total: £{isClient ? getBasketTotal() : 0}</h1>

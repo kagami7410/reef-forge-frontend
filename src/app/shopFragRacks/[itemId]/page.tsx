@@ -264,6 +264,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               <label htmlFor="my-drawer-single-item-page" aria-label="close sidebar" className="drawer-overlay"></label>
               <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
               <h1 className='mt-2 mb-4'>Your Cart</h1>
+              
                {returnBasketItems}
                
                <div className="divider"></div>
