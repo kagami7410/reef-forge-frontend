@@ -4,6 +4,7 @@ import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
 import Loading from '../components/Loading/Loading';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { verifyQuantity } from '@/lib/checkStockQuantity';
 
 
 interface BasketItem {
@@ -30,6 +31,8 @@ const Page = () => {
   const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
   const [showModal, setShowModal] = useState(false);
   const [noItems, setNoItems] = useState(false);
+    const [itemAvailable, setItems] = useState(false);
+
 
   // asynchronous access of `params.id`.
   const [currentPage, setCurrentPage] = useState(0);
@@ -78,10 +81,34 @@ const Page = () => {
 
   }, [])
 
+
+
   const addItemToBasket = (item: BasketItem) => {
+    setLoading(true)
+
+    const basketItem = basket.find((itemToFind)=> item.id===itemToFind.id)
+    console.log( "basketItem: ",basketItem)
+    if(basketItem != null){
+      
+    verifyQuantity(item.id, basketItem?.quantity+1)
+    .then(data => {if(data === 200){
     setCurrentlyClickedBasketItem(item)
     setShowModal(!showModal)
     addSingleItemToBasket(item)
+
+    }else{
+      
+    }})
+    }
+    else{
+          verifyQuantity(item.id, 1)
+    }
+    
+    // setCurrentlyClickedBasketItem(item)
+    // setShowModal(!showModal)
+    // addSingleItemToBasket(item)
+    setLoading(false)
+
 
   }
 
