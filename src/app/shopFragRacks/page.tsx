@@ -31,7 +31,7 @@ const Page = () => {
   const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
   const [showModal, setShowModal] = useState(false);
   const [noItems, setNoItems] = useState(false);
-    const [itemAvailable, setItems] = useState(false);
+  const [itemAvailable, setItemAvailable] = useState(true);
 
 
   // asynchronous access of `params.id`.
@@ -71,12 +71,12 @@ const Page = () => {
       )
   }
 
-    useEffect(() => {
-      if (typeof window == 'object') {
-        // Safe to use window or document here
-        setIsClient(true);
-      }
-      console.log("this is env:" + image_url)
+  useEffect(() => {
+    if (typeof window == 'object') {
+      // Safe to use window or document here
+      setIsClient(true);
+    }
+    console.log("this is env:" + image_url)
     getItems()
 
   }, [])
@@ -86,28 +86,50 @@ const Page = () => {
   const addItemToBasket = (item: BasketItem) => {
     setLoading(true)
 
-    const basketItem = basket.find((itemToFind)=> item.id===itemToFind.id)
-    console.log( "basketItem: ",basketItem)
-    if(basketItem != null){
-      
-    verifyQuantity(item.id, basketItem?.quantity+1)
-    .then(data => {if(data === 200){
-    setCurrentlyClickedBasketItem(item)
-    setShowModal(!showModal)
-    addSingleItemToBasket(item)
+    const basketItem = basket.find((itemToFind) => item.id === itemToFind.id)
+    console.log("basketItem: ", basketItem)
+    if (basketItem != null) {
 
-    }else{
-      
-    }})
+      verifyQuantity(item.id, basketItem?.quantity + 1)
+        .then(data => {
+          if (data === 200) {
+            setCurrentlyClickedBasketItem(item)
+            setLoading(false)
+
+            setShowModal(!showModal)
+            addSingleItemToBasket(item)
+
+          } else {
+            setLoading(false)
+
+            setItemAvailable(false)
+
+          }
+        })
     }
-    else{
-          verifyQuantity(item.id, 1)
+    else {
+      verifyQuantity(item.id, 1)
+        .then(data => {
+          if (data === 200) {
+            setCurrentlyClickedBasketItem(item)
+            setLoading(false)
+
+            setShowModal(!showModal)
+            addSingleItemToBasket(item)
+          }
+          else {
+            setLoading(false)
+
+            setItemAvailable(false)
+
+          }
+        })
+
     }
-    
+
     // setCurrentlyClickedBasketItem(item)
     // setShowModal(!showModal)
     // addSingleItemToBasket(item)
-    setLoading(false)
 
 
   }
@@ -120,82 +142,82 @@ const Page = () => {
   }
 
 
- //  returns all the items in the basket in drawer when users adds item to the cart
- const returnBasketItems = basket?.map(eachItem => {
-  return <div key={eachItem.id} className='flex flex-col'><div  className='flex w-11/12   items-center p-2 rounded-md'>
-    <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
+  //  returns all the items in the basket in drawer when users adds item to the cart
+  const returnBasketItems = basket?.map(eachItem => {
+    return <div key={eachItem.id} className='flex flex-col'><div className='flex w-11/12   items-center p-2 rounded-md'>
+      <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
-      <div className='flex h-full aspect-square items-center  rounded-md '>
+        <div className='flex h-full aspect-square items-center  rounded-md '>
 
-      <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>          
-      </div>
-    </Link>
-    <div className='flex flex-col'>
-    <Link href={`/shopFragRacks/${eachItem.id}`}>
+          <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>
+        </div>
+      </Link>
+      <div className='flex flex-col'>
+        <Link href={`/shopFragRacks/${eachItem.id}`}>
 
-      <h1 className='p-1 md:p-2 text-sm'>{eachItem.title}</h1>
-    </Link>
+          <h1 className='p-1 md:p-2 text-sm'>{eachItem.title}</h1>
+        </Link>
 
-    <h3 className='p-1'>£{eachItem.price}</h3>
-    <div className='flex h-10 text-center items-center align-middle justify-center '>
+        <h3 className='p-1'>£{eachItem.price}</h3>
+        <div className='flex h-10 text-center items-center align-middle justify-center '>
 
-    <div className='flex mt-1 md:mt-2 w-full'>
-          <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl '>
-            <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
-            <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
-            <button onClick={() => { addSingleItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
+          <div className='flex mt-1 md:mt-2 w-full'>
+            <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl '>
+              <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
+              <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
+              <button onClick={() => { addSingleItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
+            </div>
+            <button onClick={() => removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+              </svg>
+            </button>
           </div>
-          <button onClick={()=>removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
-          </svg> 
-          </button>
-           </div>
 
-    </div>
+        </div>
 
-    </div>
-
-  </div>
-      <div className='flex w-full bg-gray-300 h-px m-1'></div>
       </div>
 
-}
-)
+    </div>
+      <div className='flex w-full bg-gray-300 h-px m-1'></div>
+    </div>
+
+  }
+  )
 
   const jsxreturnedAllItems = items.map(eachItem => {
     return (
       <div key={eachItem.id} className=' flex flex-col w-11/12 rounded-md  md:p-2 md:p-8  mt-8  md:w-1/4 '>
         <Link href={`/shopFragRacks/${eachItem.id}`}>
-        <div className='bg-gradient-to-r from-blue-400/20 via-pink-500/50 to-red-500/50 rounded-md '>
-        <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100    border-slate-300  cursor-pointer' ></img>
+          <div className='bg-gradient-to-r from-blue-400/20 via-pink-500/50 to-red-500/50 rounded-md '>
+            <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100    border-slate-300  cursor-pointer' ></img>
 
-        </div>
+          </div>
 
         </Link>
 
         <a className='p-2 md:h-16 ' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
         <h3 className='pl-2'>£{eachItem.price}</h3>
-        <div  className="mt-2 drawer-end ">
+        <div className="mt-2 drawer-end ">
           <input id="my-drawer-items-page" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
             {/* Page content here */}
-            <label onClick={() => { addItemToBasket(eachItem) }} 
-            htmlFor="my-drawer-items-page" className="btn btn-primary drawer-button">Add To Cart</label>
+            <label onClick={() => { addItemToBasket(eachItem) }}
+              htmlFor="my-drawer-items-page" className="btn btn-primary drawer-button">Add To Cart</label>
           </div>
           <div className="drawer-side z-20">
             <label htmlFor="my-drawer-items-page" aria-label="close sidebar" className="drawer-overlay"></label>
             <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
-            {/* Sidebar content here */}
+              {/* Sidebar content here */}
               <h1>Your Cart</h1>
-              
+
               {returnBasketItems}
               <div className='mt-8'></div><div>
                 <h1>Your Total: £{isClient ? getBasketTotal() : 0}</h1>
-               </div>
-               <div className='flex-col flex w-5/6 mt-6'>
-               <Link href={"/basket"} className=" btn btn-primary btn-block">View cart</Link>
-               <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-full text-md mb-4 mt-2'>Checkout</h1>
-               </div>
+              </div>
+              <div className='flex-col flex w-5/6 mt-6'>
+                <Link href={"/basket"} className=" btn btn-primary btn-block">View cart</Link>
+                <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-full text-md mb-4 mt-2'>Checkout</h1>
+              </div>
             </ul>
           </div>
         </div>
@@ -265,7 +287,7 @@ const Page = () => {
       </div> : <></>}
 
 
-      
+
       <div className='flex justify-center mt-8 md:mt-20'>
         <div className="join" >
           <input className="join-item btn btn-square" type="radio" name="options" aria-label="1" value={currentPage} placeholder='1' onChange={handlePageClick} defaultChecked />
