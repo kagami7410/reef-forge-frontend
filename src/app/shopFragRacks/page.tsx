@@ -33,12 +33,14 @@ const Page = () => {
   const [noItems, setNoItems] = useState(false);
   const [itemAvailable, setItemAvailable] = useState(true);
 
+  const [currentlyClickedBasketItem, setCurrentlyClickedBasketItem] = useState<BasketItem>()
 
+  const [drawerMounted, setDrawerMounted] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   // asynchronous access of `params.id`.
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [items, setItems] = useState<FragRackItem[]>([]);
-  const [currentlyClickedBasketItem, setCurrentlyClickedBasketItem] = useState<BasketItem>();
+  const [items, setItems] = useState<FragRackItem[]>([]); 
 
   const { addSingleItemToBasket, basket, removeItemInBasket, removeAllQuantityitem, getBasketTotal } = useBasket();
 
@@ -93,16 +95,23 @@ const Page = () => {
       verifyQuantity(item.id, basketItem?.quantity + 1)
         .then(data => {
           if (data === 200) {
+            setDrawerMounted(true); // Mount it
+
             setCurrentlyClickedBasketItem(item)
-            setLoading(false)
 
             setShowModal(!showModal)
             addSingleItemToBasket(item)
+            setLoading(false)
+            requestAnimationFrame(() => {
+              setDrawerVisible(true);
+            });
+
+
 
           } else {
             setLoading(false)
 
-            setItemAvailable(false)
+            setItemAvailable(!itemAvailable)
 
           }
         })
@@ -111,16 +120,21 @@ const Page = () => {
       verifyQuantity(item.id, 1)
         .then(data => {
           if (data === 200) {
+            setDrawerMounted(true); // Mount it
+
             setCurrentlyClickedBasketItem(item)
-            setLoading(false)
 
             setShowModal(!showModal)
             addSingleItemToBasket(item)
+            setLoading(false)
+            requestAnimationFrame(() => {
+              setDrawerVisible(true);
+            });
           }
           else {
             setLoading(false)
 
-            setItemAvailable(false)
+            setItemAvailable(!itemAvailable)
 
           }
         })
@@ -130,6 +144,8 @@ const Page = () => {
     // setCurrentlyClickedBasketItem(item)
     // setShowModal(!showModal)
     // addSingleItemToBasket(item)
+    // setLoading(false)
+
 
 
   }
@@ -140,7 +156,12 @@ const Page = () => {
     // console.log(currentSelectedPage, ': page is clicked!')
     setCurrentPage(currentSelectedPage - 1)
   }
-
+  const handleClose = () => {
+    setDrawerVisible(false);
+    setTimeout(() => {
+      setDrawerMounted(false); // Unmount after animation ends
+    }, 300); // Match transition duration
+  };
 
   //  returns all the items in the basket in drawer when users adds item to the cart
   const returnBasketItems = basket?.map(eachItem => {
@@ -197,15 +218,29 @@ const Page = () => {
 
         <a className='p-2 md:h-16 ' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
         <h3 className='pl-2'>£{eachItem.price}</h3>
-        <div className="mt-2 drawer-end ">
-          <input id="my-drawer-items-page" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content">
-            {/* Page content here */}
-            <label onClick={() => { addItemToBasket(eachItem) }}
-              htmlFor="my-drawer-items-page" className="btn btn-primary drawer-button">Add To Cart</label>
-          </div>
-          <div className="drawer-side z-20">
-            <label htmlFor="my-drawer-items-page" aria-label="close sidebar" className="drawer-overlay"></label>
+
+
+        {/* Page content */}
+        <button onClick={() => addItemToBasket(eachItem)} className="btn btn-primary">
+          Add To Cart
+        </button>
+
+
+        {/* Overlay */}
+        {drawerMounted && (
+          <div
+            className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${drawerVisible ? "opacity-100 visible" : "opacity-0 invisible"
+              }`}
+            onClick={handleClose}
+          />
+        )}
+
+        {/* Drawer panel */}
+        {drawerMounted && (
+          <div
+            className={`fixed top-0 right-0 h-full bg-base-200 z-50 w-10/12 md:w-96 transform transition-transform duration-300 ease-in-out ${drawerVisible ? "translate-x-0" : "translate-x-full"
+              }`}
+          >
             <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
               {/* Sidebar content here */}
               <h1>Your Cart</h1>
@@ -220,7 +255,7 @@ const Page = () => {
               </div>
             </ul>
           </div>
-        </div>
+        )}
       </div>
     )
   })
