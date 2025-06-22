@@ -25,6 +25,7 @@ const NavBar = () => {
   const [updatedCart, setUpdatedCart] = useState(false);
   const router = useRouter() // may be null or a NextRouter instance
   const [noItems, setNoItems] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
     setBasketItems(basket)
@@ -297,7 +298,7 @@ const NavBar = () => {
               </a>
             </li>
             <li><a>Settings</a></li>
-            <li><a>Logout</a></li>
+            {signedIn ? <li><a>Sign out</a></li> : <li><a href='/SignInPage'>Sign in</a></li>}
           </ul>
         </div>
       </div>
