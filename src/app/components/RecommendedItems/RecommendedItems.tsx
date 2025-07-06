@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 // import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
 // import Loading from '../Loading/Loading';
-const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
+const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
 
 
@@ -103,7 +103,7 @@ const RecommendedItems = () => {
 
         <div className='border '>
           <Link href={`/shopFragRacks/${eachItem.id}`}></Link>
-          <img src={`${image_url}/${items[index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
+          <img src={`${image_url}/All/${items[index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
         </div>
 
           <a className='p-2 md:h-16 ' href={`/shopFragRacks/${items[index]}`}>{items[index].title}</a>

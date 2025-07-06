@@ -170,7 +170,7 @@ const Page = () => {
 
         <div className='flex h-full aspect-square items-center  rounded-md '>
 
-          <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>
+          <img src={`${image_url}/All/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>
         </div>
       </Link>
       <div className='flex flex-col'>
@@ -210,7 +210,7 @@ const Page = () => {
       <div key={eachItem.id} className=' flex flex-col w-11/12 rounded-md  md:p-2 md:p-8  mt-8  md:w-1/4 '>
         <Link href={`/shopFragRacks/${eachItem.id}`}>
           <div className='bg-gradient-to-r from-blue-400/20 via-pink-500/50 to-red-500/50 rounded-md '>
-            <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100    border-slate-300  cursor-pointer' ></img>
+            <img src={`${image_url}/All/${eachItem.photoUrls[0]}`} className=' opacity-100    border-slate-300  cursor-pointer' ></img>
 
           </div>
 

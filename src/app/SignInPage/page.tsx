@@ -11,6 +11,7 @@ const Page = () => {
 
     const [userEmail, setUserEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [userJWTtoken, setUserJWTtoken] = useState("")
 
 
 
@@ -29,7 +30,13 @@ const Page = () => {
                 })
         })
 
+//           const data = await res.json(); // 👈 Parse JSON
+//   console.log("Token received:", data.token); // 👈 Access token here
+
         if (res.status === 200) {
+             const data = await res.json()
+
+            console.log("Token received:", data.token)
             console.log("logged in successfully!")
         }
         else {

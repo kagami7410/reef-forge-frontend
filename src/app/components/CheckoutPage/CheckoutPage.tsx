@@ -41,7 +41,7 @@ const CheckoutPage = ( {userEmail, amount}:{userEmail: string, amount:number}) =
 
 
     const getFinalTotal = () => {
-        return Number(( getBasketTotal() + 2.90).toFixed(2));
+        return (( getBasketTotal() + 2.90).toFixed(2));
       }
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault()
