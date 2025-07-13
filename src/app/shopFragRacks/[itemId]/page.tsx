@@ -86,7 +86,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   }, [addToCartClicked])
 
   useEffect(() => {
-    setCurrentImage(`${image_url}/${item?.photoUrls[0]}`)
+    setCurrentImage(`${image_url}/All/${item?.photoUrls[0]}`)
   }, [item])
 
   function getItems() {
@@ -164,7 +164,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
       <div className='flex h-full aspect-square items-center'>
 
-      <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>          
+      <img src={`${image_url}/All/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>          
       </div>
     </Link>
     <div className='flex flex-col'>
@@ -215,7 +215,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
                 {item?.photoUrls.map(eachurl => {
                   return (
                     <div key={eachurl} className='flex m-1 mt-3 rounded-md border-slate-400  border  h-full aspect-square w-full '>
-                      <img key={eachurl} src={`${image_url}/${eachurl}`} className='border cursor-pointer w-full h-full object-cover ' onClick={changeImageView}></img>
+                      <img key={eachurl} src={`${image_url}/All/${eachurl}`} className='border cursor-pointer w-full h-full object-cover ' onClick={changeImageView}></img>
 
                     </div>
                   )
@@ -260,7 +260,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               <label onClick={() => { if(item !==undefined){handleBasketAdd(item)}}} 
             htmlFor="my-drawer-single-item-page" className="btn btn-primary drawer-button">Add To Cart</label>
             </div>
-            <div className="drawer-side z-20 items-center">
+            <div className="drawer-side z-50 items-center">
               <label htmlFor="my-drawer-single-item-page" aria-label="close sidebar" className="drawer-overlay"></label>
               <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
               <h1 className='mt-2 mb-4'>Your Cart</h1>
@@ -338,7 +338,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           <div key={item?.id} className='flex flex-col w-1/2  rounded-md md:p-2 md:p-2   mt-1  lg:w-1/3'>
 
             <Link href={`/shopFragRacks/${item?.id}`}>
-              <img src={`${image_url}/${item?.photoUrls[0]}`} className='border rounded-md cursor-pointer' ></img>
+              <img src={`${image_url}/All/${item?.photoUrls[0]}`} className='border rounded-md cursor-pointer' ></img>
 
             </Link>
           </div>

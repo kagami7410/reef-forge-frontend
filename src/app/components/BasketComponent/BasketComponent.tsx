@@ -10,7 +10,7 @@ type Props = {
   allowEditQuantity: boolean;
 };
 const BasketComponent = ({allowEditQuantity}: Props) => {
-  const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
+  const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
   // Define a type for the item
   interface BasketItem {
@@ -111,7 +111,7 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
     <>
       {loading ? <Loading /> : <><div className='flex flex-col   items-center justify-center  p-4 md:p-1 '>
         <div className=' items-center w-full pt-4 rounded-t-2xl  flex-col flex p-1'>
-          <h2 className=' mb-10 text-lg text-center font-semibold md:text-xl'>Your basket Total is   £{getBasketTotal()} ( {getBasketCount()} items ) </h2>
+          <h2 className=' mb-10 text-sm text-center font-semibold md:text-lg'>Your basket Total is   £{getBasketTotal()} ( {getBasketCount()} items ) </h2>
 
 
 

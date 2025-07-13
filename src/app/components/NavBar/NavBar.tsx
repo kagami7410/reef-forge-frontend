@@ -17,7 +17,7 @@ const NavBar = () => {
     photoUrls: string[];
 
   }
-  const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
+  const image_url =`${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
   const [basketItems, setBasketItems] = useState<BasketItem[]>()
   const [basketClicked, setBasketClicked] = useState(false);
@@ -181,7 +181,12 @@ const NavBar = () => {
 
         <div className="navbar-center bg-base-400 hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <li>
+
+
+          {/* This is for Nav Bar multiple options */}
+
+
+            {/* <li>
               <details>
                 <summary className='text-lg'>
                   <Link href="/corals">Magnetic Frag Holder</Link>
@@ -192,12 +197,13 @@ const NavBar = () => {
                   <li><a>Mushroom Holder</a></li>
                 </ul>
               </details>
-            </li>
-            <li><a className='text-lg'>About</a></li>
+            </li> */}
+
+            {/* <li><a className='text-lg'>About</a></li>
 
             <li><a className='text-lg'>Story</a></li>
 
-            <li><a className='text-lg'>Special Offers</a></li>
+            <li><a className='text-lg'>Special Offers</a></li> */}
           </ul>
         </div>
       </div>

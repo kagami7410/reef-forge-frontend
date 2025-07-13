@@ -103,7 +103,7 @@ const RecommendedItems = () => {
 
         <div className='border '>
           <Link href={`/shopFragRacks/${eachItem.id}`}></Link>
-          <img src={`${image_url}/All/${items[index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
+          <img src={`${image_url}/${items[index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
         </div>
 
           <a className='p-2 md:h-16 ' href={`/shopFragRacks/${items[index]}`}>{items[index].title}</a>

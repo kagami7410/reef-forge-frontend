@@ -4,7 +4,7 @@ import { NextApiRequest } from "next";
 import cookie from 'cookie';
 
 export async function POST(request: NextApiRequest) {
-  const res = NextResponse.next(); // or NextResponse.redirect(), etc.
+  // const res = NextResponse.next(); // or NextResponse.redirect(), etc.
 
   const backendHostName = process.env.HIMALAYAN_COFFEE_BACKEND_HOSTNAME
   const body = await request.json();
@@ -41,15 +41,17 @@ export async function POST(request: NextApiRequest) {
       console.log("logged in successfully!")
 
 
+    const response = NextResponse.json({ message: 'Logged in successfully' });
 
       // ✅ Correct way to set a cookie
-        res.cookies.set('token', data.token, {
+        response.cookies.set('token', data.token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
         maxAge: 60 * 60 * 24,
       });
+      return response;
     }
     else {
       console.log("either password or email is incorrect")
