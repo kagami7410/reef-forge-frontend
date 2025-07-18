@@ -62,7 +62,7 @@ const RecommendedItems = () => {
   function getItems() {
     setLoading(!loading)
 
-    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=6`)
+    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=3`)
       .then(res => res.json())
       .then(data => {
         setItems(data.data.content)

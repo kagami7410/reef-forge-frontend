@@ -46,7 +46,7 @@ const page = () => {
       <section>
         <h2 className="text-2xl font-semibold mb-4">💬 Need Help?</h2>
         <p>
-          If you have any questions about your delivery, contact us at{" "}
+          If you have any questions about your delivery, contact us at info@reef-forge.uk
           <a href="mailto:your@email.com" className="text-blue-600 underline">
             your@email.com
           </a>

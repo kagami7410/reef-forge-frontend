@@ -26,6 +26,16 @@ const NavBar = () => {
   const router = useRouter() // may be null or a NextRouter instance
   const [noItems, setNoItems] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+        checkAuth()
+
+  })
+
+
+  useEffect(()=>{
+  },[isAdmin])
 
   useEffect(() => {
     setBasketItems(basket)
@@ -47,6 +57,7 @@ const NavBar = () => {
       setIsClient(true);
       setBasketItems(basket)
     }
+
   }, []);
 
 
@@ -69,7 +80,28 @@ const NavBar = () => {
     setBasketClicked(!basketClicked)
 
   }
+const checkAuth = async () => {
+  const res = await fetch('/api/auth', {
+    credentials: 'include',
+     })
+  const data = await res.json();
+  console.log(data)
 
+
+  if (data.authenticated) {
+    console.log('User is logged in');
+    if (data.user.isAdmin === "true") {
+      setIsAdmin(true)
+      console.log('User is an admin');
+      setSignedIn(true)
+
+
+    }
+  }
+  else{
+    console.log("user not authenticated")
+  }
+};
   const routeToCheckout = () => {
     if (basket.length > 0) {
       router.push('/userDetailsCheckout')
@@ -227,8 +259,19 @@ const NavBar = () => {
       </div> : <></>}
 
 
+      {isAdmin?           <div className='flex  w-1/4'>
+                <button onClick={() => {
+                        router.push('/postItem')
+
+                }} className='btn bg-red-200 hover:bg-red-300'>Manage Inventory</button>
+        </div> : <></> }
+
+
       <div className="flex justify-center md:mr-0 md:w-72  md:ml-20 p-0 w-64">
+
+
         <div className="dropdown dropdown-end  p-0   w-1/2">
+
 
           <div className=" drawer drawer-end">
             <input id="my-drawer-navbar" type="checkbox" className="drawer-toggle" />

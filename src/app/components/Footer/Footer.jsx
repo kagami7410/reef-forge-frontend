@@ -58,7 +58,7 @@ const Footer = () => {
   <div className='flex flex-col '>
   <h6 className="footer-title">UK Manufactured</h6>
     <a className="link link-hover">All of our products are proudly manufactured and put together in the UK.</a>
-    <a className="link link-hover">    For further information, you can contact us at: </a>
+    <a className="link link-hover">    For further information, you can contact us at: info@reef-forge.uk</a>
 
   </div>
 

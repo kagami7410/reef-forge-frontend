@@ -46,9 +46,9 @@ const page = () => {
       <section>
         <h2 className="text-2xl font-semibold mb-2">Contact Us</h2>
         <p>
-          To initiate a return, report damage, or inquire about a refund/exchange, please contact us at{" "}
+          To initiate a return, report damage, or inquire about a refund/exchange, please contact us at : 
           <a href="mailto:your@email.com" className="text-blue-600 underline">
-            your@email.com
+           info@reef-forge.uk
           </a>{" "}
           with your order number and clear photos (if applicable).
         </p>
