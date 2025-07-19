@@ -4,6 +4,7 @@ import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
 import Loading from '@/src/app/components/Loading/Loading';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { verifyQuantity } from '@/lib/checkStockQuantity';
 
 
 interface BasketItem {
@@ -28,7 +29,9 @@ interface FragRackItem extends BasketItem {
 
 const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   const [isClient, setIsClient] = useState(false);
-
+  const [itemAvailable, setItemAvailable] = useState(true);
+ const [drawerMounted, setDrawerMounted] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const router = useRouter() // may be null or a NextRouter instance
   const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
   const [itemQuantity, setItemQuanity] = useState<number>(0);
@@ -108,6 +111,12 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
       })
   }
 
+  const handleClose = () => {
+    setDrawerVisible(false);
+    setTimeout(() => {
+      setDrawerMounted(false); // Unmount after animation ends
+    }, 300); // Match transition duration
+  };
 
   
   const routeToCheckout = () => {
@@ -127,13 +136,74 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
   // adds single item to basket and opens a basket drawer on right-hand side
 
-  const handleBasketAdd = (basketItem: FragRackItem) => {
-    setAddToCart(!addToCartClicked)
-    setBasketItems(basket)
-    console.log(basketItem)
-    addSingleItemToBasket(basketItem)
-    setLoading(false)
-  }
+  // const handleBasketAdd = (basketItem: FragRackItem) => {
+  //   setAddToCart(!addToCartClicked)
+  //   setBasketItems(basket)
+  //   console.log(basketItem)
+  //   addSingleItemToBasket(basketItem)
+  //   setLoading(false)
+  // }
+
+
+
+    const addItemToBasket = (item: BasketItem) => {
+      setLoading(true)
+  
+      const basketItem = basket.find((itemToFind) => item.id === itemToFind.id)
+      console.log("basketItem: ", basketItem)
+      if (basketItem != null) {
+  
+        verifyQuantity(item.id, basketItem?.quantity)
+          .then(data => {
+            if (data === 200) {
+              setDrawerMounted(true); // Mount it
+              // setShowModal(!showModal)
+              addSingleItemToBasket(item)
+              setLoading(false)
+              requestAnimationFrame(() => {
+                  setDrawerVisible(true);
+
+              });
+  
+  
+  
+            } else {
+              setLoading(false)
+                requestAnimationFrame(() => {
+                  setDrawerVisible(false);
+
+              });
+              setItemAvailable(!itemAvailable)
+  
+            }
+          })
+      }
+      else {
+        verifyQuantity(item.id, 1)
+          .then(data => {
+            if (data === 200) {
+              setDrawerMounted(true); // Mount it
+  
+              // setShowModal(!showModal)
+              addSingleItemToBasket(item)
+              setLoading(false)
+              requestAnimationFrame(() => {
+                setDrawerVisible(true);
+              });
+            }
+            else {
+              setLoading(false)
+              setItemAvailable(!itemAvailable)
+  
+            }
+          })
+  
+      }
+    }
+  
+
+
+
 
 
   // const increaseQuantity = () => {
@@ -180,7 +250,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl '>
             <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
             <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
-            <button onClick={() => { addSingleItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
+            <button onClick={() => { addItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
           </div>
           <button onClick={()=>removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
@@ -242,7 +312,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
             <button onClick={() => {
-              router.push('/shopFragRacks')
+              router.push(`/shopFragRacks/${itemId}`)
               setNoItems(!noItems)
             }}
               className="btn">Close</button>
@@ -257,10 +327,41 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
             <input id="my-drawer-single-item-page" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
               {/* Page content here */}
-              <label onClick={() => { if(item !==undefined){handleBasketAdd(item)}}} 
+              <label onClick={() => { if(item !==undefined){addItemToBasket(item)}}} 
             htmlFor="my-drawer-single-item-page" className="btn btn-primary drawer-button">Add To Cart</label>
             </div>
-            <div className="drawer-side z-50 items-center">
+
+                    {/* Overlay */}
+        {drawerMounted && (
+          <div
+            className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${drawerVisible ? "opacity-100 visible" : "opacity-0 invisible"
+              }`}
+            onClick={handleClose}
+          />
+        )}
+
+        {/* Drawer panel */}
+        {drawerMounted && (
+          <div
+            className={`fixed top-0 right-0 h-full bg-base-200 z-50 w-10/12 md:w-96 transform transition-transform duration-300 ease-in-out ${drawerVisible ? "translate-x-0" : "translate-x-full"
+              }`}
+          >
+            <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
+              {/* Sidebar content here */}
+              <h1>Your Cart</h1>
+
+              {returnBasketItems}
+              <div className='mt-8'></div><div>
+                <h1>Your Total: £{isClient ? getBasketTotal() : 0}</h1>
+              </div>
+              <div className='flex-col flex w-5/6 mt-6'>
+                <Link href={"/basket"} className=" btn btn-primary btn-block">View cart</Link>
+                <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-full text-md mb-4 mt-2'>Checkout</h1>
+              </div>
+            </ul>
+          </div>
+        )}
+            {/* <div className="drawer-side z-50 items-center">
               <label htmlFor="my-drawer-single-item-page" aria-label="close sidebar" className="drawer-overlay"></label>
               <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
               <h1 className='mt-2 mb-4'>Your Cart</h1>
@@ -277,7 +378,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
                </div>
 
               </ul>
-            </div>
+            </div> */}
           </div>
               {/* <button onClick={() => { handleAddToBasket(basketItem) }} className=' mt-1 mb-1 md:mt-2 md:mb-2 btn w-1/2'> Add To Cart</button> */}
 
@@ -327,6 +428,32 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
         </div>}
 
 
+      {itemAvailable? <></>:<div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+        <h3 className="font-bold text- md:text-lg">❌ Item has limited Quantity in Stock!</h3>
+
+        <h3 className="font-bold text-lg mt-4">{item?.title}</h3>
+        <div key={item?.id} className='flex flex-col w-1/2  rounded-md md:p-2 md:p-2   mt-1  lg:w-1/3'>
+
+          <Link href={`/shopFragRacks/${item?.id}`}>
+            <img src={currentImage} className='border rounded-md cursor-pointer' ></img>
+
+          </Link>
+        </div>
+        <h3 className="font-bold text-lg mt-1">£{item?.price}</h3>
+      <h3 className="font-bold text-lg mt-1">only {item?.stockQuantity} available!</h3>
+
+
+        <div className="modal-action">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button onClick={() => {
+              router.push(`/shopFragRacks/${itemId}`)
+              setItemAvailable(!itemAvailable)
+            }}
+              className="btn">Close</button>
+          </form>
+        </div>
+      </div>}
 
 
         {showModal ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
@@ -348,7 +475,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button onClick={() => {
-                router.push(`/shopFragRacks/${item?.id}`)
+                router.replace
                 setShowModal(!showModal)
                 setItemQuanity(0)
 

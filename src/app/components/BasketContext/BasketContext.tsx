@@ -77,6 +77,7 @@ const BasketProvider = ({ children }: BasketProviderProps) => {
 
 
   const addSingleItemToBasket = (item: BasketItem) => {
+    
     setBasket((prevBasket) => {
       const existingItem = prevBasket.find((basketItem) => basketItem.id === item.id);
       if (existingItem) {

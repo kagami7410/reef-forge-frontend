@@ -3,22 +3,31 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useBasket } from "../BasketContext/BasketContext";
 import { useRouter } from 'next/navigation'
+import { verifyQuantity } from '@/lib/checkStockQuantity';
 
 
 const NavBar = () => {
 
+interface BasketItem {
+  id: number;
+  title: string;
+  price: number;
+  code: string;
+  quantity: number;
+  photoUrls: string[];
 
-  interface BasketItem {
-    id: number;
-    title: string;
-    price: number;
-    code: string;
-    quantity: number;
-    photoUrls: string[];
+}
 
-  }
+interface FragRackItem extends BasketItem {
+  colour: string;
+  magnetNum: number;
+  size: string;
+  stockQuantity: number;
+
+}
   const image_url =`${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
-
+ const [drawerMounted, setDrawerMounted] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const [basketItems, setBasketItems] = useState<BasketItem[]>()
   const [basketClicked, setBasketClicked] = useState(false);
   const { addSingleItemToBasket, basket, removeItemInBasket, getBasketTotal, getBasketCount, removeAllQuantityitem } = useBasket();
@@ -27,6 +36,9 @@ const NavBar = () => {
   const [noItems, setNoItems] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false)
+  const [itemAvailable, setItemAvailable] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [currentlyClickedBasketItem, setCurrentlyClickedBasketItem] = useState<FragRackItem>()
 
   useEffect(() => {
         checkAuth()
@@ -80,6 +92,61 @@ const NavBar = () => {
     setBasketClicked(!basketClicked)
 
   }
+
+      const addItemToBasket = (item: FragRackItem) => {
+        setLoading(true)
+    
+        const basketItem = basket.find((itemToFind) => item.id === itemToFind.id)
+        console.log("basketItem: ", basketItem)
+        if (basketItem != null) {
+    
+          verifyQuantity(item.id, basketItem?.quantity)
+            .then(data => {
+              if (data === 200) {
+                setDrawerMounted(true); // Mount it
+                // setShowModal(!showModal)
+                addSingleItemToBasket(item)
+                setLoading(false)
+                requestAnimationFrame(() => {
+                    setDrawerVisible(true);
+  
+                });
+    
+    
+    
+              } else {
+                setLoading(false)
+                  requestAnimationFrame(() => {
+                    setDrawerVisible(false);
+                });
+                setItemAvailable(!itemAvailable)
+    
+              }
+            })
+        }
+        else {
+          verifyQuantity(item.id, 1)
+            .then(data => {
+              if (data === 200) {
+                setDrawerMounted(true); // Mount it
+    
+                // setShowModal(!showModal)
+                addSingleItemToBasket(item)
+                setLoading(false)
+                requestAnimationFrame(() => {
+                  setDrawerVisible(true);
+                });
+              }
+              else {
+                setLoading(false)
+                setItemAvailable(!itemAvailable)
+    
+              }
+            })
+    
+        }
+      }
+    
 const checkAuth = async () => {
   const res = await fetch('/api/auth', {
     credentials: 'include',
@@ -141,8 +208,9 @@ const checkAuth = async () => {
                 <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
                 <button onClick={() => {
                   setUpdatedCart(!updatedCart)
+                  setCurrentlyClickedBasketItem(eachItem)
 
-                  addSingleItemToBasket(eachItem)
+                  addItemToBasket(eachItem)
                 }} className=' text-2xl  w-1/6' >+</button>
               </div>
               <button onClick={() => {
@@ -351,8 +419,38 @@ const checkAuth = async () => {
           </ul>
         </div>
       </div>
+
+            {itemAvailable? <></>:<div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+        <h3 className="font-bold text- md:text-lg">❌ Item has limited Quantity in Stock!</h3>
+
+        <h3 className="font-bold text-lg mt-4">{currentlyClickedBasketItem?.title}</h3>
+        <div key={currentlyClickedBasketItem?.id} className='flex flex-col w-1/2  rounded-md md:p-2 md:p-2   mt-1  lg:w-1/3'>
+
+          <Link href={`/shopFragRacks/${currentlyClickedBasketItem?.id}`}>
+            <img src={`${image_url}/${currentlyClickedBasketItem?.photoUrls[0]}`} className='border rounded-md cursor-pointer' ></img>
+
+          </Link>
+        </div>
+        <h3 className="font-bold text-lg mt-1">£{currentlyClickedBasketItem?.price}</h3>
+      <h3 className="font-bold text-lg mt-1">only {currentlyClickedBasketItem?.stockQuantity} available!</h3>
+
+
+        <div className="modal-action">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button onClick={() => {
+              router.replace
+              setItemAvailable(!itemAvailable)
+            }}
+              className="btn">Close</button>
+          </form>
+        </div>
+      </div>}
+      
       
     </div>
+
+    
 
 
   )

@@ -4,17 +4,10 @@ import Link from 'next/link'
 
 const Page = () => {
 
-    interface AuthenticateRequest {
-        userEmail: string;
-        password: string;
-    }
+
 
     const [userEmail, setUserEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [userJWTtoken, setUserJWTtoken] = useState("")
-
-
-
 
 
     const clickSignIn = async () => {
@@ -30,22 +23,18 @@ const Page = () => {
                 })
         })
 
-//           const data = await res.json(); // 👈 Parse JSON
-//   console.log("Token received:", data.token); // 👈 Access token here
-
         if (res.status === 200) {
              const data = await res.json()
 
             console.log("Token received:", data.token)
             console.log("logged in successfully!")
+            window.location.reload()
         }
         else {
             console.log("either password or email is incorrect")
         }
     }
 
-
-    console.log(userEmail + password)
 
     return (
         <>

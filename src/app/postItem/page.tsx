@@ -14,6 +14,7 @@ import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } 
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 import { CSS } from '@dnd-kit/utilities';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -42,20 +43,44 @@ const Page = () => {
     userEmail: string;
     password: string;
   }
+interface BasketItem {
+  id: number;
+  title: string;
+  price: number;
+  code: string;
+  quantity: number;
+  photoUrls: string[];
+
+}
+
+interface FragRackItem extends BasketItem {
+  colour: string;
+  magnetNum: number;
+  size: string;
+  stockQuantity: number;
+
+}
 
   const sensors = useSensors(useSensor(MouseSensor));
+  const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
 
+  const [loading, setLoading] = useState(true);
+  const router = useRouter() // may be null or a NextRouter instance
 
   const [title, setTitle] = useState("");
   const [stockQuantity, setStockQuantity] = useState("");
+  const [items, setItems] = useState<FragRackItem[]>([]); 
+  const [currentPage, setCurrentPage] = useState(0);
 
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [colour, setColour] = useState(""); 
   const [files, setFiles] = useState<File[] | null>(null);
   const [fileNames, setFileNames] = useState<string[]>([]);
-
+  const [removeClicked, setRemoveClicked] = useState(false)
+  const [signedIn, setSignedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false)
   const [images, setImages] = useState<ImageItem[]>([]); // imageItem: { id, file, previewUrl }
 
   // const handleAddFiles = (files: FileList) => {
@@ -75,6 +100,8 @@ const Page = () => {
   // Don't revoke during drag-and-drop reorder
 
   useEffect(() => {
+    checkAuth()
+    getItems()
     return () => {
       // Optional cleanup on component unmount
       images.forEach(img => {
@@ -84,6 +111,55 @@ const Page = () => {
       });
     };
   }, []);
+
+const checkAuth = async () => {
+  const res = await fetch('/api/auth', {
+    credentials: 'include',
+     })
+  const data = await res.json();
+  console.log(data)
+
+
+  if (data.authenticated) {
+    console.log('User is logged in');
+    if (data.user.isAdmin === "true") {
+      setIsAdmin(true)
+      console.log('User is an admin');
+      setSignedIn(true)
+    }
+  }
+  else{
+    router.push('/SignInPage')
+        console.log("user not authenticated")
+
+    return 
+  }
+};
+
+
+  useEffect(() => {
+  }, [removeClicked])
+
+
+  const getUpdatedListOfItemsAfterRemoval = (itemId:any) => {
+
+    setItems( prevImages => {
+      return items.filter(eachitem => eachitem.id != itemId)
+    })
+  }
+
+
+
+  const removeItem = async(itemId:any) => {
+    const res = await fetch(`/api/deleteItemById?itemId=${itemId}`,{
+      method: "DELETE"
+    })
+
+    const data = await res.json();
+    console.log(data)
+    getUpdatedListOfItemsAfterRemoval(itemId)
+    setRemoveClicked(!removeClicked)
+  }
 
 
   const postItem = async (photoUrls:string[]) => {
@@ -108,6 +184,72 @@ const Page = () => {
 
   }
 
+
+
+    const jsxreturnedAllItems = items.map(eachItem => {
+        // console.log(eachItem.photoUrls[0])
+
+    return (
+      <div key={eachItem.id} className=' flex  w-full rounded-md bg-slate-500  md:p-2   mt-8  '>
+        <Link href={`/shopFragRacks/${eachItem.id}`}>
+                <div className='flex w-full justify-center'>
+                  
+          <div className='bg-gradient-to-r from-blue-400/20 via-pink-500/50 to-red-500/50 rounded-md w-20 h-20   flex'>
+            <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100 w-full h-full object-cover cursor-pointer' ></img>
+
+          </div>
+                  </div>
+
+
+        </Link>
+                <div className='flex w-full items-center mt-2 h-8 '>
+                          <a className='p-2' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
+
+                  </div>
+
+
+        <h3 className='pl-2'>£{eachItem.price}</h3>
+        <h3 className=''>{eachItem.stockQuantity}</h3>
+
+        <div className='flex flex-col  bg-orange-300'>
+          <button onClick={()=>removeItem(eachItem.id)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+          </svg> 
+          </button>
+          <button className='btn bg-orange-300'>
+            edit
+          </button>
+
+      </div>
+
+
+        {/* Page content */}
+        <div className='flex w-full justify-center mt-2'>
+
+        </div>
+      </div>
+
+
+
+
+
+    )
+  })
+
+
+
+   function getItems() {
+    setLoading(true)
+
+    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=5`)
+      .then(res => res.json())
+      .then(data => {
+        setItems(data.data.content)
+        setLoading(false)
+
+      }
+      )
+  }
 
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -313,7 +455,8 @@ const Page = () => {
 
   return (
 
-    <div className='relative w-full min-w-96 bg-lime-100 p-6  flex flex-col '>
+    <div className='flex flex-col'>
+<div className='relative w-full min-w-96 bg-lime-100 p-6  flex flex-col '>
       <Link href={'/'} className={`btn btn-ghost text-xl md:text-2xl md:ml-0 md:w-72`}> REEF FORGE </Link>
 
       <h1 className='text-lg font-bold font-sans text-slate-800 mt-3 w-full'>Title</h1>
@@ -387,6 +530,18 @@ const Page = () => {
 
       <button onClick={getAccessUrl} className='btn text-gray-50 hover:text-slate-50 hover:bg-blue-800 w-48 mt-4 bg-blue-600'>Get Access Url</button>
       {/* <button onClick={clickSignIn} className='btn text-gray-50 hover:text-slate-50 hover:bg-blue-800 w-48 mt-4 bg-blue-600'>List Item</button> */}
+    
+
+
+    </div>
+
+    <div>
+    {jsxreturnedAllItems}
+
+    </div>
+
+    
+    
     </div>
 
 

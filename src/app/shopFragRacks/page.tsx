@@ -33,7 +33,7 @@ const Page = () => {
   const [noItems, setNoItems] = useState(false);
   const [itemAvailable, setItemAvailable] = useState(true);
 
-  const [currentlyClickedBasketItem, setCurrentlyClickedBasketItem] = useState<BasketItem>()
+  const [currentlyClickedBasketItem, setCurrentlyClickedBasketItem] = useState<FragRackItem>()
 
   const [drawerMounted, setDrawerMounted] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -53,7 +53,7 @@ const Page = () => {
 
   const routeToCheckout = () => {
     if (basket.length > 0) {
-      router.push('/userDetailsCheckout')
+      router.replace
     }
     else {
       setNoItems(true)
@@ -63,7 +63,7 @@ const Page = () => {
   function getItems() {
     setLoading(true)
 
-    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=3`)
+    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=6`)
       .then(res => res.json())
       .then(data => {
         setItems(data.data.content)
@@ -87,6 +87,7 @@ const Page = () => {
 
   const addItemToBasket = (item: BasketItem) => {
     setLoading(true)
+    setCurrentlyClickedBasketItem(item)
 
     const basketItem = basket.find((itemToFind) => item.id === itemToFind.id)
     console.log("basketItem: ", basketItem)
@@ -97,9 +98,8 @@ const Page = () => {
           if (data === 200) {
             setDrawerMounted(true); // Mount it
 
-            setCurrentlyClickedBasketItem(item)
 
-            setShowModal(!showModal)
+            // setShowModal(!showModal)
             addSingleItemToBasket(item)
             setLoading(false)
             requestAnimationFrame(() => {
@@ -110,7 +110,10 @@ const Page = () => {
 
           } else {
             setLoading(false)
+                requestAnimationFrame(() => {
+                  setDrawerVisible(false);
 
+              });
             setItemAvailable(!itemAvailable)
 
           }
@@ -123,8 +126,7 @@ const Page = () => {
             setDrawerMounted(true); // Mount it
 
             setCurrentlyClickedBasketItem(item)
-
-            setShowModal(!showModal)
+            // setShowModal(!showModal)
             addSingleItemToBasket(item)
             setLoading(false)
             requestAnimationFrame(() => {
@@ -133,21 +135,12 @@ const Page = () => {
           }
           else {
             setLoading(false)
-
             setItemAvailable(!itemAvailable)
 
           }
         })
 
     }
-
-    // setCurrentlyClickedBasketItem(item)
-    // setShowModal(!showModal)
-    // addSingleItemToBasket(item)
-    // setLoading(false)
-
-
-
   }
 
   const handlePageClick = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,11 +175,11 @@ const Page = () => {
         <h3 className='p-1'>£{eachItem.price}</h3>
         <div className='flex h-10 text-center items-center align-middle justify-center '>
 
-          <div className='flex mt-1 md:mt-2 w-full'>
+          <div className='flex mt-1 md:mt-2 w-img'>
             <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl '>
               <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
               <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
-              <button onClick={() => { addSingleItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
+              <button onClick={() => { addItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
             </div>
             <button onClick={() => removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
@@ -209,23 +202,34 @@ const Page = () => {
         console.log(eachItem.photoUrls[0])
 
     return (
-      <div key={eachItem.id} className=' flex flex-col w-11/12 rounded-md  md:p-2 md:p-8  mt-8  md:w-1/4 '>
+      <div key={eachItem.id} className=' flex flex-col w-5/12 rounded-md m-2  md:p-2   mt-8 md:m-2 md:w-72 bg-slate-600'>
         <Link href={`/shopFragRacks/${eachItem.id}`}>
-          <div className='bg-gradient-to-r from-blue-400/20 via-pink-500/50 to-red-500/50 rounded-md '>
-            <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100    border-slate-300  cursor-pointer' ></img>
+                <div className='flex w-full justify-center'>
+                  
+          <div className='bg-gradient-to-r from-blue-400/20 via-pink-500/50 to-red-500/50 rounded-md w-44 h-44 md:w-60 md:h-60   flex'>
+            <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100 w-full h-full object-cover cursor-pointer' ></img>
 
           </div>
+                  </div>
+
 
         </Link>
+                <div className='flex w-full items-center mt-2 h-8 '>
+                          <a className='p-2' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
 
-        <a className='p-2 md:h-16 ' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
+                  </div>
+
+
         <h3 className='pl-2'>£{eachItem.price}</h3>
 
 
         {/* Page content */}
-        <button onClick={() => addItemToBasket(eachItem)} className="btn btn-primary">
+        <div className='flex w-full justify-center mt-2'>
+        <button onClick={() => addItemToBasket(eachItem)} className="btn btn-primary w-full">
           Add To Cart
         </button>
+        </div>
+
 
 
         {/* Overlay */}
@@ -269,7 +273,7 @@ const Page = () => {
     <>
       <div>
         {loading ? <Loading /> : <div><div className='flex justify-center'>
-          <div className='flex flex-wrap  justify-center max-w-screen-2xl  my-4 w-5/6'>
+          <div className='flex flex-wrap  justify-center max-w-screen-2xl  my-4 w-full bg-slate-500'>
             {jsxreturnedAllItems}
           </div>
         </div>
@@ -296,6 +300,33 @@ const Page = () => {
           </form>
         </div>
       </div> : <></>}
+
+      {itemAvailable? <></>:<div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+        <h3 className="font-bold text- md:text-lg">❌ Item has limited Quantity in Stock!</h3>
+
+        <h3 className="font-bold text-lg mt-4">{currentlyClickedBasketItem?.title}</h3>
+        <div key={currentlyClickedBasketItem?.id} className='flex flex-col w-1/2  rounded-md md:p-2 md:p-2   mt-1  lg:w-1/3'>
+
+          <Link href={`/shopFragRacks/${currentlyClickedBasketItem?.id}`}>
+            <img src={`${image_url}/${currentlyClickedBasketItem?.photoUrls[0]}`} className='border rounded-md cursor-pointer' ></img>
+
+          </Link>
+        </div>
+        <h3 className="font-bold text-lg mt-1">£{currentlyClickedBasketItem?.price}</h3>
+      <h3 className="font-bold text-lg mt-1">only {currentlyClickedBasketItem?.stockQuantity} available!</h3>
+
+
+        <div className="modal-action">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button onClick={() => {
+              router.push('/shopFragRacks')
+              setItemAvailable(!itemAvailable)
+            }}
+              className="btn">Close</button>
+          </form>
+        </div>
+      </div>}
 
 
       {showModal ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
