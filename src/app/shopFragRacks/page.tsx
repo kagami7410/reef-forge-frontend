@@ -53,7 +53,7 @@ const Page = () => {
 
   const routeToCheckout = () => {
     if (basket.length > 0) {
-      router.replace
+      router.push('/userDetailsCheckout')
     }
     else {
       setNoItems(true)

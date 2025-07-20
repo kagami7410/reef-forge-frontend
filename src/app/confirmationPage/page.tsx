@@ -148,8 +148,6 @@ const Page = () => {
           localStorage.setItem('basket', JSON.stringify([]))
           Cookies.remove('user_email');
 
-          window.location.reload();
-
           // setShowModal(!showModal)
 
         }

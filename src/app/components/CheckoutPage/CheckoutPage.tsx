@@ -206,7 +206,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             return;
         }
 
-        const orderSumbitted = await handleSubmitPost();
+        // const orderSumbitted = await handleSubmitPost();
 
 
 
@@ -247,7 +247,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             return;
         }
         console.log("trying to confirm payment......")
-        // handleSubmitPost()
+        const orderSumbitted = await handleSubmitPost()
 
         if (orderSumbitted) {
 
@@ -255,7 +255,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                 elements,
                 clientSecret,
                 confirmParams: {
-                    return_url: ``,
+                    return_url: `http://www.localhost:3000/confirmationPage`,
                 },
             })
 
