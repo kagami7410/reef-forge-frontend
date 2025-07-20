@@ -29,6 +29,7 @@ const Page = () => {
   const [showModal, setShowModal] = useState(false);
   const [unavailableItems, setUnavailableItems] = useState<BasketItem[]>([])
   const [showUnvailableItemsModal, setShowUnavailableItemsModal] = useState(false)
+  const image_url =`${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
   const orderBasketItems: OrderBasketItem[] = [];
   const { basket } = useBasket();
@@ -105,32 +106,30 @@ const Page = () => {
     }
   }
 
+  const verifyStockQuantityOfBasketItems = async () => {
+    let unavailableCount = 0;
+    for (const item of basket) {
+      const status = await verifyQuantity(item.id, item.quantity)
+      if (status != 200) {
+        setLoading(false)
+        setUnavailableItems(prev => [item, ...prev])
+        unavailableCount++;
+      }
+      else {
+        console.log(item.title + " is available")
+        setLoading(false)
+      }
+    }
+
+    return unavailableCount;
+  }
+
 
   const handleSubmitPost = async () => {
     console.log('trying to validate stock availablity!')
-    basket.forEach((item) => {
-      verifyQuantity(item.id, item.quantity)
-        .then(data => {
-          if (data === 200) {
 
-            setLoading(false)
-
-          } else {
-            setLoading(false)
-            setUnavailableItems(prev => [item, ...prev])
-
-
-          }
-        });
-
-      // if (unavailableItems.length > 0) {
-      //   setShowUnavailableItemsModal(true)
-      // }
-
-    })
-
-
-    if (unavailableItems.length === 0) {
+    const unavailableItemsCount = await verifyStockQuantityOfBasketItems()
+    if (unavailableItemsCount === 0) {
       console.log('trying to submit order!')
       event?.preventDefault()
       if (basket.length > 0) {
@@ -173,6 +172,7 @@ const Page = () => {
     (eachItem) => {
       return <div className='w-72 h-72 bg-slate-200 top-64 '>
         <h1>{eachItem.title}</h1>
+        <img src={`${image_url}/${eachItem?.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>
       </div>
     }
   )

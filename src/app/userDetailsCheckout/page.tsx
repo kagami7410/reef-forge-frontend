@@ -52,7 +52,7 @@ const Page = () => {
 
   return (
     <div className='flex items-center align-middle justify-center mt-6'>
-      <div className=' w-full flex md:flex-row flex-col align-middle items-center justify-center'>
+      <div className=' w-full flex md:flex-row flex-col align-middle justify-center'>
         <div className='flex flex-col md:w-96 w-11/12 bg-slate-50  m-1 pb-8 border p-4 rounded-md justify-center shadow-lg'>
 
           <Elements stripe={stripePromise}
@@ -86,7 +86,7 @@ const Page = () => {
 
 
         </div>
-        <div className='md:w-96 w-11/12 flex flex-col md:mt-4 mt-16 items-center md:align-middle md:items-center md:ml-10'>
+        <div className='md:w-96 w-11/12 flex flex-col   md:ml-10'>
           <h1 className='m-4 md:m-3 text-lg font-bold'>Order Summary</h1>
           <BasketComponent allowEditQuantity={false} />
         </div>

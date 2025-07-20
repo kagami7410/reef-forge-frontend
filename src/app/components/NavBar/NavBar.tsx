@@ -432,7 +432,7 @@ const checkAuth = async () => {
           </Link>
         </div>
         <h3 className="font-bold text-lg mt-1">£{currentlyClickedBasketItem?.price}</h3>
-      <h3 className="font-bold text-lg mt-1">only {currentlyClickedBasketItem?.stockQuantity} available!</h3>
+      <h3 className="font-bold text-lg mt-1">only {currentlyClickedBasketItem?.quantity} available!</h3>
 
 
         <div className="modal-action">
