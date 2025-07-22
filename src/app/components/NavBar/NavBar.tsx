@@ -428,7 +428,11 @@ const checkAuth = async () => {
       
     </div>:<></>
 }
+      <div className='h-px bg-slate-200 w-full '></div>
+
     </div>
+
+
     
 
 

@@ -28,7 +28,7 @@ export default function RootLayout({
           <BasketProvider>
             <div className='flex-col flex fixed top-8  w-full  bg-slate-100 h-20 bg-100 z-40 right-0 '>
               <NavBar />
-              <div className=' bg-slate-200 shadow-2xl h-px'></div>
+ 
             </div>
 
             <div className=' bg-slate-200 shadow-2xl h-px'></div>
