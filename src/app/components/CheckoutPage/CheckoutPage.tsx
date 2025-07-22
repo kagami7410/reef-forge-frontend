@@ -251,7 +251,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                 elements,
                 clientSecret,
                 confirmParams: {
-                    return_url: `http://www.localhost:3000/confirmationPage`,
+                    return_url: `https://reef-forge.uk/confirmationPage`,
                 },
             })
 
