@@ -12,7 +12,6 @@ import Loading from '../Loading/Loading'
 import { useBasket } from '../BasketContext/BasketContext'
 import { verifyQuantity } from '@/lib/checkStockQuantity';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 
 interface BasketItem {
@@ -25,13 +24,6 @@ interface BasketItem {
 
 }
 
-interface FragRackItem extends BasketItem {
-    colour: string;
-    magnetNum: number;
-    size: string;
-    stockQuantity: number;
-
-}
 
 interface OrderBasketItem {
     itemId: number,
@@ -43,9 +35,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     const [errorMessage, setErrorMessage] = useState<string>()
     const [clientSecret, setClientSecret] = useState("")
     const { getBasketTotal } = useBasket();
-    const router = useRouter() // may be null or a NextRouter instance
 
-    const [showModal, setShowModal] = useState(false);
     const [unavailableItems, setUnavailableItems] = useState<BasketItem[]>([])
     const [showUnvailableItemsModal, setShowUnavailableItemsModal] = useState(false)
     const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
@@ -53,6 +43,8 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     const orderBasketItems: OrderBasketItem[] = [];
     const { basket } = useBasket();
     const [loading, setLoading] = useState(false)
+    // const [isMounted, setIsMounted] = useState(false)
+
     useEffect(() => {
         fetch('/api/create-payment-intent', {
             method: "POST",
@@ -66,7 +58,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             .then((data) => setClientSecret(data.clientSecret))
 
 
-    }, [amount])
+    }, [])
 
     const getOrderedItems = () => {
         basket.forEach((eachItem) => {
@@ -175,7 +167,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
 
     const returnAvailableItems = unavailableItems.map(
         (eachItem) => {
-            return <div><h3 className="font-bold text-lg mt-4">{eachItem?.title}</h3>
+            return <div key={eachItem.id}><h3 className="font-bold text-lg mt-4">{eachItem?.title}</h3>
                 <div key={eachItem?.id} className='flex flex-col w-1/2  rounded-md md:p-2 md:p-2   mt-1  lg:w-1/3'>
 
                     <Link href={`/shopFragRacks/${eachItem?.id}`}>
@@ -193,7 +185,13 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
 
 
     const getFinalTotal = () => {
-        return ((getBasketTotal() + 2.90).toFixed(2));
+        if(getBasketTotal()!= 0){
+        return ((getBasketTotal() ).toFixed(2));
+
+        }
+        else
+                return 0;
+
     }
     const handlePayment = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault()
@@ -205,8 +203,6 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
 
             return;
         }
-
-        // const orderSumbitted = await handleSubmitPost();
 
 
 
@@ -295,7 +291,6 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             <form onSubmit={handlePayment}>
                 {clientSecret && < PaymentElement />}
                 {errorMessage && <div>{errorMessage}</div>}
-                {/* {clientSecret?<PaymentElement/>:<></>} */}
                 <button className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48 mt-4 text-xl w-full'>{!loading ? `Pay £${getFinalTotal()}` : `Processing... `}</button>
 
 
@@ -312,7 +307,6 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                             setShowUnavailableItemsModal(!showUnvailableItemsModal)
                             setUnavailableItems([])
                             console.log("unavailable items modal" + showUnvailableItemsModal)
-                            router.replace
                         }}
                             className="btn ml-72">Close</button>
                     </form></div> : <></>}

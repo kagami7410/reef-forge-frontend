@@ -2,7 +2,7 @@ app:
   name: reef-forge-frontend
   image:
     name: docker.io/sujan7410/reef-forge-frontend
-    tag: latest
+    tag: release_test
 namespace:
   name: reef-forge-frontend
 

@@ -15,19 +15,12 @@ interface BasketItem {
 
 }
 
-interface FragRackItem extends BasketItem {
-  colour: string;
-  magnetNum: number;
-  size: string;
-  stockQuantity: number;
 
-}
 
 
 const Page = () => {
 
-  const [showModal, setShowModal] = useState(false);
-  const [unavailableItems, setUnavailableItems] = useState<BasketItem[]>([])
+ const [unavailableItems, setUnavailableItems] = useState<BasketItem[]>([])
   const [showUnvailableItemsModal, setShowUnavailableItemsModal] = useState(false)
   const image_url =`${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
@@ -168,7 +161,7 @@ const Page = () => {
 
   const returnAvailableItems = unavailableItems.map(
     (eachItem) => {
-      return <div className='w-72 h-72 bg-slate-200 top-64 '>
+      return <div key={eachItem.id} className='w-72 h-72 bg-slate-200 top-64 '>
         <h1>{eachItem.title}</h1>
         <img src={`${image_url}/${eachItem?.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>
       </div>

@@ -2,16 +2,18 @@
 
 import { useState } from 'react';
 
-export default function ImagePreview({ src, alt }: { src: string; alt?: string }) {
-  const [isOpen, setIsOpen] = useState(false);
+
+import React from 'react'
+
+const Page = ( { src }: { src: string}) => {
+    const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <>
-      <img
+    <div>
+       <img
         src={src}
-        alt={alt}
         onClick={() => setIsOpen(true)}
-        className="cursor-pointer max-w-full max-h-60 object-cover rounded"
+        className="cursor-pointer max-w-full max-h-96 object-cover rounded"
       />
 
       {isOpen && (
@@ -21,11 +23,11 @@ export default function ImagePreview({ src, alt }: { src: string; alt?: string }
         >
           <img
             src={src}
-            alt={alt}
             className="max-w-full max-h-full object-contain"
           />
         </div>
       )}
-    </>
-  );
+    </div>
+  )
 }
+export default Page

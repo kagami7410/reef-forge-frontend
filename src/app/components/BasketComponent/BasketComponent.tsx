@@ -20,6 +20,8 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
     code: string;
     quantity: number;
     photoUrls: string[];
+    stockQuantity: number;
+
   }
   const { basket, removeItemInBasket, getBasketTotal, getBasketCount, addSingleItemToBasket, removeAllQuantityitem} = useBasket();
   const [noItems, setNoItems] = useState(false);
@@ -43,7 +45,7 @@ const BasketComponent = ({allowEditQuantity}: Props) => {
   }, [basket])
 
   const getFinalTotal = () => {
-    return Number((getBasketTotal() + 2.90).toFixed(2));
+    return Number((getBasketTotal()).toFixed(2));
   }
 
 

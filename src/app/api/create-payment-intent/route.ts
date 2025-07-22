@@ -19,7 +19,7 @@ export async function POST(request: NextRequest){
             automatic_payment_methods: {enabled:true},
         });
 
-        console.log("payment: " + paymentIntent.client_secret)
+        console.log("payment intent from api: " + paymentIntent.client_secret)
 
         return NextResponse.json({ clientSecret: paymentIntent.client_secret})
     }

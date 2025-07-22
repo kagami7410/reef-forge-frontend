@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     const backendHostName = process.env.HIMALAYAN_COFFEE_BACKEND_HOSTNAME
 
     try {
-         res = await fetch(`http://localhost:9080/backend/fragRacks/add`, {
+         res = await fetch(`${backendHostName}/backend/fragRacks/add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

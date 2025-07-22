@@ -1,7 +1,6 @@
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function POST(request: NextApiRequest) {
+export async function POST(request: NextRequest) {
     const backendHostName = process.env.HIMALAYAN_COFFEE_BACKEND_HOSTNAME
     const body = await request.json();
 

@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 
-export default function VideoPreview({ src, alt }: { src: string; alt?: string }) {
+export default function VideoPreview({ src }: { src: string; alt?: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <video
-       style={{ object: 'cover' }}
+       
         src={src}
         muted autoPlay loop
                 onClick={() => setIsOpen(true)}

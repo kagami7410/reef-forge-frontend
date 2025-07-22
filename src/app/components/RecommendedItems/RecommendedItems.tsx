@@ -62,7 +62,7 @@ const RecommendedItems = () => {
   function getItems() {
     setLoading(!loading)
 
-    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=3`)
+    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=6`)
       .then(res => res.json())
       .then(data => {
         setItems(data.data.content)
@@ -122,10 +122,14 @@ const RecommendedItems = () => {
 
     else {
       return <div key={eachItem.title} id={eachItem.title} className=" carousel-item scroll-mt-96 relative items-center justify-center w-full bg-lime-100 rounded-lg">
+                 <div className=" flex -translate-y-1/2 transform justify-between">
 
+         
+          <button onClick={() => goToSlide(items[prevIndex].title)} className="btn btn-circle">❮</button>
+</div>
         <div className='flex-col m-4'>
           <Link href={`/shopFragRacks/${eachItem.id}`}>
-            <div className='border '>
+            <div className='border w-96 h-96 '>
               <img src={`${image_url}/${items[md_start_index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
             </div>
           </Link>
@@ -136,7 +140,7 @@ const RecommendedItems = () => {
 
         <div className='flex-col m-4'>
           <Link href={`/shopFragRacks/${eachItem.id}`}>
-            <div className='border'>
+            <div className='border  w-96 h-96'>
 
               <img src={`${image_url}/${items[(md_start_index+1)%items.length].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
             </div>
@@ -148,7 +152,7 @@ const RecommendedItems = () => {
 
         <div className='flex-col m-4'>
           <Link href={`/shopFragRacks/${eachItem.id}`}>
-            <div className='border '>
+            <div className='border  w-96 h-96'>
 
               <img src={`${image_url}/${items[(md_start_index+2)% items.length].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
             </div>
@@ -159,8 +163,7 @@ const RecommendedItems = () => {
         </div>
 
 
-        <div className="absolute left-72 right-72 top-1/2 flex -translate-y-1/2 transform justify-between">
-          <button onClick={() => goToSlide(items[prevIndex].title)} className="btn btn-circle">❮</button>
+        <div className=" flex -translate-y-1/2 transform justify-between">
           <button onClick={() => goToSlide(items[nextIndex].title)} className="btn btn-circle">❯</button>
 
           {/* <a  href={`#${items[prevIndex].title}`} className="btn btn-circle">❮</a>

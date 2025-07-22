@@ -4,8 +4,8 @@ import '/src/app/globals.css'
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import RecommendedItems from '../RecommendedItems/RecommendedItems'
-import ImagePreview from '../ImagePreview/page'
-import VideoPreview from '../VideoPreview/page'
+import ImagePreview from '../ImagePreview/ImagePreview'
+import VideoPreview from '../VideoPreview/VideoPreview'
 
 const LandingPage = () => {
 
@@ -217,16 +217,12 @@ const LandingPage = () => {
           <h1 className={`text-center text-xl  w-full mb-4 ${styles.otherHeadline} md:text-2xl`}> Reef Forge Products in Use </h1>
         </div>
 
-        <ImagePreview  src={`${image_url}/IMG20250607212926.jpg`}/>
 
-        <VideoPreview src="https://storage.googleapis.com/fragracks-web-images/videos/VID20250607214330.mp4" />
 
         <div className='w-full flex md:flex-row flex-col bg-slate-200 rounded-lg flex items-center justify-center'>
-          {/* <div className='w-full m-4 flex justify-center'>
-            <video className='object-cover rounded-xl h-96 w-96' style={{ object: 'cover' }} muted autoPlay loop >
-              <source src="https://storage.googleapis.com/fragracks-web-images/videos/VID20250607214330.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+          <div className='w-full m-4 flex justify-center'>
+        <VideoPreview src="https://storage.googleapis.com/fragracks-web-images/videos/VID20250607214330.mp4" />
+
           </div>
 
        
@@ -235,22 +231,19 @@ const LandingPage = () => {
 
           <div className='w-full m-4 items-center  flex justify-center'>
 
+                     <ImagePreview  src={`${image_url}/IMG20250607212926.jpg`}/>
 
-            <img className='rounded-xl h-96 w-96' style={{ object: 'cover' }} src={`${image_url}/IMG20250607212926.jpg`} />
           </div>
           
           <div className='w-full m-4 flex justify-center'>
-
-
-            <img className='rounded-xl h-96 w-96' style={{ object: 'cover' }} src={`${image_url}/IMG20250607213428.jpg`} />
-          </div> */}
-
-
-                     <ImagePreview  src={`${image_url}/IMG20250607212926.jpg`}/>
-
-                          <ImagePreview  src={`${image_url}/IMG20250607212926.jpg`}/>
-
                                   <ImagePreview  src={`${image_url}/IMG20250607212926.jpg`}/>
+
+
+          </div>
+
+
+
+
 
         </div>
 

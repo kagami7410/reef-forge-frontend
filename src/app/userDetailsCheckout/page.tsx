@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useBasket } from '../components/BasketContext/BasketContext';
 import BasketComponent from '../components/BasketComponent/BasketComponent';
 import { loadStripe } from "@stripe/stripe-js";
@@ -11,7 +11,11 @@ import { StripeAddressElementOptions } from '@stripe/stripe-js';
 let stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
 
 const Page = () => {
+const [hasMounted, setHasMounted] = useState(false);
 
+useEffect(() => {
+  setHasMounted(true);
+}, []);
 
 
   const { getBasketTotal } = useBasket();
@@ -32,8 +36,8 @@ const Page = () => {
 
 
   const getFinalTotal = () => {
-    const rounded_number = getBasketTotal() + 2.95
-    return rounded_number.toFixed(2) ;
+    const rounded_number = getBasketTotal()
+    return parseFloat(rounded_number.toFixed(2)) ;
   }
 
 
@@ -54,6 +58,7 @@ const Page = () => {
     <div className='flex items-center align-middle justify-center mt-6'>
       <div className=' w-full flex md:flex-row flex-col align-middle justify-center'>
         <div className='flex flex-col md:w-96 w-11/12 bg-slate-50  m-1 pb-8 border p-4 rounded-md justify-center shadow-lg'>
+{hasMounted && stripePromise && (
 
           <Elements stripe={stripePromise}
             options={{
@@ -71,7 +76,9 @@ const Page = () => {
                 type="email"
                 required
                 value={userEmail}
-                onChange={(e) => setUserEmail(e.target.value)}
+                onChange={(e) => {
+                  setUserEmail(e.target.value)
+                }}
                 className="border p-2 mb-4 w-full"
               />      
             </div>
@@ -81,6 +88,7 @@ const Page = () => {
             </div>
 
           </Elements>
+)}
 
 
 

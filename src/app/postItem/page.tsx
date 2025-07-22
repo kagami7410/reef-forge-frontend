@@ -1,5 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import type { Active, Over } from '@dnd-kit/core';
+
 import Link from 'next/link'
 import {
   DndContext,
@@ -14,7 +16,7 @@ import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } 
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 import { CSS } from '@dnd-kit/utilities';
-import { useRouter } from 'next/navigation';
+import Loading from '../components/Loading/Loading';
 
 
 
@@ -23,26 +25,21 @@ type ImageItem = {
   file: File;
   previewUrl: string;
 };
-
-
+interface MyDragEvent {
+  active: Active;
+  over: Over | null;
+}
 type UploadObject = {
   objectName: string;
   uploadUrl: string;
 }
 
-type ImageRequest = {
-  fileName: string;
-  fileType: string;
-}
 
 
 
 const Page = () => {
 
-  interface AuthenticateRequest {
-    userEmail: string;
-    password: string;
-  }
+
 interface BasketItem {
   id: number;
   title: string;
@@ -66,7 +63,6 @@ interface FragRackItem extends BasketItem {
 
 
   const [loading, setLoading] = useState(true);
-  const router = useRouter() // may be null or a NextRouter instance
 
   const [title, setTitle] = useState("");
   const [stockQuantity, setStockQuantity] = useState("");
@@ -79,8 +75,7 @@ interface FragRackItem extends BasketItem {
   const [files, setFiles] = useState<File[] | null>(null);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [removeClicked, setRemoveClicked] = useState(false)
-  const [signedIn, setSignedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false)
+  // const [signedIn, setSignedIn] = useState(false);
   const [images, setImages] = useState<ImageItem[]>([]); // imageItem: { id, file, previewUrl }
 
   // const handleAddFiles = (files: FileList) => {
@@ -100,8 +95,12 @@ interface FragRackItem extends BasketItem {
   // Don't revoke during drag-and-drop reorder
 
   useEffect(() => {
-    checkAuth()
     getItems()
+
+
+    //NEED TO REVISIT THIS IF PAGINATION IS ENABLED
+
+    setCurrentPage(0)
     return () => {
       // Optional cleanup on component unmount
       images.forEach(img => {
@@ -112,45 +111,19 @@ interface FragRackItem extends BasketItem {
     };
   }, []);
 
-const checkAuth = async () => {
-  const res = await fetch('/api/auth', {
-    credentials: 'include',
-     })
-  const data = await res.json();
-  console.log(data)
-
-
-  if (data.authenticated) {
-    console.log('User is logged in');
-    if (data.user.isAdmin === "true") {
-      setIsAdmin(true)
-      console.log('User is an admin');
-      setSignedIn(true)
-    }
-  }
-  else{
-    router.push('/SignInPage')
-        console.log("user not authenticated")
-
-    return 
-  }
-};
-
 
   useEffect(() => {
   }, [removeClicked])
 
 
-  const getUpdatedListOfItemsAfterRemoval = (itemId:any) => {
+  const getUpdatedListOfItemsAfterRemoval = (itemId:number) => {
 
-    setItems( prevImages => {
-      return items.filter(eachitem => eachitem.id != itemId)
-    })
+    setItems(  items.filter(eachitem => eachitem.id != itemId))
   }
 
 
 
-  const removeItem = async(itemId:any) => {
+  const removeItem = async(itemId:number) => {
     const res = await fetch(`/api/deleteItemById?itemId=${itemId}`,{
       method: "DELETE"
     })
@@ -171,7 +144,6 @@ const checkAuth = async () => {
       body: JSON.stringify(
         {
           title: title,
-          size: null,
           photoUrls: photoUrls,
           description: description,
           price: price,
@@ -272,13 +244,16 @@ const checkAuth = async () => {
   console.log(fileNames)
 
 
-  const handleDragEnd = (event: any) => {
+  const handleDragEnd = (event:MyDragEvent) => {
     const { active, over } = event;
+    if(over?.id != undefined){
     if (active.id !== over?.id) {
       const oldIndex = images.findIndex(i => i.id === active.id);
       const newIndex = images.findIndex(i => i.id === over.id);
       setImages(arrayMove(images, oldIndex, newIndex));
     }
+    }
+
   };
 
   const removeImage = (idToRemove: string) => {
@@ -536,7 +511,8 @@ const checkAuth = async () => {
     </div>
 
     <div>
-    {jsxreturnedAllItems}
+      {loading?<Loading/>:jsxreturnedAllItems}
+
 
     </div>
 

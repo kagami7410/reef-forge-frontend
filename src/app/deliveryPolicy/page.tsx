@@ -7,7 +7,7 @@ const page = () => {
       <h1 className="text-3xl font-bold mb-6 text-center">📦 Delivery Policy</h1>
 
       <p className="mb-6">
-        We’ve partnered with <strong>Evri</strong> to bring you a fast, secure, and premium delivery experience. Here's everything you need to know about how your order will be delivered.
+        We have partnered with <strong>Evri</strong> to bring you a fast, secure, and premium delivery experience. Here is everything you need to know about how your order will be delivered.
       </p>
 
 
@@ -16,7 +16,7 @@ const page = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">📍 Tracking Your Order</h2>
         <p>
-          Once your order ships, you’ll receive a tracking link via email. You can monitor your parcel using the Evri website or mobile app in real time.
+          Once your order ships, you will receive a tracking link via email. You can monitor your parcel using the Evri website or mobile app in real time.
         </p>
       </section>
 

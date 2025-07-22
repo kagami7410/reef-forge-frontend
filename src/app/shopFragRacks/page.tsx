@@ -14,6 +14,8 @@ interface BasketItem {
   code: string;
   quantity: number;
   photoUrls: string[];
+  stockQuantity: number;
+
 
 }
 
@@ -21,7 +23,7 @@ interface FragRackItem extends BasketItem {
   colour: string;
   magnetNum: number;
   size: string;
-  stockQuantity: number;
+
 
 }
 
@@ -33,7 +35,7 @@ const Page = () => {
   const [noItems, setNoItems] = useState(false);
   const [itemAvailable, setItemAvailable] = useState(true);
 
-  const [currentlyClickedBasketItem, setCurrentlyClickedBasketItem] = useState<FragRackItem>()
+  const [currentlyClickedBasketItem, setCurrentlyClickedBasketItem] = useState<BasketItem>()
 
   const [drawerMounted, setDrawerMounted] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -93,7 +95,7 @@ const Page = () => {
     console.log("basketItem: ", basketItem)
     if (basketItem != null) {
 
-      verifyQuantity(item.id, basketItem?.quantity + 1)
+      verifyQuantity(item.id, basketItem?.quantity)
         .then(data => {
           if (data === 200) {
             setDrawerMounted(true); // Mount it

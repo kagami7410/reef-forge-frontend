@@ -5,6 +5,7 @@ import Loading from '@/src/app/components/Loading/Loading';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { verifyQuantity } from '@/lib/checkStockQuantity';
+import RecommendedItems from '../../components/RecommendedItems/RecommendedItems';
 
 
 interface BasketItem {
@@ -14,6 +15,7 @@ interface BasketItem {
   code: string;
   quantity: number;
   photoUrls: string[];
+  stockQuantity: number;
 
 }
 
@@ -30,7 +32,7 @@ interface FragRackItem extends BasketItem {
 const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   const [isClient, setIsClient] = useState(false);
   const [itemAvailable, setItemAvailable] = useState(true);
- const [drawerMounted, setDrawerMounted] = useState(false);
+  const [drawerMounted, setDrawerMounted] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const router = useRouter() // may be null or a NextRouter instance
   const image_url = process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS;
@@ -41,20 +43,18 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   const [currentImage, setCurrentImage] = useState('')
   const [item, setItem] = useState<FragRackItem>();
   const [noItems, setNoItems] = useState(false);
-
   const [basketItem, setBasketItem] = useState<BasketItem>({
     id: 0,
     title: "",
     price: 0,
     code: "",
     quantity: 0,
-    photoUrls: []
+    photoUrls: [],
+    stockQuantity: 0
 
   });
-  const [basketItems, setBasketItems] = useState<BasketItem[]>()
   const { addSingleItemToBasket, basket, removeItemInBasket, getBasketTotal, removeAllQuantityitem } = useBasket();
   const { itemId } = React.use(params)
-  const [addToCartClicked, setAddToCart] = useState(false);
 
   // const handleAddToBasket = (item: BasketItem) => {
 
@@ -83,10 +83,6 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   }, [])
 
 
-  useEffect(() => {
-    console.log("cart clicked!")
-    setBasketItems(basketItems)
-  }, [addToCartClicked])
 
   useEffect(() => {
     setCurrentImage(`${image_url}/All/${item?.photoUrls[0]}`)
@@ -273,7 +269,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
     <>
 
       <div className='flex-col w-full   justify-items-center max-w-screen-2xl m-auto  md:p-2 '>
-        {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6  p-4'>
+        {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6 h-screen p-4'>
           {/* <Loading/> */}
           <div className='flex rounded-md  flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
             <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-1/2 rounded-md     '>
@@ -419,7 +415,11 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
                   </div>
                 </div>
               </div>
+
+
             </div>
+
+            
           </div>
 
 
@@ -475,7 +475,6 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button onClick={() => {
-                router.replace
                 setShowModal(!showModal)
                 setItemQuanity(0)
 
@@ -484,6 +483,16 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
             </form>
           </div>
         </div> : <></>}
+
+
+             <div className='flex flex-col mt-3 md:mt-4'>
+                <div className='flex'>
+                  <h1 className={`text-center text-xl  w-full mb-4 md:text-2xl`}> Reef Forge Products </h1>
+                </div>
+                <RecommendedItems />
+        
+        
+              </div>
 
       </div>
 

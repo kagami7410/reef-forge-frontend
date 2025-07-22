@@ -31,6 +31,7 @@ interface BasketItem {
   code: string;
   quantity: number;
   photoUrls: string[];
+  stockQuantity: number;
 
 }
 // Define the provider props type

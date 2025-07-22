@@ -1,14 +1,11 @@
-import { NextResponse } from "next/server";
-import { NextApiRequest } from "next";
+import { NextResponse, NextRequest } from "next/server";
 
-import cookie from 'cookie';
 
-export async function POST(request: NextApiRequest) {
+export async function POST(request: NextRequest) {
   // const res = NextResponse.next(); // or NextResponse.redirect(), etc.
 
   const backendHostName = process.env.HIMALAYAN_COFFEE_BACKEND_HOSTNAME
   const body = await request.json();
-  const { itemId, quantity } = body;
 
   // try {
   //   console.log("Parsed Body:", body); // Debug: Check the parsed data
