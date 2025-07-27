@@ -101,7 +101,7 @@ const RecommendedItems = () => {
       return <div key={eachItem.title} id={eachItem.title} className=" carousel-item scroll-mt-96 relative items-center justify-center w-full bg-lime-100 rounded-lg">
       <div className='flex-col '>
 
-        <div className='border '>
+        <div className='border bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50'>
           <Link href={`/shopFragRacks/${eachItem.id}`}></Link>
           <img src={`${image_url}/${items[index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
         </div>
@@ -129,8 +129,8 @@ const RecommendedItems = () => {
 </div>
         <div className='flex-col m-4'>
           <Link href={`/shopFragRacks/${eachItem.id}`}>
-            <div className='border w-96 h-96 '>
-              <img src={`${image_url}/${items[md_start_index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
+            <div className=' w-96 h-96 bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-lg'>
+              <img src={`${image_url}/${items[md_start_index].photoUrls[0]}`} className="w-full rounded-lg  h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
             </div>
           </Link>
           <a className='p-2 md:h-16 ' href={`/shopFragRacks/${items[md_start_index]}`}>{items[md_start_index].title}</a>
@@ -142,7 +142,7 @@ const RecommendedItems = () => {
           <Link href={`/shopFragRacks/${eachItem.id}`}>
             <div className='border  w-96 h-96'>
 
-              <img src={`${image_url}/${items[(md_start_index+1)%items.length].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
+              <img src={`${image_url}/${items[(md_start_index+1)%items.length].photoUrls[0]}`} className="w-full rounded-lg  h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
             </div>
           </Link>
           <a className='p-2 md:h-16 ' href={`/shopFragRacks/${items[(md_start_index+1)%items.length].id}`}>{items[(md_start_index+1)%items.length].title}</a>
@@ -154,7 +154,7 @@ const RecommendedItems = () => {
           <Link href={`/shopFragRacks/${eachItem.id}`}>
             <div className='border  w-96 h-96'>
 
-              <img src={`${image_url}/${items[(md_start_index+2)% items.length].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
+              <img src={`${image_url}/${items[(md_start_index+2)% items.length].photoUrls[0]}`} className="w-full rounded-lg  h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
             </div>
           </Link>
           <a className='p-2 md:h-16 ' href={`/shopFragRacks/${items[(md_start_index+2)% items.length].id}`}>{items[(md_start_index+2)% items.length].title}</a>

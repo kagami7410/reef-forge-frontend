@@ -55,6 +55,8 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   });
   const { addSingleItemToBasket, basket, removeItemInBasket, getBasketTotal, removeAllQuantityitem } = useBasket();
   const { itemId } = React.use(params)
+    const [futureDate, setFutureDate] = useState('');
+
 
   // const handleAddToBasket = (item: BasketItem) => {
 
@@ -74,6 +76,10 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
   // const vaildPaths = ["getAll", "greenBeans", "darkRoastedBeans"]
 
     useEffect(() => {
+
+    const now = new Date();
+    now.setDate(now.getDate() + 3); // Add 3 days
+    setFutureDate(now.toDateString()); // Or toISOString(), toLocaleDateString(), etc.
       if (typeof window == 'object') {
         // Safe to use window or document here
         setIsClient(true);
@@ -290,8 +296,12 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
             </div>
             <div className='flex flex-col w-full  p-2 md:p-6 md:pl-8 md:w-1/2 md:mt-2'>
-              <h1 className='flex  p-2 text-2xl md:text-3xl font-semibold'>{item?.title}</h1>
+                          <h1 className='flex pl-2 text-sm'>Reef Forge</h1>
+
+              <h1 className='flex  pl-2 text-2xl md:text-3xl font-semibold'>{item?.title}</h1>
               <h3 className='flex    p-2 text-xl '>£{item?.price}</h3>
+              <div className="flex border w-96 justify-center p-2 rounded-lg  text-lime-600">✅ Get it by {futureDate}</div>
+
               <div className='flex  justify-center items-center  w-full md:w-1/2 mt-1 mb-1 md:mt-2 md:mb-2'>
                 {/* <div className='flex w-full h-full  items-center justify-center'>
                   <button onClick={decreaseQuantity} className=' text-2xl  rounded-md  w-2/6 border' >-</button>
@@ -300,7 +310,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
                 </div> */}
               </div>
               {noItems ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
-        <h3 className="font-bold text- md:text-lg">Basket is Empty!</h3>
+        <h3 className="font-bold text-lg md:text-lg">Basket is Empty!</h3>
 
 
 
@@ -324,7 +334,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
             <div className="drawer-content">
               {/* Page content here */}
               <label onClick={() => { if(item !==undefined){addItemToBasket(item)}}} 
-            htmlFor="my-drawer-single-item-page" className="btn btn-primary drawer-button">Add To Cart</label>
+            htmlFor="my-drawer-single-item-page" className="btn btn-primary drawer-button  w-96">Add To Cart</label>
             </div>
 
                     {/* Overlay */}

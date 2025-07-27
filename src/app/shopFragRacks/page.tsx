@@ -194,7 +194,7 @@ const Page = () => {
       </div>
 
     </div>
-      <div className='flex w-full bg-gray-300 h-px m-1'></div>
+      <div className='flex w-full  h-px m-1'></div>
     </div>
 
   }
@@ -204,11 +204,11 @@ const Page = () => {
         console.log(eachItem.photoUrls[0])
 
     return (
-      <div key={eachItem.id} className=' flex flex-col w-5/12 rounded-md m-2  md:p-2   mt-8 md:m-2 md:w-72 bg-slate-600'>
+      <div key={eachItem.id} className=' flex flex-col w-5/12 rounded-md m-2  md:p-2   mt-8 md:m-3 md:w-80 '>
         <Link href={`/shopFragRacks/${eachItem.id}`}>
                 <div className='flex w-full justify-center'>
                   
-          <div className='bg-gradient-to-r from-blue-400/20 via-pink-500/50 to-red-500/50 rounded-md w-44 h-44 md:w-60 md:h-60   flex'>
+          <div className='bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-md w-44 h-44 md:w-80 md:h-80   flex'>
             <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100 w-full h-full object-cover cursor-pointer' ></img>
 
           </div>
@@ -275,7 +275,7 @@ const Page = () => {
     <>
       <div>
         {loading ? <Loading /> : <div><div className='flex justify-center'>
-          <div className='flex flex-wrap  justify-center max-w-screen-2xl  my-4 w-full bg-slate-500'>
+          <div className='flex flex-wrap  justify-center max-w-screen-2xl  my-4 w-full'>
             {jsxreturnedAllItems}
           </div>
         </div>
