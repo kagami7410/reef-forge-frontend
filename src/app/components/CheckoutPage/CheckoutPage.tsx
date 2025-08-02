@@ -43,7 +43,6 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     const orderBasketItems: OrderBasketItem[] = [];
     const { basket } = useBasket();
     const [loading, setLoading] = useState(false)
-    // const [isMounted, setIsMounted] = useState(false)
 
     useEffect(() => {
         fetch('/api/create-payment-intent', {
@@ -85,9 +84,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                     postCode: parsedAddress.address.postal_code ?? ""
                 },
                 role: "ADMIN"
-
             }
-
             return userDetails;
         }
 
@@ -147,11 +144,10 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                     localStorage.setItem('basket', JSON.stringify([]))
                     Cookies.remove('user_email');
                     orderSumbitted = true
-                    window.location.reload();
                     // setShowModal(!showModal)
                 }
                 else {
-                    console.log(response.body)
+                    console.error('Order submission failed');
                 }
             }
         }
@@ -252,6 +248,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                 clientSecret,
                 confirmParams: {
                     return_url: `https://reef-forge.uk/confirmationPage`,
+
                 },
             })
 
@@ -282,6 +279,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     }
 
 
+
     return (
         <div className='flex flex-col'>
             <div className='flex align-middle justify-center text-xl m-4'>
@@ -291,7 +289,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             <form onSubmit={handlePayment}>
                 {clientSecret && < PaymentElement />}
                 {errorMessage && <div>{errorMessage}</div>}
-                <button className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48 mt-4 text-xl w-full'>{!loading ? `Pay £${getFinalTotal()}` : `Processing... `}</button>
+                <button disabled={!stripe || loading} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48 mt-4 text-xl w-full'>{!loading ? `Pay £${getFinalTotal()}` : `Processing... `}</button>
 
 
             </form>

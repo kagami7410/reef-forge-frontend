@@ -35,8 +35,8 @@ COPY --from=builder /app/lib ./
 
 
 # Please uncomment line below for local builds
-# RUN mkdir -p vault/secrets
-# COPY vault ./vault
+RUN mkdir -p vault/secrets
+COPY vault ./vault
 
 # COPY .env.dev ./
 

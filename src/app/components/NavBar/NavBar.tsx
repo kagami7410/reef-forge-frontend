@@ -35,11 +35,11 @@ interface BasketItem {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-        checkAuth()
+      checkAuth()
        setIsMounted(true);
 
 
-  })
+  },[])
 
 
   useEffect(()=>{

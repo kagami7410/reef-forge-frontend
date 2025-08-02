@@ -5,14 +5,12 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest){
         try{
-            const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-    apiVersion: "2025-03-31.basil", // or the version you are using
-    });
+            const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 
         console.log("requesting clientsecret.....")
         const {amount} = await request.json();
-        
+
         const paymentIntent = await stripe.paymentIntents.create({
             amount: amount,
             currency: "gbp",
@@ -30,6 +28,6 @@ export async function POST(request: NextRequest){
         {error: `Internal Server Error: ${error}`},
         {status: 500}
         );
- 
+
     }
 }

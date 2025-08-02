@@ -361,9 +361,9 @@ const Page = () => {
       <div className='flex justify-center mt-8 md:mt-20'>
         <div className="join" >
           <input className="join-item btn btn-square" type="radio" name="options" aria-label="1" value={currentPage} placeholder='1' onChange={handlePageClick} defaultChecked />
-          <input className="join-item btn btn-square" type="radio" name="options" aria-label="2" value={currentPage} placeholder='2' onChange={handlePageClick} />
+          {/* <input className="join-item btn btn-square" type="radio" name="options" aria-label="2" value={currentPage} placeholder='2' onChange={handlePageClick} />
           <input className="join-item btn btn-square" type="radio" name="options" aria-label="3" value={currentPage} placeholder='3' onChange={handlePageClick} />
-          <input className="join-item btn btn-square" type="radio" name="options" aria-label="4" value={currentPage} placeholder='4' onChange={handlePageClick} />
+          <input className="join-item btn btn-square" type="radio" name="options" aria-label="4" value={currentPage} placeholder='4' onChange={handlePageClick} /> */}
         </div>
 
 
