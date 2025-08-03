@@ -9,11 +9,19 @@ export async function POST(request: NextRequest){
 
 
         console.log("requesting clientsecret.....")
-        const {amount} = await request.json();
+        const {amount, basketItems, orderId} = await request.json();
 
+        // You can serialize product info into metadata
+        const metadata: Record<string, string> = {
+            order_id: orderId,
+            products: basketItems
+            .map((item: any) => `${item.title} x ${item.quantity}`)
+            .join(', '),
+  };
         const paymentIntent = await stripe.paymentIntents.create({
             amount: amount,
             currency: "gbp",
+            metadata,
             automatic_payment_methods: {enabled:true},
         });
 

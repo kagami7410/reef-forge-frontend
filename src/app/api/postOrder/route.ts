@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-    const backendHostName = process.env.HIMALAYAN_COFFEE_BACKEND_HOSTNAME
+    const backendHostName = process.env.REEF_FORGE_BACKEND_HOSTNAME
 
     const body = await request.json();
 
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     // }
   
   try {
-    console.log("Parsed Body:", body); // Debug: Check the parsed data
+    console.log("Parsed Body from postOrder:", body); // Debug: Check the parsed data
     const res = await fetch(`${backendHostName}/backend/orders/submitOrder`,{
         method: "POST",
         headers: {

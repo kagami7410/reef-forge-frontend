@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 
 export async function GET(req:NextRequest) {
-    const backendHostName = process.env.HIMALAYAN_COFFEE_BACKEND_HOSTNAME
+    const backendHostName = process.env.REEF_FORGE_BACKEND_HOSTNAME
 
     try{
         console.log(`trying to getAll the beans`)

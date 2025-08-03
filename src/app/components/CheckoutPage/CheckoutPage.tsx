@@ -40,31 +40,53 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     const [showUnvailableItemsModal, setShowUnavailableItemsModal] = useState(false)
     const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
-    const orderBasketItems: OrderBasketItem[] = [];
     const { basket } = useBasket();
     const [loading, setLoading] = useState(false)
+    const [orderId, setOrderId] = useState("")
+    const frontendHostName = process.env.REEF_FORGE_FRONTEND_HOSTNAME
+    const [updatedOrderId, setUpdatedOrderId] = useState(false)
+
+    
+  function generateOrderNumber(): string {
+    const timestamp = Date.now(); // ensures uniqueness
+    const random = Math.floor(1000 + Math.random() * 9000); // 4-digit random number
+    return `ORD-${timestamp}-${random}`;
+  }
+
+      useEffect(() => {
+        if(!updatedOrderId){
+            setOrderId(generateOrderNumber())
+            setUpdatedOrderId(true)
+        }
+    },[])
+
+
 
     useEffect(() => {
+        if(!updatedOrderId){
+            
+        }
+        console.log("creating order id for order: ", orderId)
         fetch('/api/create-payment-intent', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
 
             },
-            body: JSON.stringify({ amount: convertToSubcurrency(amount) }),
+            body: JSON.stringify({ amount: convertToSubcurrency(amount), basketItems: basket, orderId: orderId }),
         })
             .then((res) => res.json())
             .then((data) => setClientSecret(data.clientSecret))
 
 
-    }, [])
+    }, [updatedOrderId])
 
-    const getOrderedItems = () => {
-        basket.forEach((eachItem) => {
-            orderBasketItems.push({ itemId: eachItem.id, itemQuantity: eachItem.quantity })
-        })
-        return orderBasketItems;
-    }
+    // const getOrderedItems = () => {
+    //     basket.forEach((eachItem) => {
+    //         orderBasketItems.push({ itemId: eachItem.id, itemQuantity: eachItem.quantity })
+    //     })
+    //     return orderBasketItems;
+    // }
 
     const getUserDetails = () => {
         const storedEmail = Cookies.get('user_email');
@@ -92,14 +114,6 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
 
 
 
-
-    const getSubmitOrderBody = () => {
-        return {
-            registerRequest: getUserDetails(),
-            orderedItems: getOrderedItems()
-        }
-    }
-
     const verifyStockQuantityOfBasketItems = async () => {
         let unavailableCount = 0;
         for (const item of basket) {
@@ -119,45 +133,45 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     }
 
 
-    const handleSubmitPost = async () => {
-        //checks if the order is submitted to backend
-        let orderSumbitted = false
-        console.log('trying to validate stock availablity!')
+    // const handleSubmitPost = async () => {
+    //     //checks if the order is submitted to backend
+    //     let orderSumbitted = false
+    //     console.log('trying to validate stock availablity!')
 
-        const unavailableItemsCount = await verifyStockQuantityOfBasketItems()
-        if (unavailableItemsCount === 0) {
-            console.log('trying to submit order!')
-            event?.preventDefault()
-            if (basket.length > 0) {
-                setLoading(true)
-                const response = await fetch("/api/postOrder", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(getSubmitOrderBody()),
-                });
-                console.log('status: ', response.status)
-                setLoading(false)
+    //     const unavailableItemsCount = await verifyStockQuantityOfBasketItems()
+    //     if (unavailableItemsCount === 0) {
+    //         console.log('trying to submit order!')
+    //         event?.preventDefault()
+    //         if (basket.length > 0) {
+    //             setLoading(true)
+    //             const response = await fetch("/api/postOrder", {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify(getSubmitOrderBody()),
+    //             });
+    //             console.log('status: ', response.status)
+    //             setLoading(false)
 
-                if (response.status === 202) {
-                    localStorage.setItem('basket', JSON.stringify([]))
-                    Cookies.remove('user_email');
-                    orderSumbitted = true
-                    // setShowModal(!showModal)
-                }
-                else {
-                    console.error('Order submission failed');
-                }
-            }
-        }
-        else {
-            console.log("trying to show unavailable items")
-            setShowUnavailableItemsModal(!showUnvailableItemsModal)
-        }
-        return orderSumbitted;
+    //             if (response.status === 202) {
+    //                 localStorage.setItem('basket', JSON.stringify([]))
+    //                 Cookies.remove('user_email');
+    //                 orderSumbitted = true
+    //                 // setShowModal(!showModal)
+    //             }
+    //             else {
+    //                 console.error('Order submission failed');
+    //             }
+    //         }
+    //     }
+    //     else {
+    //         console.log("trying to show unavailable items")
+    //         setShowUnavailableItemsModal(!showUnvailableItemsModal)
+    //     }
+    //     return orderSumbitted;
 
-    };
+    // };
     console.log('unavailable Items: ', unavailableItems)
 
 
@@ -181,12 +195,12 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
 
 
     const getFinalTotal = () => {
-        if(getBasketTotal()!= 0){
-        return ((getBasketTotal() ).toFixed(2));
+        if (getBasketTotal() != 0) {
+            return ((getBasketTotal()).toFixed(2));
 
         }
         else
-                return 0;
+            return 0;
 
     }
     const handlePayment = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -239,33 +253,32 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             return;
         }
         console.log("trying to confirm payment......")
-        const orderSumbitted = await handleSubmitPost()
 
-        if (orderSumbitted) {
-
+        const unavailableItemsCount = await verifyStockQuantityOfBasketItems()
+        if (unavailableItemsCount === 0) {
             const { error } = await stripe.confirmPayment({
                 elements,
                 clientSecret,
                 confirmParams: {
-                    return_url: `https://reef-forge.uk/confirmationPage`,
+                    return_url: `http://localhost:3000/confirmationPage?orderId=${orderId}`,
 
                 },
             })
-
-
-
 
             if (error) {
                 console.log('There was an error in making payment!')
                 setErrorMessage(error.message)
             } else {
+
                 console.log('payment was successful!')
+                
                 // router.push('/')
 
 
                 // user is returmed to return url
             }
         }
+
 
         setLoading(false)
 
@@ -295,19 +308,19 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             </form>
 
             {showUnvailableItemsModal ? <div className="z-30 flex-col items-center h-96 flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
-<h3 className="font-bold text- md:text-lg">❌ Some Items in your basket has limited available</h3>{returnAvailableItems}
-                           <div className="modal-action">
+                <h3 className="font-bold text- md:text-lg">❌ Some Items in your basket has limited available</h3>{returnAvailableItems}
+                <div className="modal-action">
 
                 </div>                                     <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button onClick={() => {
+                    {/* if there is a button in form, it will close the modal */}
+                    <button onClick={() => {
 
-                            setShowUnavailableItemsModal(!showUnvailableItemsModal)
-                            setUnavailableItems([])
-                            console.log("unavailable items modal" + showUnvailableItemsModal)
-                        }}
-                            className="btn ml-72">Close</button>
-                    </form></div> : <></>}
+                        setShowUnavailableItemsModal(!showUnvailableItemsModal)
+                        setUnavailableItems([])
+                        console.log("unavailable items modal" + showUnvailableItemsModal)
+                    }}
+                        className="btn ml-72">Close</button>
+                </form></div> : <></>}
             {/* {returnAvailableItems } */}
 
 

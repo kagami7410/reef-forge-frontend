@@ -4,7 +4,7 @@ import { NextResponse, NextRequest } from "next/server";
 export async function POST(request: NextRequest) {
   // const res = NextResponse.next(); // or NextResponse.redirect(), etc.
 
-  const backendHostName = process.env.HIMALAYAN_COFFEE_BACKEND_HOSTNAME
+  const backendHostName = process.env.REEF_FORGE_BACKEND_HOSTNAME
   const body = await request.json();
 
   // try {

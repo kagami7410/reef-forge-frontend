@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
 
     let res;
 
-    const backendHostName = process.env.HIMALAYAN_COFFEE_BACKEND_HOSTNAME
+    const backendHostName = process.env.REEF_FORGE_BACKEND_HOSTNAME
 
     try {
          res = await fetch(`${backendHostName}/backend/fragRacks/add`, {

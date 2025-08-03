@@ -1,59 +1,33 @@
 'use client'
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useBasket } from '../components/BasketContext/BasketContext';
 import Cookies from 'js-cookie';
 import Loading from '../components/Loading/Loading';
-import { verifyQuantity } from '@/lib/checkStockQuantity';
-interface BasketItem {
-  id: number;
-  title: string;
-  price: number;
-  code: string;
-  quantity: number;
-  photoUrls: string[];
-
-}
+import Link from 'next/link';
 
 
 
 
-const Page = () => {
-
- const [unavailableItems, setUnavailableItems] = useState<BasketItem[]>([])
-  const [showUnvailableItemsModal, setShowUnavailableItemsModal] = useState(false)
-  const image_url =`${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
+const Page = ({searchParams: { orderId }}: {searchParams: {orderId: string}}) => {
 
   const orderBasketItems: OrderBasketItem[] = [];
   const { basket } = useBasket();
   const [loading, setLoading] = useState(false)
+
 
   interface OrderBasketItem {
     itemId: number,
     itemQuantity: number
   }
 
-  // const [userDetails, setUserDetails] = useState({
-  //   email:"",
-  //   password:"",
-  //   address: {
-  //     line1:"",
-  //     line2: "",
-  //     city: "",
-  //     country: "",
-  //     postCode: "",
 
-  //   },
-  //   role:"ADMIN"
-
-  // });
 
 
 
   useEffect(() => {
+
+
     // console.log(Cookies.get(userEmail))
-
-
     handleSubmitPost()
 
   }, [])
@@ -64,6 +38,9 @@ const Page = () => {
     })
     return orderBasketItems;
   }
+
+
+
 
   const getUserDetails = () => {
     const storedEmail = Cookies.get('user_email');
@@ -91,82 +68,46 @@ const Page = () => {
 
   }
 
-
   const getSubmitOrderBody = () => {
+    console.log("preparing body for postOrder")
     return {
       registerRequest: getUserDetails(),
-      orderedItems: getOrderedItems()
+      orderedItems: getOrderedItems(),
+      orderId: orderId
     }
-  }
-
-  const verifyStockQuantityOfBasketItems = async () => {
-    let unavailableCount = 0;
-    for (const item of basket) {
-      const status = await verifyQuantity(item.id, item.quantity)
-      if (status != 200) {
-        setLoading(false)
-        setUnavailableItems(prev => [item, ...prev])
-        unavailableCount++;
-      }
-      else {
-        console.log(item.title + " is available")
-        setLoading(false)
-      }
-    }
-
-    return unavailableCount;
   }
 
 
   const handleSubmitPost = async () => {
-    console.log('trying to validate stock availablity!')
+    //checks if the order is submitted to backend
 
-    const unavailableItemsCount = await verifyStockQuantityOfBasketItems()
-    if (unavailableItemsCount === 0) {
-      console.log('trying to submit order!')
-      event?.preventDefault()
-      if (basket.length > 0) {
-        setLoading(true)
-        const response = await fetch("/api/postOrder", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(getSubmitOrderBody()),
-        });
-        console.log('status: ', response.status)
-        setLoading(false)
+    console.log('trying to submit order!')
+    event?.preventDefault()
+    if (basket.length > 0) {
+      setLoading(true)
+      const response = await fetch("/api/postOrder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(getSubmitOrderBody()),
+      });
+      console.log('status: ', response.status)
+      setLoading(false)
 
-        if (response.status === 202) {
-          localStorage.setItem('basket', JSON.stringify([]))
-          Cookies.remove('user_email');
-
-          // setShowModal(!showModal)
-
-        }
-        else {
-          console.log(response.body)
-        }
+      if (response.status === 202) {
+        localStorage.setItem('basket', JSON.stringify([]))
+        Cookies.remove('user_email');
+        // setShowModal(!showModal)
+      }
+      else {
+        console.error('Order submission failed');
       }
     }
-    else {
-      console.log("trying to show unavailable items")
-      setShowUnavailableItemsModal(!unavailableItems)
-    }
+  }
 
 
-  };
-  console.log('unavailable Items: ', unavailableItems)
 
-
-  const returnAvailableItems = unavailableItems.map(
-    (eachItem) => {
-      return <div key={eachItem.id} className='w-72 h-72 bg-slate-200 top-64 '>
-        <h1>{eachItem.title}</h1>
-        <img src={`${image_url}/${eachItem?.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>
-      </div>
-    }
-  )
 
 
   // useEffect(() => {
@@ -178,6 +119,8 @@ const Page = () => {
       {loading ? <Loading /> :
         <div className='flex flex-col align-middle justify-center items-center mt-20 '>
           <h1 className='text-xl '>Thank you for your Order!</h1>
+          <h1 className='text-xl '>Your Order number is {orderId}</h1>
+
           <h1 className='text-md '>confirmation has been sent to your email.</h1>
 
           <Link className='w-2/5 mr-3 items-center flex justify-center' href={`/`}>
@@ -188,7 +131,6 @@ const Page = () => {
 
         </div>}
 
-      {showUnvailableItemsModal ? returnAvailableItems : <></>}
 
     </>
 
