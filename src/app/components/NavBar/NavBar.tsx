@@ -142,11 +142,12 @@ interface BasketItem {
       }
     
 const checkAuth = async () => {
-  const res = await fetch('/api/auth', {
+
+  try{
+      const res = await fetch('/api/auth', {
     credentials: 'include',
      })
   const data = await res.json();
-  console.log(data)
 
 
   if (data.authenticated) {
@@ -162,6 +163,13 @@ const checkAuth = async () => {
   else{
     console.log("user not authenticated")
   }
+
+  }
+  catch(error){
+    console.log(error)
+
+  }
+
 };
   const routeToCheckout = () => {
     if (basket.length > 0) {

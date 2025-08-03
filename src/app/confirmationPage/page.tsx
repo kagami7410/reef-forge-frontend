@@ -4,15 +4,19 @@ import { useBasket } from '../components/BasketContext/BasketContext';
 import Cookies from 'js-cookie';
 import Loading from '../components/Loading/Loading';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+
+import { Suspense } from 'react';
 
 
 
-
-const Page = ({searchParams: { orderId }}: {searchParams: {orderId: string}}) => {
-
+function ConfirmationPageDetails() {
+  const searchParams = useSearchParams();
   const orderBasketItems: OrderBasketItem[] = [];
   const { basket } = useBasket();
   const [loading, setLoading] = useState(false)
+  const orderId = searchParams.get('orderId'); // ✅ Correct way
+const [hasMounted, setHasMounted] = useState(false);
 
 
   interface OrderBasketItem {
@@ -26,7 +30,7 @@ const Page = ({searchParams: { orderId }}: {searchParams: {orderId: string}}) =>
 
   useEffect(() => {
 
-
+  setHasMounted(true);
     // console.log(Cookies.get(userEmail))
     handleSubmitPost()
 
@@ -98,6 +102,8 @@ const Page = ({searchParams: { orderId }}: {searchParams: {orderId: string}}) =>
       if (response.status === 202) {
         localStorage.setItem('basket', JSON.stringify([]))
         Cookies.remove('user_email');
+        window.location.reload()
+
         // setShowModal(!showModal)
       }
       else {
@@ -115,8 +121,8 @@ const Page = ({searchParams: { orderId }}: {searchParams: {orderId: string}}) =>
 
   // },[])
   return (
-    <>
-      {loading ? <Loading /> :
+<>
+      {!hasMounted || loading? <Loading /> :
         <div className='flex flex-col align-middle justify-center items-center mt-20 '>
           <h1 className='text-xl '>Thank you for your Order!</h1>
           <h1 className='text-xl '>Your Order number is {orderId}</h1>
@@ -128,13 +134,20 @@ const Page = ({searchParams: { orderId }}: {searchParams: {orderId: string}}) =>
             <h1 className='btn  bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  text-md mb-4 mt-6'>Continue Shopping</h1>
           </Link>
           {/* <div onClick={handleSubmitPost} className='btn  bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  text-md mb-4 mt-6'>TEST</div>  */}
-
         </div>}
 
+</>
+          
 
-    </>
+
 
   )
 }
-
-export default Page
+// Wrap in Suspense
+export default function ConfirmationPage() {
+  return (
+    <Suspense fallback={<div>Loading order info...</div>}>
+      <ConfirmationPageDetails />
+    </Suspense>
+  );
+}

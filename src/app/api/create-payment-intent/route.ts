@@ -4,6 +4,18 @@ import Stripe from "stripe";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest){
+
+    // Define a type for the item
+    interface BasketItem {
+    id: number;
+    title: string;
+    price: number;
+    code: string;
+    quantity: number;
+    photoUrls: string[];
+    stockQuantity: number;
+
+    }
         try{
             const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -15,7 +27,7 @@ export async function POST(request: NextRequest){
         const metadata: Record<string, string> = {
             order_id: orderId,
             products: basketItems
-            .map((item: any) => `${item.title} x ${item.quantity}`)
+            .map((item: BasketItem) => `${item.title} x ${item.quantity}`)
             .join(', '),
   };
         const paymentIntent = await stripe.paymentIntents.create({

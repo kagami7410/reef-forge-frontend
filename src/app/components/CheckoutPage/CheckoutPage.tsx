@@ -25,10 +25,7 @@ interface BasketItem {
 }
 
 
-interface OrderBasketItem {
-    itemId: number,
-    itemQuantity: number
-}
+
 const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number }) => {
     const stripe = useStripe()
     const elements = useElements()
@@ -88,29 +85,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     //     return orderBasketItems;
     // }
 
-    const getUserDetails = () => {
-        const storedEmail = Cookies.get('user_email');
-        const storedAddress = Cookies.get('user_address');
-        if (storedAddress) {
-            const parsedAddress = JSON.parse(storedAddress);
-            console.log('Retrieved address:', parsedAddress);
-            const userDetails = {
-                fullName: parsedAddress.name,
-                email: storedEmail,
-                password: "",
-                address: {
-                    line1: parsedAddress.address.line1 ?? "",
-                    line2: parsedAddress.address.line2 ?? "",
-                    city: parsedAddress.address.city ?? "",
-                    country: parsedAddress.address.country ?? "",
-                    postCode: parsedAddress.address.postal_code ?? ""
-                },
-                role: "ADMIN"
-            }
-            return userDetails;
-        }
 
-    }
 
 
 
