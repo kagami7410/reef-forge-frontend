@@ -57,6 +57,7 @@ const BasketProvider = ({ children }: BasketProviderProps) => {
     if (basket.length > 0) {
       localStorage.setItem('basket', JSON.stringify(basket));
     }
+    console.log("basket context: ",basket)
   }, [basket]);
 
 

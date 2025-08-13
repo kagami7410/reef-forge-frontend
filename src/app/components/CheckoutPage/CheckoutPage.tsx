@@ -32,7 +32,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     const [errorMessage, setErrorMessage] = useState<string>()
     const [clientSecret, setClientSecret] = useState("")
     const { getBasketTotal } = useBasket();
-
+    const [paymentSuccessful, setPaymentSuccessful] = useState<Boolean>(true)
     const [unavailableItems, setUnavailableItems] = useState<BasketItem[]>([])
     const [showUnvailableItemsModal, setShowUnavailableItemsModal] = useState(false)
     const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
@@ -171,7 +171,13 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
 
     const getFinalTotal = () => {
         if (getBasketTotal() != 0) {
-            return ((getBasketTotal()).toFixed(2));
+            if(getBasketTotal() >= 50){
+                return ((getBasketTotal()).toFixed(2));
+            }
+            else{
+                return ((getBasketTotal() + 2.95).toFixed(2));
+
+            }
 
         }
         else
@@ -242,9 +248,10 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
 
             if (error) {
                 console.log('There was an error in making payment!')
+                setPaymentSuccessful(false)
                 setErrorMessage(error.message)
             } else {
-
+                setPaymentSuccessful(true)
                 console.log('payment was successful!')
                 
                 // router.push('/')
@@ -297,6 +304,26 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                         className="btn ml-72">Close</button>
                 </form></div> : <></>}
             {/* {returnAvailableItems } */}
+
+
+            
+      {paymentSuccessful? <></>:<div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+        <h3 className="font-bold text- md:text-lg">❌ Something went wrong with the payment!</h3>
+
+\
+
+
+        <div className="modal-action">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button onClick={() => {
+              router.push('/userDetailsCheckout')
+        
+            }}
+              className="btn">Close</button>
+          </form>
+        </div>
+      </div>}
 
 
         </div>

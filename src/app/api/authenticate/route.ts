@@ -7,6 +7,7 @@ export async function POST(request: NextRequest) {
   const backendHostName = process.env.REEF_FORGE_BACKEND_HOSTNAME
   const body = await request.json();
 
+
   // try {
   //   console.log("Parsed Body:", body); // Debug: Check the parsed data
   // } catch (error) {
@@ -26,14 +27,13 @@ export async function POST(request: NextRequest) {
 
     })
 
-    const data = await loginRes.json();
-    const token = data.token;
-    // console.log(token)
 
 
     if (loginRes.status === 200) {
+      
+    const data = await loginRes.json();
+    // console.log(token)
       console.log(data)
-
       console.log("Token received:", data.token)
       console.log("logged in successfully!")
 
@@ -46,20 +46,13 @@ export async function POST(request: NextRequest) {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
-        maxAge: 60 * 60 * 24,
+        maxAge: 60*60,
       });
       return response;
     }
     else {
       console.log("either password or email is incorrect")
     }
-
-
-
-
-
-    return NextResponse.json({ token }, { status: loginRes.status });
-
 
   } catch (error) {
     console.error("Error handling POST request:", error);

@@ -12,7 +12,7 @@ export default function VideoPreview({ src }: { src: string; alt?: string }) {
         src={src}
         muted autoPlay loop
                 onClick={() => setIsOpen(true)}
-        className="cursor-pointer object-cover max-w-full  h-96 w-96 object-cover rounded"
+        className="cursor-pointer object-cover max-w-full  h-96 w-96 object-cover rounded-2xl"
       />
 
       {isOpen && (

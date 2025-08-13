@@ -24,6 +24,7 @@ interface FragRackItem extends BasketItem {
   magnetNum: number;
   size: string;
   stockQuantity: number;
+  description: string;
 
 }
 
@@ -155,7 +156,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
       console.log("basketItem: ", basketItem)
       if (basketItem != null) {
   
-        verifyQuantity(item.id, basketItem?.quantity)
+        verifyQuantity(item.id, basketItem?.quantity+1)
           .then(data => {
             if (data === 200) {
               setDrawerMounted(true); // Mount it
@@ -231,15 +232,14 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
  //  returns all the items in the basket in drawer when users adds item to the cart
  const returnBasketItems = basket?.map(eachItem => {
   return <div key={eachItem.id} className='flex flex-col'>
-    <div  className='flex w-11/12   items-center p-2 '>
+    <div  className='flex w-full  justify-center items-center p-2 '>
     <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
-      <div className='flex h-full aspect-square items-center'>
-
-      <img src={`${image_url}/All/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>          
-      </div>
+            <div className='flex h-full  aspect-square justify-center '>
+              <img key={eachItem.id} src={`${image_url}/All/${eachItem.photoUrls[0]}`} className='  rounded-md cursor-pointer object-cover ' ></img>
+            </div>
     </Link>
-    <div className='flex flex-col'>
+    <div className='flex  w-4/6 flex-col'>
     <Link href={`/shopFragRacks/${eachItem.id}`}>
 
       <h1 className='p-1 md:p-2 text-sm'>{eachItem.title}</h1>
@@ -277,10 +277,10 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
       <div className='flex-col w-full   justify-items-center max-w-screen-2xl m-auto  md:p-2 '>
         {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6 h-screen p-4'>
           {/* <Loading/> */}
-          <div className='flex rounded-md  flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
-            <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-1/2 rounded-md     '>
-              <div className='flex h-full  border-slate-400 rounded-lg  aspect-square w-full'>
-                <img className='flex p-1  w-full h-full object-cover bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-md' src={currentImage} />
+          <div className='flex rounded-2xl  flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
+            <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-1/2 rounded-2xl    '>
+              <div className='flex h-full  border-slate-400 rounded-2xl  aspect-square w-full'>
+                <img className='flex p-1  w-full h-full object-cover bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-2xl' src={currentImage} />
 
               </div>
               <div key={item?.id} className='flex  items-center justify-center  w-full   '>
@@ -295,7 +295,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               </div>
 
             </div>
-            <div className='flex flex-col w-full  p-2 md:p-6 md:pl-8 md:w-1/2 md:mt-2'>
+            <div className='flex flex-col w-full  p-2 md:p-6 md:pl-8 md:w-1/2 md:mt-2 shadow-2xl'>
                           <h1 className='flex pl-2 text-sm'>Reef Forge</h1>
 
               <h1 className='flex  pl-2 text-2xl md:text-3xl font-semibold'>{item?.title}</h1>
@@ -393,36 +393,9 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
               <div className='flex flex-col w-full  p-1 md:w-full md:mt-1'>
                 <div className='my-2  flex-col  w-full ' >
-                  <h1 className='  text-lg md:text-2xl mt-6'> Description </h1>
-                  <div className='flex items-center  p-2 '>
-                    {/* <video className='w-[80%] rounded-3xl  '
-          src="http://localhost:8000/contents/video?videoName=video1"
-          loop
-          autoPlay
-          controls/> */}
-                    <div className='mt-4 text-sm '>
-                      <h1>🚨 Transform Your Reef Tank with the Ultimate Coral Frag Rack! 🚨</h1>
-                      <h1>🔷 Aqua-Print 21cm Honeycomb Frag Rack </h1>
-                      <h1>💎 Available Now at Kraken Corals & Aquatics 💎</h1>
-                      <ul className='list-disc list-inside mt-4'>
-                        <strong>✅ Innovative Honeycomb Design</strong>
-                        <li>Maximize coral placement with full usability of all frag holes!</li>
-                        <li>Designed to minimize shadowing and boost upward flow, perfect for SPS coral growth.</li>
-                      </ul>
+                  <h1 className='  text-lg md:text-xl mt-6 font-bold'> About this product </h1>
+                  <h3 className='mt-4 text-sm'>{item?.description}</h3>
 
-                      <ul className='list-disc list-inside mt-4'>
-                        <strong>✅ Heavy-Duty Magnets Included</strong>
-                        <li>Attach securely to glass up to 20mm thick—no slipping, no worries!</li>
-                        <li>Single magnet is all you need for a strong and sturdy hold but hey if you want two go for it!</li>
-                      </ul>
-
-                      <ul className='list-disc list-inside mt-4'>
-                        <strong>🌊 Stylish, Durable, and Functional</strong>
-                        <li>Reef Forge frag racks combine aesthetics with performance to give your tank a professional edge.</li>
-                      </ul>
-
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -433,7 +406,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
           </div>
 
 
-          <div className='flex w-full md:min-h-screen  bg-slate-100'></div>
+          <div className='flex w-full md:min-h-screen '></div>
 
         </div>}
 
@@ -496,10 +469,12 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
 
              <div className='flex flex-col mt-3 md:mt-4'>
-                <div className='flex'>
-                  <h1 className={`text-center text-xl  w-full mb-4 md:text-2xl`}> Reef Forge Products </h1>
-                </div>
+
+                <div className='flex flex-col  md:mt-4 mt-96'>
+          <h1 className={`text-center text-xl font-sans font-semibold  w-full mb-6 md:text-2xl`}> Reef Forge Products </h1>
                 <RecommendedItems />
+
+                </div>
         
         
               </div>

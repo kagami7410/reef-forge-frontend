@@ -61,7 +61,8 @@ interface FragRackItem extends BasketItem {
   const sensors = useSensors(useSensor(MouseSensor));
   const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
-
+  const [signedIn, setSignedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false)
   const [loading, setLoading] = useState(true);
 
   const [title, setTitle] = useState("");
@@ -121,7 +122,44 @@ interface FragRackItem extends BasketItem {
     setItems(  items.filter(eachitem => eachitem.id != itemId))
   }
 
+   useEffect(()=>{
+        checkAuth()
 
+    },[])
+
+
+    const checkAuth = async () => {
+
+  try{
+      const res = await fetch('/api/auth', {
+    credentials: 'include',
+     })
+  const data = await res.json();
+
+
+  if (data.authenticated) {
+    console.log('User is logged in');
+    console.log(data)
+    if (data.user.isAdmin === "true") {
+      setIsAdmin(true)
+
+      console.log('User is an admin');
+      setSignedIn(true)
+
+
+    }
+  }
+  else{
+    console.log("user not authenticated")
+  }
+
+  }
+  catch(error){
+    console.log(error)
+
+  }
+
+};
 
   const removeItem = async(itemId:number) => {
     const res = await fetch(`/api/deleteItemById?itemId=${itemId}`,{
@@ -429,8 +467,8 @@ interface FragRackItem extends BasketItem {
   // console.log(userEmail + password)
 
   return (
-
-    <div className='flex flex-col'>
+    <>
+    {isAdmin?     <div className='flex flex-col'>
 <div className='relative w-full min-w-96 bg-lime-100 p-6  flex flex-col '>
       <Link href={'/'} className={`btn btn-ghost text-xl md:text-2xl md:ml-0 md:w-72`}> REEF FORGE </Link>
 
@@ -518,7 +556,11 @@ interface FragRackItem extends BasketItem {
 
     
     
-    </div>
+    </div>:
+    <div className='mt-32 text-3xl font-semibold'>Page not found!</div>}
+    </>
+
+
 
 
   )

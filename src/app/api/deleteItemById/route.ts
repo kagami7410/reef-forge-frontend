@@ -9,7 +9,7 @@ export async function DELETE(req: NextRequest){
     try{
         console.log(`trying to delete item with id: ${itemId}`)
         const res = await fetch(`${backendHostName}/backend/fragRacks/deleteById?itemId=${itemId}`,
-                  {method: "DELETE",}
+                  {method: "DELETE"}
 
         );
         const data = await res.json();

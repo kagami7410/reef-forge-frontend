@@ -63,8 +63,8 @@ useEffect(() => {
 
   return (
     <div className='flex items-center align-middle justify-center mt-6'>
-      <div className=' w-full flex md:flex-row flex-col align-middle justify-center'>
-        <div className='flex flex-col md:w-96 w-11/12 bg-slate-50  m-1 pb-8 border p-4 rounded-md justify-center shadow-lg'>
+      <div className=' w-full flex md:flex-row flex-col align-middle p-4 justify-center '>
+        <div className='flex mt-8 md:mr-10  flex-col md:w-96 w-full bg-slate-50 h-full  m-1 pb-8 border p-4 rounded-md  shadow-lg'>
 {hasMounted && stripePromise && somethingInBasket &&(
 
           <Elements stripe={stripePromise}

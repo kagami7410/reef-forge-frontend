@@ -5,6 +5,7 @@ import { useBasket } from "../BasketContext/BasketContext";
 import { useRouter } from 'next/navigation'
 import { verifyQuantity } from '@/lib/checkStockQuantity';
 import Loading from '../Loading/Loading';
+import Cookies from "js-cookie";
 
 
 const NavBar = () => {
@@ -42,8 +43,7 @@ interface BasketItem {
   },[])
 
 
-  useEffect(()=>{
-  },[isAdmin])
+
 
 
 
@@ -81,18 +81,26 @@ interface BasketItem {
   const handleBasketClicked = () => {
     setUpdatedCart(!updatedCart)
 
+
+    
+  }
+
+  const logout = async () => {
+    console.log("removing cookie token")
+    await fetch("/api/logout", { method: "POST" });
+    window.location.reload()
+
   }
 
 
-                        console.log("loading:" + loading)
-
+      console.log("loading:" + loading)
       const addItemToBasket = (item: BasketItem) => {
         setLoading(true)
         const basketItem = basket.find((itemToFind) => item.id === itemToFind.id)
         console.log("basketItem: ", basketItem)
         if (basketItem != null) {
     
-          verifyQuantity(item.id, basketItem?.quantity)
+          verifyQuantity(item.id, basketItem?.quantity+1)
             .then(data => {
               if (data === 200) {
 
@@ -152,13 +160,18 @@ const checkAuth = async () => {
 
   if (data.authenticated) {
     console.log('User is logged in');
+    console.log(data)
+    setSignedIn(true)
     if (data.user.isAdmin === "true") {
       setIsAdmin(true)
+
       console.log('User is an admin');
       setSignedIn(true)
 
 
     }
+
+
   }
   else{
     console.log("user not authenticated")
@@ -183,15 +196,14 @@ const checkAuth = async () => {
  //  returns all the items in the basket in drawer when users adds item to the cart
  const returnBasketItems = basket?.map(eachItem => {
   return <div key={eachItem.id} className='flex flex-col'>
-    <div  className='flex w-11/12 items-center p-2 '>
+    <div  className='flex w-full bg-slate-100 justify-center items-center p-2 '>
     <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
-      <div className='flex h-full aspect-square items-center'>
-
-      <img src={`${image_url}/All/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>          
-      </div>
-    </Link>
-    <div className='flex flex-col'>
+            <div className='flex h-full  aspect-square justify-center '>
+              <img key={eachItem.id} src={`${image_url}/All/${eachItem.photoUrls[0]}`} className='  rounded-md cursor-pointer object-cover ' ></img>
+            </div>
+          </Link>
+    <div className='flex flex-col  w-3/5'>
     <Link href={`/shopFragRacks/${eachItem.id}`}>
 
       <h1 className='p-1 md:p-2 text-sm'>{eachItem.title}</h1>
@@ -228,8 +240,8 @@ const checkAuth = async () => {
 )
   return (
     <div>
-      {isMounted?    <div className={` max-w-screen-2xl navbar h-20  m-auto pr-4 pl-4  bg-slate-100  md:pr-0 md:pl-0  ${borderVisibile}`}>
-      <div className="dropdown">
+      {isMounted?    <div className={` max-w-screen-2xl navbar h-20  m-auto pr-4 pl-4    md:pr-0 md:pl-0  ${borderVisibile}`}>
+      {/* <div className="dropdown">
         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -258,10 +270,16 @@ const checkAuth = async () => {
           </li>
           <li><a>Item 3</a></li>
         </ul>
-      </div>
+      </div> */}
 
       <div className={` ${borderVisibile} `}>
-        <Link href={'/'} className={`btn btn-ghost text-xl md:text-2xl md:ml-0 md:w-72`}> REEF FORGE</Link>
+
+        <Link href={'/'} className="btn btn-ghost text-xl md:text-2xl md:ml-0 md:w-72"> 
+                      <img src="/favicon.ico" alt="REEF FOGE logo" className='w-8' />
+                      <h1> REEF FORGE</h1>
+
+       
+        </Link>
       </div>
 
       <div className="navbar flex justify-center  h-8 opacity-0 md:opacity-100 ">
@@ -384,7 +402,8 @@ const checkAuth = async () => {
             </div>
           </div> */}
         </div>
-        <div className="dropdown dropdown-end p-0 m-0  w-1/2">
+
+        {signedIn?<div className="dropdown dropdown-end p-0 m-0  w-1/2">
           <div tabIndex={0} role="button" className="btn btn-ghost p-2 m-0">
             <div className=" rounded-full flex items-center w-8 md:w-10 align-middle justify-center">
               <svg className="md:h-7 md:w-7 h-6 w-6"
@@ -397,14 +416,15 @@ const checkAuth = async () => {
             className="menu menu-md dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
             <li>
               <a className="justify-between">
-                Profile
+                Account
                 <span className="badge">New</span>
               </a>
             </li>
-            <li><a>Settings</a></li>
-            {signedIn ? <li><a>Sign out</a></li> : <li><a href='/SignInPage'>Sign in</a></li>}
+            {/* <li><a>Settings</a></li> */}
+            {signedIn ? <li><button onClick={logout}>Sign out</button></li> : <li><a href='/SignInPage'>Sign in</a></li>}
           </ul>
-        </div>
+        </div>:<a className='bg-slate-100 h-12 ml-3 w-20 flex items-center justify-center rounded-lg font-semibold' href='/SignInPage'>Sign In</a>}
+
       </div>
 
             {itemAvailable? <></>:<div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">

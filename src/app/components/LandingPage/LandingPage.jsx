@@ -24,8 +24,7 @@ const LandingPage = () => {
   const [isMobile, setIsMobile] = useState(false)
   const [screenSize, setScreenSize] = useState(0);
   const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/LandingPageImages`;
-
-
+  
 
 
   useEffect(() => {
@@ -106,7 +105,7 @@ const LandingPage = () => {
 
   return (
     <div className={`max-w-screen-2xl ${styles.landingPageContainer}`}>
-      <div className={` ${styles.landingPageTopContainer}  pb-24 pt-10 md:pt-8  md:pb-20`}>
+      <div className={` ${styles.landingPageTopContainer} bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100  shadow-lg pb-24 pt-10 md:pt-8  md:pb-20`}>
         <div className={` transform transition-all px-8 md:px-4`}
           style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(${xPosition}%)` }}>
           <div className={`${styles.mainHeadline}`}>Rock-Solid Magnetic Frag Holder</div>
@@ -188,10 +187,10 @@ const LandingPage = () => {
       <div className='h-px bg-slate-200 w-full mt-16 rounded-xl '></div>
 
 
-      <div style={{ overflow: 'hidden' }} className='flex flex-col mt-3 md:mt-4 md:w-5/6 rounded-xl bg-slate-400 '>
+      <div style={{ overflow: 'hidden' }} className='flex flex-col mt-3 md:mt-4 md:w-full w-11/12 rounded-xl bg-slate-400 '>
 
 
-        <video className='object-cover rounded-xl h-52 md:h-96' style={{ object: 'cover' }} muted autoPlay loop >
+        <video className='object-cover rounded-xl h-52 md:h-96 ' style={{ object: 'cover' }} muted autoPlay loop >
           <source src="https://storage.googleapis.com/fragracks-web-images/videos/VID20250607213344.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -199,7 +198,7 @@ const LandingPage = () => {
 
       </div>
 
-      <div className='flex flex-col mt-3 md:mt-4'>
+      <div className='flex flex-col mt-10 '>
         <div className='flex'>
           <h1 className={`text-center text-xl  w-full mb-4 ${styles.otherHeadline} md:text-2xl`}> Reef Forge Products </h1>
         </div>
@@ -212,15 +211,15 @@ const LandingPage = () => {
 
       <div className='h-px bg-slate-200 w-full  rounded-lg mt-16'></div>
 
-      <div className='flex flex-col mt-3 md:mt-4 w-full rounded-lg'>
+      <div className='flex flex-col mt-6  w-full rounded-lg'>
         <div className='flex'>
           <h1 className={`text-center text-xl  w-full mb-4 ${styles.otherHeadline} md:text-2xl`}> Reef Forge Products in Use </h1>
         </div>
 
 
 
-        <div className='w-full flex md:flex-row flex-col bg-slate-200 rounded-lg flex items-center justify-center'>
-          <div className='w-full m-4 flex justify-center'>
+        <div className='w-full flex md:flex-row flex-col  rounded-2xl flex items-center justify-center'>
+          <div className='  h-full aspect-square items-center  flex justify-center m-2'>
         <VideoPreview src="https://storage.googleapis.com/fragracks-web-images/videos/VID20250607214330.mp4" />
 
           </div>
@@ -229,13 +228,13 @@ const LandingPage = () => {
 
 
 
-          <div className='w-full m-4 items-center  flex justify-center'>
+          <div className='  h-full aspect-square items-center  flex justify-center  m-2'>
 
                      <ImagePreview  src={`${image_url}/IMG20250607212926.jpg`}/>
 
           </div>
           
-          <div className='w-full m-4 flex justify-center'>
+          <div className='  h-full aspect-square items-center  flex justify-center  m-2'>
                                   <ImagePreview  src={`${image_url}/IMG20250607212926.jpg`}/>
 
 

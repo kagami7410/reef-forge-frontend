@@ -80,7 +80,6 @@ const Page = () => {
       // Safe to use window or document here
       setIsClient(true);
     }
-    console.log("this is env:" + image_url)
     getItems()
 
   }, [])
@@ -92,17 +91,17 @@ const Page = () => {
     setCurrentlyClickedBasketItem(item)
 
     const basketItem = basket.find((itemToFind) => item.id === itemToFind.id)
-    console.log("basketItem: ", basketItem)
     if (basketItem != null) {
+      console.log("basket_item quantity to check" + basketItem.quantity)
 
-      verifyQuantity(item.id, basketItem?.quantity)
+      verifyQuantity(item.id, basketItem?.quantity+1)
         .then(data => {
           if (data === 200) {
             setDrawerMounted(true); // Mount it
 
 
             // setShowModal(!showModal)
-            addSingleItemToBasket(item)
+            addSingleItemToBasket(basketItem)
             setLoading(false)
             requestAnimationFrame(() => {
               setDrawerVisible(true);
@@ -160,42 +159,42 @@ const Page = () => {
 
   //  returns all the items in the basket in drawer when users adds item to the cart
   const returnBasketItems = basket?.map(eachItem => {
-    return <div key={eachItem.id} className='flex flex-col'><div className='flex w-11/12   items-center p-2 rounded-md'>
-      <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
+    return <div key={eachItem.id} className='flex flex-col'>
+    <div  className='flex w-full  justify-center items-center p-2 '>
+    <Link className='w-2/5 mr-3 rounded-md' href={`/shopFragRacks/${eachItem.id}`}>
 
-        <div className='flex h-full aspect-square items-center  rounded-md '>
-
-          <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' rounded-md cursor-pointer' ></img>
-        </div>
-      </Link>
-      <div className='flex flex-col'>
-        <Link href={`/shopFragRacks/${eachItem.id}`}>
-
-          <h1 className='p-1 md:p-2 text-sm'>{eachItem.title}</h1>
-        </Link>
-
-        <h3 className='p-1'>£{eachItem.price}</h3>
-        <div className='flex h-10 text-center items-center align-middle justify-center '>
-
-          <div className='flex mt-1 md:mt-2 w-img'>
-            <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl '>
-              <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
-              <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
-              <button onClick={() => { addItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
+            <div className='flex h-full  rounded-md aspect-square justify-center '>
+              <img key={eachItem.id} src={`${image_url}/${eachItem.photoUrls[0]}`} className='rounded-md cursor-pointer object-cover ' ></img>
             </div>
-            <button onClick={() => removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
-              </svg>
-            </button>
+    </Link>
+    <div className='flex  w-4/6 flex-col'>
+    <Link href={`/shopFragRacks/${eachItem.id}`}>
+
+      <h1 className='p-1 md:p-2 text-sm'>{eachItem.title}</h1>
+    </Link>
+
+    <h3 className='p-1'>£{eachItem.price}</h3>
+    <div className='flex h-10 text-center items-center align-middle justify-center '>
+
+    <div className='flex mt-1 md:mt-2 w-full'>
+          <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl '>
+            <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
+            <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
+            <button onClick={() => { addItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
           </div>
+          <button onClick={()=>removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+          </svg> 
+          </button>
+           </div>
 
-        </div>
+    </div>
 
+    </div>
+
+  </div>
+      <div className='flex w-full bg-gray-300 h-px m-1'></div>
       </div>
-
-    </div>
-      <div className='flex w-full  h-px m-1'></div>
-    </div>
 
   }
   )
@@ -204,12 +203,12 @@ const Page = () => {
         console.log(eachItem.photoUrls[0])
 
     return (
-      <div key={eachItem.id} className=' flex flex-col w-5/12 rounded-md m-2  md:p-2   mt-8 md:m-3 md:w-80 '>
+      <div key={eachItem.id} className=' flex flex-col w-5/12 rounded-xl m-2  md:p-2   mt-8 md:m-3 md:w-80 '>
         <Link href={`/shopFragRacks/${eachItem.id}`}>
                 <div className='flex w-full justify-center'>
                   
-          <div className='bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-md w-44 h-44 md:w-80 md:h-80   flex'>
-            <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100 w-full h-full object-cover cursor-pointer' ></img>
+          <div className='bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-xl w-44 h-44 md:w-80 md:h-80   flex'>
+            <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100 w-full rounded-xl h-full object-cover cursor-pointer' ></img>
 
           </div>
                   </div>

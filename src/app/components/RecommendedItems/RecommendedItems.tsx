@@ -98,12 +98,12 @@ const RecommendedItems = () => {
 
 
     if (isMobile) {
-      return <div key={eachItem.title} id={eachItem.title} className=" carousel-item scroll-mt-96 relative items-center justify-center w-full bg-lime-100 rounded-lg">
+      return <div key={eachItem.title} id={eachItem.title} className=" carousel-item scroll-mt-96 relative items-center justify-center w-full  rounded-lg">
       <div className='flex-col '>
 
         <div className='border bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50'>
           <Link href={`/shopFragRacks/${eachItem.id}`}></Link>
-          <img src={`${image_url}/${items[index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
+          <img src={`${image_url}/${items[index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  object-cover" alt={`Slide ${index + 1}`} />
         </div>
 
           <a className='p-2 md:h-16 ' href={`/shopFragRacks/${items[index]}`}>{items[index].title}</a>
@@ -121,7 +121,7 @@ const RecommendedItems = () => {
     }
 
     else {
-      return <div key={eachItem.title} id={eachItem.title} className=" carousel-item scroll-mt-96 relative items-center justify-center w-full bg-lime-100 rounded-lg">
+      return <div key={eachItem.title} id={eachItem.title} className=" carousel-item scroll-mt-96 relative items-center justify-center w-full  rounded-lg">
                  <div className=" flex -translate-y-1/2 transform justify-between">
 
          

@@ -9,11 +9,11 @@ const Page = ( { src }: { src: string}) => {
     const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
+    <div className='flex'>
        <img
         src={src}
         onClick={() => setIsOpen(true)}
-        className="cursor-pointer max-w-full max-h-96 object-cover rounded"
+        className="cursor-pointer object-cover max-w-full  h-96 w-96 object-cover rounded-2xl"
       />
 
       {isOpen && (
