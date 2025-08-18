@@ -140,7 +140,7 @@ const LandingPage = () => {
 
 
 
-        <div className='my-4 mt-4 md:mt-24 bg-slate-100  flex-col  p-8  rounded-md md:rounded-lg w-full md:w-full' ref={observedElement}>
+        <div className='my-4 mt-4 md:mt-24 bg-slate-100  flex-col shadow-xl p-8  rounded-md md:rounded-lg w-full md:w-full' ref={observedElement}>
           <div className='flex  justify-center items-center '>
             {/* <video className='w-[80%] rounded-3xl  '
           src="http://localhost:8000/contents/video?videoName=video1"

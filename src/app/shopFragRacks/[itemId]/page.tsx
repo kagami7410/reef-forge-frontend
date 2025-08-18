@@ -300,7 +300,8 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
 
               <h1 className='flex  pl-2 text-2xl md:text-3xl font-semibold'>{item?.title}</h1>
               <h3 className='flex    p-2 text-xl '>£{item?.price}</h3>
-              <div className="flex border w-96 justify-center p-2 rounded-lg  text-lime-600">✅ Get it by {futureDate}</div>
+              <div className='flex flex-col items-center align-middle justify-center'>
+              <div className="flex border w-72 md:w-96 justify-center p-2 rounded-lg  text-lime-600">✅ Get it by {futureDate}</div>
 
               <div className='flex  justify-center items-center  w-full md:w-1/2 mt-1 mb-1 md:mt-2 md:mb-2'>
                 {/* <div className='flex w-full h-full  items-center justify-center'>
@@ -309,6 +310,8 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
                   <button onClick={increaseQuantity} className=' text-2xl rounded-md w-2/6 border' >+</button>
                 </div> */}
               </div>
+              </div>
+
               {noItems ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
         <h3 className="font-bold text-lg md:text-lg">Basket is Empty!</h3>
 
@@ -329,12 +332,12 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               {/* adding item to cart [single] */}
               
 
-              <div className=" drawer drawer-end">
+              <div className=" drawer drawer-end justify-center">
             <input id="my-drawer-single-item-page" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
               {/* Page content here */}
               <label onClick={() => { if(item !==undefined){addItemToBasket(item)}}} 
-            htmlFor="my-drawer-single-item-page" className="btn btn-primary drawer-button  w-96">Add To Cart</label>
+            htmlFor="my-drawer-single-item-page" className="btn btn-primary drawer-button w-72 md:w-96">Add To Cart</label>
             </div>
 
                     {/* Overlay */}

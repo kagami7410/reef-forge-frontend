@@ -343,7 +343,7 @@ const checkAuth = async () => {
       <div className="flex justify-center md:mr-0 md:w-72  md:ml-20 p-0 w-64">
 
 
-        <div className="dropdown dropdown-end  p-0   w-1/2">
+        <div className="dropdown dropdown-end shadow-lg rounded-lg p-0   w-1/2">
 
 
           <div className=" drawer drawer-end">
@@ -365,7 +365,7 @@ const checkAuth = async () => {
                       strokeWidth="2"
                       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  <span className="badge badge-md indicator-item  bg-slate-200">
+                  <span className="badge badge-md indicator-item shadow-lg bg-slate-200">
                     {isClient ? getBasketCount() : 0}
 
                   </span>
@@ -403,7 +403,7 @@ const checkAuth = async () => {
           </div> */}
         </div>
 
-        {signedIn?<div className="dropdown dropdown-end p-0 m-0  w-1/2">
+        {signedIn?<div className="dropdown dropdown-end p-0 m-0  w-1/2 bg-slate-100 flex align-middle shadow-xl justify-center rounded-lg ml-2">
           <div tabIndex={0} role="button" className="btn btn-ghost p-2 m-0">
             <div className=" rounded-full flex items-center w-8 md:w-10 align-middle justify-center">
               <svg className="md:h-7 md:w-7 h-6 w-6"
@@ -423,8 +423,27 @@ const checkAuth = async () => {
             {/* <li><a>Settings</a></li> */}
             {signedIn ? <li><button onClick={logout}>Sign out</button></li> : <li><a href='/SignInPage'>Sign in</a></li>}
           </ul>
-        </div>:<a className='bg-slate-100 h-12 ml-3 w-20 flex items-center justify-center rounded-lg font-semibold' href='/SignInPage'>Sign In</a>}
+        </div>:<div className="dropdown dropdown-end p-0 m-0  w-1/2 bg-slate-100 flex align-middle shadow-xl justify-center rounded-lg ml-2">
+          <div tabIndex={0} role="button" className="btn btn-ghost p-2 m-0">
+            <div className=" rounded-full flex items-center w-8 md:w-10 align-middle justify-center">
+              <svg className="md:h-7 md:w-7 h-6 w-6"
+                version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 32 32"  ><style></style><path d="M25.838 31H6.162a3.957 3.957 0 0 1-3.245-1.661 3.956 3.956 0 0 1-.549-3.604l.704-2.113a6.034 6.034 0 0 1 4.966-4.059C10.131 19.307 13.211 19 16 19c2.788 0 5.869.307 7.963.563a6.032 6.032 0 0 1 4.965 4.059l.704 2.113a3.954 3.954 0 0 1-.55 3.604A3.955 3.955 0 0 1 25.838 31zM16 21c-2.688 0-5.681.298-7.718.549a4.02 4.02 0 0 0-3.312 2.706l-.704 2.112c-.206.618-.106 1.274.274 1.802S5.511 29 6.162 29h19.676a1.98 1.98 0 0 0 1.622-.83c.381-.528.48-1.185.275-1.803l-.704-2.112a4.02 4.02 0 0 0-3.312-2.706C21.681 21.298 18.687 21 16 21zM16 18c-4.687 0-8.5-3.813-8.5-8.5S11.313 1 16 1c4.687 0 8.5 3.813 8.5 8.5S20.687 18 16 18zm0-15c-3.584 0-6.5 2.916-6.5 6.5S12.416 16 16 16s6.5-2.916 6.5-6.5S19.584 3 16 3z" /><path d="M12.04 10.54c-.543 0-.988-.435-1-.98a4.964 4.964 0 0 1 1.394-3.564 4.968 4.968 0 0 1 3.505-1.535c.562.01 1.009.428 1.02.98a1 1 0 0 1-.98 1.02 2.982 2.982 0 0 0-2.103.92 2.981 2.981 0 0 0-.836 2.139 1 1 0 0 1-.98 1.02h-.02z" style={{ fill: "#008ad0" }} /></svg>
 
+            </div>
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-md dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            <li>
+              <a className="justify-between">
+                Account
+                <span className="badge">New</span>
+              </a>
+            </li>
+            {/* <li><a>Settings</a></li> */}
+            {signedIn ? <li><button onClick={logout}>Sign out</button></li> : <li><a href='/SignInPage'>Sign in</a></li>}
+          </ul>
+        </div>}
       </div>
 
             {itemAvailable? <></>:<div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
