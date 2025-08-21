@@ -20,7 +20,7 @@ export async function POST(request: NextRequest){
             const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 
-        console.log("requesting clientsecret.....")
+        // console.log("requesting clientsecret.....")
         const {amount, basketItems, orderId} = await request.json();
 
         // You can serialize product info into metadata
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest){
             automatic_payment_methods: {enabled:true},
         });
 
-        console.log("payment intent from api: " + paymentIntent.client_secret)
+        // console.log("payment intent from api: " + paymentIntent.client_secret)
 
         return NextResponse.json({ clientSecret: paymentIntent.client_secret})
     }

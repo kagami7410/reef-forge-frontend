@@ -5,7 +5,6 @@ import { useBasket } from "../BasketContext/BasketContext";
 import { useRouter } from 'next/navigation'
 import { verifyQuantity } from '@/lib/checkStockQuantity';
 import Loading from '../Loading/Loading';
-import Cookies from "js-cookie";
 
 
 const NavBar = () => {
@@ -66,10 +65,10 @@ interface BasketItem {
 
 
   useEffect(() => {
-    console.log("basket count is: ", getBasketCount())
+    // console.log("basket count is: ", getBasketCount())
 
     if (getBasketCount() === 0) {
-      console.log('basket is empty')
+      // console.log('basket is empty')
     }
 
   }, [getBasketCount()])
@@ -86,14 +85,14 @@ interface BasketItem {
   }
 
   const logout = async () => {
-    console.log("removing cookie token")
+    // console.log("removing cookie token")
     await fetch("/api/logout", { method: "POST" });
     window.location.reload()
 
   }
 
 
-      console.log("loading:" + loading)
+      // console.log("loading:" + loading)
       const addItemToBasket = (item: BasketItem) => {
         setLoading(true)
         const basketItem = basket.find((itemToFind) => item.id === itemToFind.id)
@@ -160,7 +159,7 @@ const checkAuth = async () => {
 
   if (data.authenticated) {
     console.log('User is logged in');
-    console.log(data)
+    // console.log(data)
     setSignedIn(true)
     if (data.user.isAdmin === "true") {
       setIsAdmin(true)
@@ -196,7 +195,7 @@ const checkAuth = async () => {
  //  returns all the items in the basket in drawer when users adds item to the cart
  const returnBasketItems = basket?.map(eachItem => {
   return <div key={eachItem.id} className='flex flex-col'>
-    <div  className='flex w-full bg-slate-100 justify-center items-center p-2 '>
+    <div  className='flex w-full justify-center items-center p-2 '>
     <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
             <div className='flex h-full  aspect-square justify-center '>
@@ -415,7 +414,7 @@ const checkAuth = async () => {
             tabIndex={0}
             className="menu menu-md dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
             <li>
-              <a className="justify-between">
+              <a href='/UserAccount' className="justify-between">
                 Account
                 <span className="badge">New</span>
               </a>
@@ -435,7 +434,7 @@ const checkAuth = async () => {
             tabIndex={0}
             className="menu menu-md dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
             <li>
-              <a className="justify-between">
+              <a href='/UserAccount' className="justify-between">
                 Account
                 <span className="badge">New</span>
               </a>

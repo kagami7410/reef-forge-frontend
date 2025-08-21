@@ -4,7 +4,7 @@ export async function POST(request: NextRequest) {
     const backendHostName = process.env.REEF_FORGE_BACKEND_HOSTNAME
     const body = await request.json();
 
-    console.log(body)
+    // console.log(body)
 
     try {
         const res = await fetch(`${backendHostName}/backend/gcsBucket/get/signed-url`, {

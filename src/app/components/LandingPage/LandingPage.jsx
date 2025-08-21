@@ -24,7 +24,7 @@ const LandingPage = () => {
   const [isMobile, setIsMobile] = useState(false)
   const [screenSize, setScreenSize] = useState(0);
   const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/LandingPageImages`;
-  
+
 
 
   useEffect(() => {
@@ -174,11 +174,8 @@ const LandingPage = () => {
                 <h1 className='text-sm'>✨ Do not miss out! Your reef deserves the best! ✨</h1>
 
               </div>
-
             </div>
-
           </div>
-
         </div>
 
 
@@ -187,7 +184,7 @@ const LandingPage = () => {
       <div className='h-px bg-slate-200 w-full mt-16 rounded-xl '></div>
 
 
-      <div style={{ overflow: 'hidden' }} className='flex flex-col mt-3 md:mt-4 md:w-full w-11/12 rounded-xl bg-slate-400 '>
+      <div style={{ overflow: 'hidden' }} className='flex flex-col md:p-8 mt-3 md:mt-4 md:w-full w-11/12 rounded-xl  '>
 
 
         <video className='object-cover rounded-xl h-52 md:h-96 ' style={{ object: 'cover' }} muted autoPlay loop >
@@ -219,23 +216,21 @@ const LandingPage = () => {
 
 
         <div className='w-full flex md:flex-row flex-col  rounded-2xl flex items-center justify-center'>
-          <div className='  h-full aspect-square items-center  flex justify-center m-2'>
-        <VideoPreview src="https://storage.googleapis.com/fragracks-web-images/videos/VID20250607214330.mp4" />
+          <div className='  h-full aspect-square items-center  flex justify-center m-3'>
+            <VideoPreview src="https://storage.googleapis.com/fragracks-web-images/videos/VID20250607214330.mp4" />
 
           </div>
 
-       
 
 
+          <div className='  h-full aspect-square items-center  flex justify-center  m-3'>
 
-          <div className='  h-full aspect-square items-center  flex justify-center  m-2'>
-
-                     <ImagePreview  src={`${image_url}/IMG20250607212926.jpg`}/>
+            <ImagePreview src={`${image_url}/IMG20250607212926.jpg`} />
 
           </div>
-          
-          <div className='  h-full aspect-square items-center  flex justify-center  m-2'>
-                                  <ImagePreview  src={`${image_url}/IMG20250607212926.jpg`}/>
+
+          <div className='  h-full aspect-square items-center  flex justify-center  m-3'>
+            <ImagePreview src={`${image_url}/IMG20250607212926.jpg`} />
 
 
           </div>

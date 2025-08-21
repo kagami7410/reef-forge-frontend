@@ -40,7 +40,7 @@ const RecommendedItems = () => {
 
   }, [])
 
-  console.log("all items: " + items)
+  // console.log("all items: " + items)
 
 
 
@@ -51,11 +51,11 @@ const RecommendedItems = () => {
     handleResize()
     if (screenSize < 760) {
       setIsMobile(true)
-      console.log("Device is Mobile in recommened page")
+      // console.log("Device is Mobile in recommened page")
     }
     else {
       setIsMobile(false)
-      console.log('Device is Desktop in recommened page')
+      // console.log('Device is Desktop in recommened page')
     }
   }, [screenSize])
 
@@ -87,9 +87,9 @@ const RecommendedItems = () => {
 
 
     const md_start_index = (index * 3) % items.length;
-    console.log("items length: " + items.length)
-    console.log("index are for md for +1: " + (md_start_index + 1) % items.length)
-    console.log("index are for md for +2: " + (md_start_index + 2) % items.length)
+    // console.log("items length: " + items.length)
+    // console.log("index are for md for +1: " + (md_start_index + 1) % items.length)
+    // console.log("index are for md for +2: " + (md_start_index + 2) % items.length)
 
 
     // const md_prev_start_index =(index - 1) * 3;;
@@ -101,9 +101,9 @@ const RecommendedItems = () => {
       return <div key={eachItem.title} id={eachItem.title} className=" carousel-item scroll-mt-96 relative items-center justify-center w-full  rounded-lg">
         <div className='flex-col '>
 
-          <div className='border bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50'>
+          <div className='border flex items-center rounded-xl'>
             <Link href={`/shopFragRacks/${items[index].id}`}>
-              <img src={`${image_url}/${items[index].photoUrls[0]}`} className="w-full rounded-lg p-8 h-96  object-cover" alt={`Slide ${index + 1}`} />
+              <img src={`${image_url}/${items[index].photoUrls[0]}`} className="w-96 h-96 rounded-xl p-4   object-cover rounded-lg" alt={`Slide ${index + 1}`} />
             </Link>
           </div>
 
@@ -128,9 +128,9 @@ const RecommendedItems = () => {
 
           <button onClick={() => goToSlide(items[prevIndex].title)} className="btn btn-circle">❮</button>
         </div>
-        <div className='flex-col m-4'>
+        <div className='flex-col m-8'>
           <Link href={`/shopFragRacks/${items[md_start_index].id}`}>
-            <div className=' w-96 h-96 bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-lg'>
+            <div className=' w-96 h-96  rounded-lg'>
               <img src={`${image_url}/${items[md_start_index].photoUrls[0]}`} className="w-full rounded-lg  h-96  w-full object-cover" alt={`Slide ${index + 1}`} />
             </div>
           </Link>
@@ -139,7 +139,7 @@ const RecommendedItems = () => {
 
         </div>
 
-        <div className='flex-col m-4'>
+        <div className='flex-col m-8'>
           <Link href={`/shopFragRacks/${items[(md_start_index + 1) % items.length].id}`}>
             <div className='border  w-96 h-96'>
 
@@ -151,7 +151,7 @@ const RecommendedItems = () => {
 
         </div>
 
-        <div className='flex-col m-4'>
+        <div className='flex-col m-8'>
           <Link href={`/shopFragRacks/${items[(md_start_index + 2) % items.length].id}`}>
             <div className='border  w-96 h-96'>
 

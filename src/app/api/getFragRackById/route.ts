@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
         console.log(`trying to get ${itemId}`)
         const res = await fetch(`${backendHostName}/backend/fragRacks/getById?itemId=${itemId}`);
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         return NextResponse.json(data, { status: 200 });
     }
     catch(error) {

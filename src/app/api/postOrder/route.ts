@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     // }
   
   try {
-    console.log("Parsed Body from postOrder:", body); // Debug: Check the parsed data
+    // console.log("Parsed Body from postOrder:", body); // Debug: Check the parsed data
     const res = await fetch(`${backendHostName}/backend/orders/submitOrder`,{
         method: "POST",
         headers: {

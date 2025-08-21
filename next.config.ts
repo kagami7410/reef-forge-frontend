@@ -12,9 +12,9 @@ if (fs.existsSync("vault/secrets/stripe-api-key.txt") && fs.existsSync("vault/se
   process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY = stripeApiKey;
   process.env.STRIPE_SECRET_KEY = stripeApiSecret;
   if (stripeApiKey.includes("test")) {
-    console.log("Secret Injected successfully!");
-    console.log("Public Key: " + process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY )
-    console.log("Secret Key: " + process.env.STRIPE_SECRET_KEY )
+    // console.log("Secret Injected successfully!");
+    // console.log("Public Key: " + process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY )
+    // console.log("Secret Key: " + process.env.STRIPE_SECRET_KEY )
 
   }
 } else {

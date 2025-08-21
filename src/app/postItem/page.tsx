@@ -61,7 +61,6 @@ interface FragRackItem extends BasketItem {
   const sensors = useSensors(useSensor(MouseSensor));
   const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
-  const [signedIn, setSignedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false)
   const [loading, setLoading] = useState(true);
 
@@ -144,7 +143,6 @@ interface FragRackItem extends BasketItem {
       setIsAdmin(true)
 
       console.log('User is an admin');
-      setSignedIn(true)
 
 
     }

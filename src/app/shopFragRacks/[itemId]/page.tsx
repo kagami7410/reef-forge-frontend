@@ -232,7 +232,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
  //  returns all the items in the basket in drawer when users adds item to the cart
  const returnBasketItems = basket?.map(eachItem => {
   return <div key={eachItem.id} className='flex flex-col'>
-    <div  className='flex w-full  justify-center items-center p-2 '>
+    <div  className='flex w-full   justify-center items-center p-2 '>
     <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
             <div className='flex h-full  aspect-square justify-center '>
@@ -277,7 +277,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
       <div className='flex-col w-full   justify-items-center max-w-screen-2xl m-auto  md:p-2 '>
         {loading ? <Loading /> : <div className='flex-col align-middle justify-items-center w-11/12 md:w-5/6 h-screen p-4'>
           {/* <Loading/> */}
-          <div className='flex rounded-2xl  flex-col md:flex-row  justify-center  my-4 w-full md:w-full  p-2'>
+          <div className='flex rounded-2xl  flex-col md:flex-row align-middle items-center justify-center  my-4 w-full md:w-full  p-2'>
             <div className='flex flex-col h-full w-full md:m-4 items-center  md:p-2 md:w-1/2 rounded-2xl    '>
               <div className='flex h-full  border-slate-400 rounded-2xl  aspect-square w-full'>
                 <img className='flex p-1  w-full h-full object-cover bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-2xl' src={currentImage} />
@@ -295,13 +295,13 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
               </div>
 
             </div>
-            <div className='flex flex-col w-full  p-2 md:p-6 md:pl-8 md:w-1/2 md:mt-2 shadow-2xl'>
+            <div className='flex flex-col w-96  p-2 md:p-6 md:pl-8 md:w-1/2 md:mt-2 rounded-xl shadow-2xl'>
                           <h1 className='flex pl-2 text-sm'>Reef Forge</h1>
 
               <h1 className='flex  pl-2 text-2xl md:text-3xl font-semibold'>{item?.title}</h1>
               <h3 className='flex    p-2 text-xl '>£{item?.price}</h3>
               <div className='flex flex-col items-center align-middle justify-center'>
-              <div className="flex border w-72 md:w-96 justify-center p-2 rounded-lg  text-lime-600">✅ Get it by {futureDate}</div>
+              <div className="flex border w-80 md:w-96 justify-center p-2 rounded-lg  text-lime-600">✅ Get it by {futureDate}</div>
 
               <div className='flex  justify-center items-center  w-full md:w-1/2 mt-1 mb-1 md:mt-2 md:mb-2'>
                 {/* <div className='flex w-full h-full  items-center justify-center'>
@@ -355,7 +355,7 @@ const Page = ({ params }: { params: Promise<{ itemId: string }> }) => {
             className={`fixed top-0 right-0 h-full bg-base-200 z-50 w-10/12 md:w-96 transform transition-transform duration-300 ease-in-out ${drawerVisible ? "translate-x-0" : "translate-x-full"
               }`}
           >
-            <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
+            <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-full items-center">
               {/* Sidebar content here */}
               <h1>Your Cart</h1>
 

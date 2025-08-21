@@ -11,7 +11,7 @@ export async function GET(req:NextRequest) {
         const pageSize = searchParams.get('pageSize'); // Extract 'corqalType' from query        console.log('pageNumber: ',  req.query)
         const res = await fetch(`${backendHostName}/backend/fragRacks/getByPage?pageNumber=${pageNumber}&pageSize=${pageSize}`);
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         return NextResponse.json({data, status: res.status})
     }
     catch(error) {

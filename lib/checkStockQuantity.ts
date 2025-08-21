@@ -4,7 +4,7 @@
 
 
 export async function verifyQuantity(itemId: number, quantity: number): Promise<number> {
-    console.log(itemId + " and " + quantity)
+    // console.log(itemId + " and " + quantity)
   try {
     const res = await fetch('/api/checkStockQuantity', {
       method: 'POST',

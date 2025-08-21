@@ -22,12 +22,12 @@ const secretKey = Buffer.from(secret_base64, 'base64'); // 👈 important
   // }
 
   try {
-      console.log("trying to decode token")
+      // console.log("trying to decode token")
 
       if(token != undefined){
     const decoded = jwt.verify(token, secretKey,  { algorithms: ['HS256'] });
 
-    console.log("decoded token: ", decoded)
+    // console.log("decoded token: ", decoded)
 
     return NextResponse.json({
       authenticated: true,

@@ -13,7 +13,7 @@ export async function GET(request: Request){
     // }
   
   try {
-    console.log("Parsed Body from postOrder:"); // Debug: Check the parsed data
+    // console.log("Parsed Body from postOrder:"); // Debug: Check the parsed data
     const res = await fetch(`${backendHostName}/backend/users/restPasswordInit?email=${email}`,{
         method: "GET",
         headers: {

@@ -92,7 +92,7 @@ const Page = () => {
 
     const basketItem = basket.find((itemToFind) => item.id === itemToFind.id)
     if (basketItem != null) {
-      console.log("basket_item quantity to check" + basketItem.quantity)
+      // console.log("basket_item quantity to check" + basketItem.quantity)
 
       verifyQuantity(item.id, basketItem?.quantity+1)
         .then(data => {
@@ -200,7 +200,7 @@ const Page = () => {
   )
 
   const jsxreturnedAllItems = items.map(eachItem => {
-        console.log(eachItem.photoUrls[0])
+        // console.log(eachItem.photoUrls[0])
 
     return (
       <div key={eachItem.id} className=' flex flex-col w-5/12 rounded-xl m-2  md:p-2   mt-8 md:m-3 md:w-80 '>
@@ -248,7 +248,7 @@ const Page = () => {
             className={`fixed top-0 right-0 h-full bg-base-200 z-50 w-10/12 md:w-96 transform transition-transform duration-300 ease-in-out ${drawerVisible ? "translate-x-0" : "translate-x-full"
               }`}
           >
-            <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-10/12 items-center">
+            <ul className="pt-8 menu bg-base-200 text-base-content min-h-full md:w-96 w-full items-center">
               {/* Sidebar content here */}
               <h1>Your Cart</h1>
 

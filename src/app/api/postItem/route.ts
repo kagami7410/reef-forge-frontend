@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     console.log(token)
 
     const body = await request.json();
-    console.log("this should get items for posting")
+    // console.log("this should get items for posting")
     console.log(body)
 
     let res;

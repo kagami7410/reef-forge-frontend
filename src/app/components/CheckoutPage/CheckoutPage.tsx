@@ -12,6 +12,7 @@ import Loading from '../Loading/Loading'
 import { useBasket } from '../BasketContext/BasketContext'
 import { verifyQuantity } from '@/lib/checkStockQuantity';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
 
 interface BasketItem {
@@ -32,7 +33,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     const [errorMessage, setErrorMessage] = useState<string>()
     const [clientSecret, setClientSecret] = useState("")
     const { getBasketTotal } = useBasket();
-    const [paymentSuccessful, setPaymentSuccessful] = useState<Boolean>(true)
+    const [paymentSuccessful, setPaymentSuccessful] = useState<boolean>(true)
     const [unavailableItems, setUnavailableItems] = useState<BasketItem[]>([])
     const [showUnvailableItemsModal, setShowUnavailableItemsModal] = useState(false)
     const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
@@ -40,8 +41,8 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     const { basket } = useBasket();
     const [loading, setLoading] = useState(false)
     const [orderId, setOrderId] = useState("")
-    const frontendHostName = process.env.REEF_FORGE_FRONTEND_HOSTNAME
     const [updatedOrderId, setUpdatedOrderId] = useState(false)
+    const router = useRouter() // may be null or a NextRouter instance
 
     
   function generateOrderNumber(): string {
@@ -99,7 +100,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                 unavailableCount++;
             }
             else {
-                console.log(item.title + " is available")
+                // console.log(item.title + " is available")
                 setLoading(false)
             }
         }
@@ -147,7 +148,6 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     //     return orderSumbitted;
 
     // };
-    console.log('unavailable Items: ', unavailableItems)
 
 
     const returnAvailableItems = unavailableItems.map(
@@ -210,7 +210,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
         const result = await addressElement?.getValue(); // Extracts the address details
 
         if (result?.complete) {
-            console.log('Address:', result.value); // Contains name, address, phone, etc.
+            // Contains name, address, phone, etc.
             Cookies.set('user_address', JSON.stringify(result.value), {
                 expires: 3,
                 sameSite: 'lax'

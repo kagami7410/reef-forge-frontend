@@ -9,11 +9,11 @@ export async function GET(req:NextRequest) {
         const res = await fetch(`${backendHostName}/backend/orders/getUserOrder`,{
             method: "GET",
         headers: {
-            Cookie: cookieHeader
+            Cookie: cookieHeader??""
         },
     });
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         return NextResponse.json({data, status: res.status})
     }
     catch(error) {

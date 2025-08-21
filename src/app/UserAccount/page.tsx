@@ -1,10 +1,8 @@
 'use client'
-import { PaymentRequestUpdateDetailsStatus } from '@stripe/stripe-js';
-import { List } from 'postcss/lib/list';
 import React, { useEffect, useState } from 'react'
 import Loading from '../components/Loading/Loading';
 
-const page = () => {
+const Page = () => {
 
   interface BasketItem {
     id: number;
@@ -15,7 +13,7 @@ const page = () => {
   }
 
   interface EmptyOrder {
-
+    null:null;
   }
 
   interface Item {
@@ -112,4 +110,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

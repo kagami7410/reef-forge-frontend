@@ -1,9 +1,8 @@
 'use client'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
-const page = () => {
+const Page = () => {
         const [userEmail, setUserEmail] = useState("");
 
 
@@ -90,4 +89,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -13,7 +13,7 @@ export async function POST(request: Request){
         // }
       
       try {
-        console.log("Parsed Body of register request:", body); // Debug: Check the parsed data
+        // console.log("Parsed Body of register request:", body); // Debug: Check the parsed data
         const res = await fetch(`${backendHostName}/backend/users/preRegister`,{
             method: "POST",
             headers: {
