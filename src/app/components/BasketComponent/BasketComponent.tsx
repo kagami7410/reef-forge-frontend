@@ -8,8 +8,9 @@ import Link from 'next/link';
 
 type Props = {
   allowEditQuantity: boolean;
+  discount: number;
 };
-const BasketComponent = ({ allowEditQuantity }: Props) => {
+const BasketComponent = ({ allowEditQuantity, discount }: Props) => {
   const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
   // Define a type for the item
@@ -57,29 +58,43 @@ const BasketComponent = ({ allowEditQuantity }: Props) => {
 
 
   const getFinalTotal = () => {
+    if(discount > 0){
+          if (getBasketTotal() != 0) {
+      if (getBasketTotal() >= 50) {
+        return ((getBasketTotal()*discount).toFixed(2));
+      }
+      else {
+        return (((getBasketTotal()*discount) + 2.95).toFixed(2));
+
+      }
+
+    }
+
+    }
+    else{
     if (getBasketTotal() != 0) {
       if (getBasketTotal() >= 50) {
         return ((getBasketTotal()).toFixed(2));
       }
       else {
         return ((getBasketTotal() + 2.95).toFixed(2));
-
       }
 
     }
     else
       return 0;
+    }
 
   }
 
 
   const returnBasketItems = basketItems?.map(eachItem => {
     if (eachItem.id) {
-      return <div key={eachItem.id} className='flex-col'>
-        <div className='flex  p-2  items-center  w-full  justify-center'>
+      return <div key={eachItem.id} className='flex-col w-full'>
+        <div className='flex  p-2  items-center  w-96 md:w-full shadow-lg  justify-center'>
           <div className='flex w-2/5 md:w-2/6 mr-2 '>
             <Link href={`/shopFragRacks/${eachItem.id}`}>
-              <div className='flex h-full  aspect-square justify-center '>
+              <div className='flex   aspect-square justify-center '>
                 <img key={eachItem.id} src={`${image_url}/${eachItem.photoUrls[0]}`} className='  rounded-md cursor-pointer object-cover ' ></img>
               </div>
             </Link>
@@ -105,7 +120,7 @@ const BasketComponent = ({ allowEditQuantity }: Props) => {
 
           </div>
         </div>
-        <div className='bg-slate-300 w-full my-2 md:my-3 h-px'></div>
+        <div className='bg-slate-200 shadow-lg w-full my-2 md:my-3 h-px'></div>
 
 
       </div>
@@ -135,7 +150,7 @@ const BasketComponent = ({ allowEditQuantity }: Props) => {
     <>
       {loading ? <Loading /> : <><div className='flex flex-col max-w-2xl  items-center justify-center p-4 md:p-1 '>
         <div className=' items-center w-full pt-4 rounded-t-2xl  flex-col flex p-1'>
-          <h2 className=' mb-10 text-sm text-center font-semibold md:text-lg'>Your basket Total is   £{getBasketTotal()} ( {getBasketCount()} items ) </h2>
+          <h2 className=' mb-10 text-sm text-center font-semibold md:text-lg'>Your basket Total is   £{getFinalTotal()} ( {getBasketCount()} items ) </h2>
 
 
 
@@ -161,7 +176,7 @@ const BasketComponent = ({ allowEditQuantity }: Props) => {
             {allowEditQuantity ? <> <h2 className=' p-2 text-xl text-center '>Subtotal: £{getBasketTotal()} </h2> <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  text-md mb-4 mt-2'>Checkout</h1> </> :
               <>
                 <div className='flex flex-col items-start w-full m-0 p-0'>
-                  <h2 className='  text-md text-center '>Subtotal: £{getBasketTotal()}</h2>
+                  <h2 className='  text-md text-center '>Subtotal: £{getFinalTotal()}</h2>
 
                   {freeShipping ? <div className='flex space-x-1'><h2 className='  text-md text-center '>Shipping: </h2> <h2 className='text-lime-600 font-semibold'>Free</h2></div> :
                     <h2 className='  text-md text-center '>Shipping: £2.95</h2>

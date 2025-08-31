@@ -195,7 +195,7 @@ const checkAuth = async () => {
  //  returns all the items in the basket in drawer when users adds item to the cart
  const returnBasketItems = basket?.map(eachItem => {
   return <div key={eachItem.id} className='flex flex-col'>
-    <div  className='flex w-full justify-center items-center p-2 '>
+    <div  className='flex w-full justify-center items-center p-2 shadow-lg '>
     <Link className='w-2/5 mr-3' href={`/shopFragRacks/${eachItem.id}`}>
 
             <div className='flex h-full  aspect-square justify-center '>
@@ -212,7 +212,7 @@ const checkAuth = async () => {
     <div className='flex h-10 text-center items-center align-middle justify-center '>
 
     <div className='flex mt-1 md:mt-2 w-full'>
-          <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl '>
+          <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl bg-slate-50 shadow-md'>
             <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
             <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
             <button onClick={() => {
@@ -221,7 +221,7 @@ const checkAuth = async () => {
                }} 
                className=' text-2xl  w-1/6' >+</button>
           </div>
-          <button onClick={()=>removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
+          <button onClick={()=>removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9 '>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
           </svg> 
           </button>

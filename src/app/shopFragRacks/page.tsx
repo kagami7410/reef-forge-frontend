@@ -42,7 +42,7 @@ const Page = () => {
   // asynchronous access of `params.id`.
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [items, setItems] = useState<FragRackItem[]>([]); 
+  const [items, setItems] = useState<FragRackItem[]>([]);
 
   const { addSingleItemToBasket, basket, removeItemInBasket, removeAllQuantityitem, getBasketTotal } = useBasket();
 
@@ -94,7 +94,7 @@ const Page = () => {
     if (basketItem != null) {
       // console.log("basket_item quantity to check" + basketItem.quantity)
 
-      verifyQuantity(item.id, basketItem?.quantity+1)
+      verifyQuantity(item.id, basketItem?.quantity + 1)
         .then(data => {
           if (data === 200) {
             setDrawerMounted(true); // Mount it
@@ -111,10 +111,10 @@ const Page = () => {
 
           } else {
             setLoading(false)
-                requestAnimationFrame(() => {
-                  setDrawerVisible(false);
+            requestAnimationFrame(() => {
+              setDrawerVisible(false);
 
-              });
+            });
             setItemAvailable(!itemAvailable)
 
           }
@@ -160,65 +160,64 @@ const Page = () => {
   //  returns all the items in the basket in drawer when users adds item to the cart
   const returnBasketItems = basket?.map(eachItem => {
     return <div key={eachItem.id} className='flex flex-col'>
-    <div  className='flex w-full  justify-center items-center p-2 '>
-    <Link className='w-2/5 mr-3 rounded-md' href={`/shopFragRacks/${eachItem.id}`}>
+    <div  className='flex w-full justify-center items-center p-2 shadow-lg '>
+        <Link className='w-2/5 mr-3 rounded-md' href={`/shopFragRacks/${eachItem.id}`}>
 
-            <div className='flex h-full  rounded-md aspect-square justify-center '>
-              <img key={eachItem.id} src={`${image_url}/${eachItem.photoUrls[0]}`} className='rounded-md cursor-pointer object-cover ' ></img>
-            </div>
-    </Link>
-    <div className='flex  w-4/6 flex-col'>
-    <Link href={`/shopFragRacks/${eachItem.id}`}>
-
-      <h1 className='p-1 md:p-2 text-sm'>{eachItem.title}</h1>
-    </Link>
-
-    <h3 className='p-1'>£{eachItem.price}</h3>
-    <div className='flex h-10 text-center items-center align-middle justify-center '>
-
-    <div className='flex mt-1 md:mt-2 w-full'>
-          <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl '>
-            <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
-            <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
-            <button onClick={() => { addItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
+          <div className='flex h-full  rounded-md aspect-square justify-center '>
+            <img key={eachItem.id} src={`${image_url}/${eachItem.photoUrls[0]}`} className='rounded-md cursor-pointer object-cover ' ></img>
           </div>
-          <button onClick={()=>removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
-          </svg> 
-          </button>
-           </div>
+        </Link>
+        <div className='flex  w-4/6 flex-col'>
+          <Link href={`/shopFragRacks/${eachItem.id}`}>
 
-    </div>
+            <h1 className='p-1 md:p-2 text-sm'>{eachItem.title}</h1>
+          </Link>
 
-    </div>
+          <h3 className='p-1'>£{eachItem.price}</h3>
+          <div className='flex h-10 text-center items-center align-middle justify-center '>
 
-  </div>
-      <div className='flex w-full bg-gray-300 h-px m-1'></div>
+            <div className='flex mt-1 md:mt-2 w-full'>
+          <div className='flex border items-center justify-center w-4/6 pr-2 pl-2 rounded-xl bg-slate-50 shadow-md'>
+                <button onClick={() => removeItemInBasket(eachItem)} className=' text-2xl w-1/6'>-</button>
+                <h4 className=' w-1/2 text-center text-stone-900 text-sm m-2'> {eachItem.quantity}</h4>
+                <button onClick={() => { addItemToBasket(eachItem) }} className=' text-2xl  w-1/6' >+</button>
+              </div>
+              <button onClick={() => removeAllQuantityitem(eachItem)} className='flex w-8 cursor-pointer ml-4 md:ml-8 hover:w-9'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+                </svg>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
+      <div className='flex w-full bg-gray-300 h-px m-1'></div>
+    </div>
 
   }
   )
 
   const jsxreturnedAllItems = items.map(eachItem => {
-        // console.log(eachItem.photoUrls[0])
+    // console.log(eachItem.photoUrls[0])
 
     return (
       <div key={eachItem.id} className=' flex flex-col w-5/12 rounded-xl m-2  md:p-2   mt-8 md:m-3 md:w-80 '>
         <Link href={`/shopFragRacks/${eachItem.id}`}>
-                <div className='flex w-full justify-center'>
-                  
-          <div className='bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-xl w-44 h-44 md:w-80 md:h-80   flex'>
-            <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100 w-full rounded-xl h-full object-cover cursor-pointer' ></img>
+          <div className='flex w-full justify-center'>
 
+            <div className='bg-gradient-to-r from-blue-400/70 via-red-500/40 to-orange-500/50 rounded-xl w-44 h-44 md:w-80 md:h-80   flex'>
+              <img src={`${image_url}/${eachItem.photoUrls[0]}`} className=' opacity-100 w-full rounded-xl h-full object-cover cursor-pointer' ></img>
+
+            </div>
           </div>
-                  </div>
-
 
         </Link>
-                <div className='flex w-full items-center mt-2 h-8 '>
-                          <a className='p-2' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
+        <div className='flex w-full items-center mt-2 h-10 align-middle leading-tight '>
+          <a className='p-2' href={`/shopFragRacks/${eachItem.id}`}>{eachItem.title}</a>
 
-                  </div>
+        </div>
 
 
         <h3 className='pl-2'>£{eachItem.price}</h3>
@@ -226,9 +225,9 @@ const Page = () => {
 
         {/* Page content */}
         <div className='flex w-full justify-center mt-2'>
-        <button onClick={() => addItemToBasket(eachItem)} className="btn btn-primary w-full">
-          Add To Cart
-        </button>
+          <button onClick={() => addItemToBasket(eachItem)} className="btn btn-primary w-full">
+            Add To Cart
+          </button>
         </div>
 
 
@@ -285,6 +284,7 @@ const Page = () => {
       </div>
 
 
+
       {noItems ? <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto">
         <h3 className="font-bold text- md:text-lg">Basket is Empty!</h3>
 
@@ -302,7 +302,7 @@ const Page = () => {
         </div>
       </div> : <></>}
 
-      {itemAvailable? <></>:<div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+      {itemAvailable ? <></> : <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
         <h3 className="font-bold text- md:text-lg">❌ Item has limited Quantity in Stock!</h3>
 
         <h3 className="font-bold text-lg mt-4">{currentlyClickedBasketItem?.title}</h3>
@@ -314,7 +314,7 @@ const Page = () => {
           </Link>
         </div>
         <h3 className="font-bold text-lg mt-1">£{currentlyClickedBasketItem?.price}</h3>
-      <h3 className="font-bold text-lg mt-1">only {currentlyClickedBasketItem?.stockQuantity} available!</h3>
+        <h3 className="font-bold text-lg mt-1">only {currentlyClickedBasketItem?.stockQuantity} available!</h3>
 
 
         <div className="modal-action">

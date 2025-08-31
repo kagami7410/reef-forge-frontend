@@ -105,7 +105,7 @@ const LandingPage = () => {
 
   return (
     <div className={`max-w-screen-2xl ${styles.landingPageContainer}`}>
-      <div className={` ${styles.landingPageTopContainer} bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100  shadow-lg pb-24 pt-10 md:pt-8  md:pb-20`}>
+      <div className={` ${styles.landingPageTopContainer}  bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100  shadow-lg  `}>
         <div className={` transform transition-all px-8 md:px-4`}
           style={{ opacity: `${opacityEnabled}`, transitionDuration: '750ms', transform: `translateX(${xPosition}%)` }}>
           <div className={`${styles.mainHeadline}`}>Rock-Solid Magnetic Frag Holder</div>

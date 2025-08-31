@@ -44,25 +44,25 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     const [updatedOrderId, setUpdatedOrderId] = useState(false)
     const router = useRouter() // may be null or a NextRouter instance
 
-    
-  function generateOrderNumber(): string {
-    const timestamp = Date.now(); // ensures uniqueness
-    const random = Math.floor(1000 + Math.random() * 9000); // 4-digit random number
-    return `ORD-${timestamp}-${random}`;
-  }
 
-      useEffect(() => {
-        if(!updatedOrderId){
+    function generateOrderNumber(): string {
+        const timestamp = Date.now(); // ensures uniqueness
+        const random = Math.floor(1000 + Math.random() * 9000); // 4-digit random number
+        return `ORD-${timestamp}-${random}`;
+    }
+
+    useEffect(() => {
+        if (!updatedOrderId) {
             setOrderId(generateOrderNumber())
             setUpdatedOrderId(true)
         }
-    },[])
+    }, [])
 
 
 
     useEffect(() => {
-        if(!updatedOrderId){
-            
+        if (!updatedOrderId) {
+
         }
         console.log("creating order id for order: ", orderId)
         fetch('/api/create-payment-intent', {
@@ -77,7 +77,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             .then((data) => setClientSecret(data.clientSecret))
 
 
-    }, [updatedOrderId])
+    }, [basket, amount])
 
     // const getOrderedItems = () => {
     //     basket.forEach((eachItem) => {
@@ -168,28 +168,12 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
 
 
 
-
-    const getFinalTotal = () => {
-        if (getBasketTotal() != 0) {
-            if(getBasketTotal() >= 50){
-                return ((getBasketTotal()).toFixed(2));
-            }
-            else{
-                return ((getBasketTotal() + 2.95).toFixed(2));
-
-            }
-
-        }
-        else
-            return 0;
-
-    }
     const handlePayment = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault()
         setLoading(true);
 
         if (userEmail.length === 0) {
-            alert('Email is required');
+            alert('Email is required')
             setLoading(false)
 
             return;
@@ -241,7 +225,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                 elements,
                 clientSecret,
                 confirmParams: {
-                    return_url: `http://localhost:3000/confirmationPage?orderId=${orderId}`,
+                    return_url: `https://reef-forge.uk/confirmationPage?orderId=${orderId}`,
 
                 },
             })
@@ -253,7 +237,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             } else {
                 setPaymentSuccessful(true)
                 console.log('payment was successful!')
-                
+
                 // router.push('/')
 
 
@@ -284,7 +268,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             <form onSubmit={handlePayment}>
                 {clientSecret && < PaymentElement />}
                 {errorMessage && <div>{errorMessage}</div>}
-                <button disabled={!stripe || loading} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48 mt-4 text-xl w-full'>{!loading ? `Pay £${getFinalTotal()}` : `Processing... `}</button>
+                <button disabled={!stripe || loading} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48 mt-4 text-xl w-full'>{!loading ? `Pay £${amount}` : `Processing... `}</button>
 
 
             </form>
@@ -306,24 +290,24 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             {/* {returnAvailableItems } */}
 
 
-            
-      {paymentSuccessful? <></>:<div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
-        <h3 className="font-bold text- md:text-lg">❌ Something went wrong with the payment!</h3>
 
-\
+            {paymentSuccessful ? <></> : <div className="z-30 flex-col items-center flex modal-box fixed top-1/4 left-1/2 -translate-x-1/2  m-auto bg-slate-200">
+                <h3 className="font-bold text- md:text-lg">❌ Something went wrong with the payment!</h3>
+
+                \
 
 
-        <div className="modal-action">
-          <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <button onClick={() => {
-              router.push('/userDetailsCheckout')
-        
-            }}
-              className="btn">Close</button>
-          </form>
-        </div>
-      </div>}
+                <div className="modal-action">
+                    <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button onClick={() => {
+                            router.push('/userDetailsCheckout')
+
+                        }}
+                            className="btn">Close</button>
+                    </form>
+                </div>
+            </div>}
 
 
         </div>
