@@ -10,9 +10,7 @@ const Basket = () => {
     <>
     <div className='flex align-middle justify-center  mt-4'>
       <div className='md:w-3/4 w-full'>
-      <BasketComponent allowEditQuantity={true}/>
-
-
+      <BasketComponent discount={1} allowEditQuantity={true}/>
       </div>
     </div>
 

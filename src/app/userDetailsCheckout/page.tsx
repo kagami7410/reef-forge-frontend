@@ -9,21 +9,21 @@ import convertToSubcurrency from '@/lib/convertToSubcurrency';
 import { StripeAddressElementOptions } from '@stripe/stripe-js';
 
 let stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
+const shippingPrice = process.env.NEXT_PUBLIC_SHIPPING_PRICE??2.95;
 
 const Page = () => {
   const [hasMounted, setHasMounted] = useState(false);
   const { getBasketTotal } = useBasket();
   const [userEmail, setUserEmail] = useState("");
-  const [applyDiscount, setApplyDiscount] = useState(false);
 
   const [somethingInBasket, setSomethingInBasket] = useState(false)
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setDiscount] = useState(0);
-  const [error, setError] = useState("");
+  const [invalidCode, setInvalidCode] = useState(false)
+    const [codeApplied, setCodeApplied] = useState(false)
 
   const validCodes: Record<string, number> = {
     SAVE10: 0.9,
-    SAVE20: 0.8,
   };
   useEffect(() => {
 
@@ -31,9 +31,7 @@ const Page = () => {
       setSomethingInBasket(true)
     }
     setHasMounted(true);
-
   }, []);
-
 
 
 
@@ -59,7 +57,7 @@ const getFinalTotal = (): number => {
       if (basketTotal >= 50) {
         return parseFloat((basketTotal * discount).toFixed(2));
       } else {
-        return parseFloat(((basketTotal * discount) + 2.95).toFixed(2));
+        return parseFloat(((basketTotal * discount) + Number(shippingPrice)).toFixed(2));
       }
     } else {
       return 0; // ✅ handle basketTotal = 0 case
@@ -69,7 +67,7 @@ const getFinalTotal = (): number => {
       if (basketTotal >= 50) {
         return parseFloat(basketTotal.toFixed(2));
       } else {
-        return parseFloat((basketTotal + 2.95).toFixed(2));
+        return parseFloat((basketTotal + Number(shippingPrice)).toFixed(2));
       }
     } else {
       return 0; // ✅ handle basketTotal = 0 case
@@ -80,11 +78,11 @@ const getFinalTotal = (): number => {
 
   const applyCode = () => {
     if (discountCode in validCodes) {
+      setCodeApplied(true)
       setDiscount(validCodes[discountCode]);
-      setError("");
     } else {
+      setInvalidCode(true)
       setDiscount(0);
-      setError("Invalid code. Try again.");
     }
   };
 
@@ -103,8 +101,9 @@ const getFinalTotal = (): number => {
 
 
   return (
+
     <div className='flex items-center align-middle justify-center mt-6'>
-      <div className=' w-full flex md:flex-row flex-col align-middle p-4 justify-center '>
+      {getBasketTotal()? <div className=' w-full flex md:flex-row flex-col align-middle p-4 justify-center '>
         <div className='flex mt-8 md:mr-10  flex-col md:w-96 w-full bg-slate-50 h-full  m-1 pb-8 border p-4 rounded-md  shadow-lg'>
           {hasMounted && stripePromise && somethingInBasket && (
 
@@ -163,7 +162,39 @@ const getFinalTotal = (): number => {
 
 
 
-      </div>
+      </div>:<div className='mt-20 text-3xl font-serif font-semibold'>Basket is empty</div>
+        }
+
+                {invalidCode ? <div className=" modal-box fixed top-1/3 left-1/2 -translate-x-1/2 w-80 m-auto bg-slate-200">
+            <h3 className="font-bold text-lg text-center">Invalid Discount Code!</h3>
+
+            <div className="modal-action items-center justify-items-center align-middle justify-center">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button onClick={() => {
+                  setInvalidCode(false)
+                }}
+                  className="btn">Close</button>
+              </form>
+            </div>
+          </div> : <></>}
+
+
+          
+                {codeApplied ? <div className=" modal-box fixed top-1/3 left-1/2 -translate-x-1/2 w-80 m-auto bg-slate-200">
+            <h3 className="font-bold text-lg text-center">Discount Code Applied!</h3>
+
+            <div className="modal-action items-center justify-items-center align-middle justify-center">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button onClick={() => {
+                  setCodeApplied(false)
+                }}
+                  className="btn">Close</button>
+              </form>
+            </div>
+          </div> : <></>}
+  
 
     </div>
 

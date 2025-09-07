@@ -6,12 +6,16 @@ import Loading from '../Loading/Loading';
 import Link from 'next/link';
 
 
-type Props = {
+// type Props = {
+//   allowEditQuantity: boolean;
+//   discount: number;
+// };
+const BasketComponent = ({ allowEditQuantity, discount }: {
   allowEditQuantity: boolean;
   discount: number;
-};
-const BasketComponent = ({ allowEditQuantity, discount }: Props) => {
+}) => {
   const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
+const shippingPrice = process.env.NEXT_PUBLIC_SHIPPING_PRICE??2.95;
 
   // Define a type for the item
   interface BasketItem {
@@ -58,31 +62,54 @@ const BasketComponent = ({ allowEditQuantity, discount }: Props) => {
 
 
   const getFinalTotal = () => {
-    if(discount > 0){
-          if (getBasketTotal() != 0) {
-      if (getBasketTotal() >= 50) {
-        return ((getBasketTotal()*discount).toFixed(2));
-      }
-      else {
-        return (((getBasketTotal()*discount) + 2.95).toFixed(2));
+    if (discount > 0) {
+      if (getBasketTotal() != 0) {
+        if (getBasketTotal() >= 50) {
+          return ((getBasketTotal() * discount).toFixed(2));
+        }
+        else {
+          return (((getBasketTotal() * discount) +Number(shippingPrice)).toFixed(2));
+
+        }
 
       }
 
     }
+    else {
+      if (getBasketTotal() != 0) {
+        if (getBasketTotal() >= 50) {
+          return ((getBasketTotal()).toFixed(2));
+        }
+        else {
+          return ((getBasketTotal() + Number(shippingPrice)).toFixed(2));
+        }
+
+      }
+      else
+        return 0;
+    }
+
+  }
+
+
+
+  const getSubTotal = () => {
+    if (discount > 0) {
+      if (getBasketTotal() != 0) {
+
+          return (((getBasketTotal() * discount)).toFixed(2));
+
+      
+      }
 
     }
-    else{
-    if (getBasketTotal() != 0) {
-      if (getBasketTotal() >= 50) {
-        return ((getBasketTotal()).toFixed(2));
-      }
-      else {
-        return ((getBasketTotal() + 2.95).toFixed(2));
-      }
+    else {
+      if (getBasketTotal() != 0) {
+          return ((getBasketTotal()).toFixed(2));
 
-    }
-    else
-      return 0;
+      }
+      else
+        return 0;
     }
 
   }
@@ -173,13 +200,13 @@ const BasketComponent = ({ allowEditQuantity, discount }: Props) => {
               {/* <h2 className=' p-2 text-2xl text-center font-semibold'> £{getBasketTotal()} </h2> */}
 
             </div>
-            {allowEditQuantity ? <> <h2 className=' p-2 text-xl text-center '>Subtotal: £{getBasketTotal()} </h2> <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  text-md mb-4 mt-2'>Checkout</h1> </> :
+            {allowEditQuantity ? <> <h2 className=' p-2 text-xl text-center '>Subtotal: £{getSubTotal()} </h2> <h1 onClick={routeToCheckout} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48  text-md mb-4 mt-2'>Checkout</h1> </> :
               <>
                 <div className='flex flex-col items-start w-full m-0 p-0'>
-                  <h2 className='  text-md text-center '>Subtotal: £{getFinalTotal()}</h2>
+                  <h2 className='  text-md text-center '>Subtotal: £{getSubTotal()}</h2>
 
                   {freeShipping ? <div className='flex space-x-1'><h2 className='  text-md text-center '>Shipping: </h2> <h2 className='text-lime-600 font-semibold'>Free</h2></div> :
-                    <h2 className='  text-md text-center '>Shipping: £2.95</h2>
+                    <h2 className='  text-md text-center '>Shipping: £{shippingPrice}</h2>
 
                   }
 

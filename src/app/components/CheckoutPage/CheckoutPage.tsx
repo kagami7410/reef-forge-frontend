@@ -32,7 +32,6 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
     const elements = useElements()
     const [errorMessage, setErrorMessage] = useState<string>()
     const [clientSecret, setClientSecret] = useState("")
-    const { getBasketTotal } = useBasket();
     const [paymentSuccessful, setPaymentSuccessful] = useState<boolean>(true)
     const [unavailableItems, setUnavailableItems] = useState<BasketItem[]>([])
     const [showUnvailableItemsModal, setShowUnavailableItemsModal] = useState(false)
@@ -225,7 +224,9 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                 elements,
                 clientSecret,
                 confirmParams: {
-                    return_url: `https://reef-forge.uk/confirmationPage?orderId=${orderId}`,
+                    // return_url: `https://reef-forge.uk/confirmationPage?orderId=${orderId}`,
+                    return_url: `http://localhost:3000/confirmationPage?orderId=${orderId}`,
+
 
                 },
             })
@@ -268,7 +269,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
             <form onSubmit={handlePayment}>
                 {clientSecret && < PaymentElement />}
                 {errorMessage && <div>{errorMessage}</div>}
-                <button disabled={!stripe || loading} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48 mt-4 text-xl w-full'>{!loading ? `Pay £${amount}` : `Processing... `}</button>
+                <button disabled={!stripe || loading} className='btn bg-slate-900 text-cyan-50 hover:bg-slate-700 w-48 mt-4 text-xl w-full'>{!loading ? `Pay £${amount.toFixed(2)}` : `Processing... `}</button>
 
 
             </form>
