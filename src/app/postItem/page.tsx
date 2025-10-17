@@ -78,21 +78,6 @@ interface FragRackItem extends BasketItem {
   // const [signedIn, setSignedIn] = useState(false);
   const [images, setImages] = useState<ImageItem[]>([]); // imageItem: { id, file, previewUrl }
 
-  // const handleAddFiles = (files: FileList) => {
-  //   const newImages = Array.from(files).map(file => ({
-  //     id: crypto.randomUUID(), // ✅ stable ID
-  //     file,
-  //     previewUrl: URL.createObjectURL(file),
-  //   }));
-
-  //   setImages(prev => [...prev, ...newImages]);
-  // };
-  // ✅ Better approach: Revoke only newly removed URLs
-  // Replace with this cleanup method:
-
-  // That means:
-  // Only revoke on unmount
-  // Don't revoke during drag-and-drop reorder
 
   useEffect(() => {
     getItems()
@@ -224,9 +209,9 @@ interface FragRackItem extends BasketItem {
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#2e2d2d" d="M576 128c0-35.3-28.7-64-64-64L205.3 64c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7L512 448c35.3 0 64-28.7 64-64l0-256zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
           </svg> 
           </button>
-          <button className='btn bg-orange-300'>
+          <a href="/editItem/${eachItem.id}" className='btn bg-orange-300'>
             edit
-          </button>
+          </a>
 
       </div>
 
