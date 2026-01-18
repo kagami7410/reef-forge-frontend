@@ -1,62 +1,66 @@
-import { NextResponse, NextRequest } from "next/server";
-
+import { NextRequest } from "next/server";
+import { getBackendUrl } from "@/lib/env";
+import { successResponseWithCookie, errorResponse, handleApiError, unauthorizedResponse } from "@/lib/api-response";
+import { safeValidateRequestBody, loginSchema } from "@/lib/validation";
+import { AUTH, SUCCESS_MESSAGES, ERROR_MESSAGES } from "@/config";
+import logger from "@/lib/logger";
 
 export async function POST(request: NextRequest) {
-  // const res = NextResponse.next(); // or NextResponse.redirect(), etc.
-
-  const backendHostName = process.env.REEF_FORGE_BACKEND_HOSTNAME
-  const body = await request.json();
-
-
-  // try {
-  //   console.log("Parsed Body:", body); // Debug: Check the parsed data
-  // } catch (error) {
-  //   console.error("Error parsing JSON:", error);
-  //   return NextResponse.json({ error: "Invalid JSON format" }, { status: 400 });
-  // }
-
   try {
-    console.log("Parsed Body:", body); // Debug: Check the parsed data
-    const loginRes = await fetch(`${backendHostName}/backend/users/authenticate`, {
+    // Validate request body
+    const validation = await safeValidateRequestBody(loginSchema, request);
+
+    if (!validation.success) {
+      logger.validation('login', validation.errors);
+      return errorResponse('Invalid email or password format', 400, validation.errors);
+    }
+
+    const { email, password } = validation.data;
+    logger.auth('login_attempt', email);
+
+    // Call backend authentication service
+    const loginRes = await fetch(getBackendUrl('/backend/users/authenticate'), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-
       },
-      body: JSON.stringify(body),
-
-    })
-
-
+      body: JSON.stringify({ email, password }),
+    });
 
     if (loginRes.status === 200) {
-      
-    const data = await loginRes.json();
-    // console.log(token)
-      console.log(data)
-      console.log("Token received:", data.token)
-      console.log("logged in successfully!")
+      const data = await loginRes.json();
 
+      if (!data.token) {
+        logger.error('Backend returned 200 but no token', data);
+        return errorResponse(ERROR_MESSAGES.AUTHENTICATION, 500);
+      }
 
-    const response = NextResponse.json({ message: 'Logged in successfully' });
+      logger.auth('login_success', email);
 
-      // ✅ Correct way to set a cookie
-        response.cookies.set('token', data.token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-        maxAge: 60*60,
-      });
-      return response;
-    }
-    else {
-      console.log("either password or email is incorrect")
+      // Return success response with secure cookie
+      return successResponseWithCookie(
+        { message: SUCCESS_MESSAGES.LOGIN },
+        AUTH.TOKEN_COOKIE_NAME,
+        data.token,
+        SUCCESS_MESSAGES.LOGIN,
+        {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          path: '/',
+          maxAge: AUTH.SESSION_DURATION,
+        }
+      );
+    } else if (loginRes.status === 401 || loginRes.status === 403) {
+      logger.warn('login_failed', email);
+      return unauthorizedResponse('Invalid email or password');
+    } else {
+      logger.error('Backend authentication error', { status: loginRes.status, email });
+      return errorResponse(ERROR_MESSAGES.AUTHENTICATION, 500);
     }
 
   } catch (error) {
-    console.error("Error handling POST request:", error);
-    // Send an error response
-    return NextResponse.json({ error: "Something went wrong verifying qunatity!" }, { status: 500 });
+    logger.error("Authentication error", error);
+    return handleApiError(error);
   }
 }

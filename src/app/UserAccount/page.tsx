@@ -1,6 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Loading from '../components/Loading/Loading';
+import { useRouter } from 'next/navigation';
+import logger from '@/lib/logger';
 
 const Page = () => {
 
@@ -34,6 +36,39 @@ const Page = () => {
 
   const [userOrders, setUserOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const router = useRouter()
+
+  const checkAuth = async () => {
+    try {
+      const res = await fetch('/api/auth', {
+        credentials: 'include',
+      });
+      const response = await res.json();
+
+      // Extract the actual data from the wrapped response
+      const data = response.data || response;
+
+      if (data.authenticated && data.user) {
+        logger.info('User authenticated on UserAccount page', { email: data.user.email });
+        setIsAuthenticated(true);
+        // Only fetch orders if authenticated
+        fetchUserOrder();
+      } else {
+        logger.debug('User not authenticated on UserAccount page');
+        setIsAuthenticated(false);
+        setLoading(false);
+        // Redirect to sign in page after a short delay
+        setTimeout(() => {
+          router.push('/SignInPage');
+        }, 2000);
+      }
+    } catch (error) {
+      logger.error('Auth check failed on UserAccount page', error);
+      setIsAuthenticated(false);
+      setLoading(false);
+    }
+  };
 
   const fetchUserOrder = async () => {
     const res = await fetch(`/api/getUserOrders`,
@@ -95,17 +130,21 @@ const Page = () => {
   )
 
   useEffect(() => {
-    fetchUserOrder()
-
+    checkAuth()
   }, [])
   return (
     <div className='flex flex-col mt-20 w-full '>
-      <h1 className='mb-6'>Your Orders </h1>
-      {/* {loading?<Loading/>:userOrders.map(eachOrder => {return <h1>{eachOrder.orderId}</h1>})} */}
-
-      {loading ? <Loading /> : returnAllOrders}
-
-
+      {!isAuthenticated && !loading ? (
+        <div className='flex flex-col items-center justify-center mt-32'>
+          <h1 className='text-2xl font-semibold mb-4'>Please sign in to view your orders</h1>
+          <p className='text-gray-600'>Redirecting to sign in page...</p>
+        </div>
+      ) : (
+        <>
+          <h1 className='mb-6'>Your Orders </h1>
+          {loading ? <Loading /> : returnAllOrders}
+        </>
+      )}
     </div>
   )
 }

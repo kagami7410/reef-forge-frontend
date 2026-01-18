@@ -1,31 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
+import { useBasket } from '@/app/components/BasketContext/BasketContext';
 import Loading from '../components/Loading/Loading';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { verifyQuantity } from '@/lib/checkStockQuantity';
+import type { FragRackItem } from '@/types';
 
-
-interface BasketItem {
-  id: number;
-  title: string;
-  price: number;
-  code: string;
-  quantity: number;
-  photoUrls: string[];
-  stockQuantity: number;
-
-
-}
-
-interface FragRackItem extends BasketItem {
-  colour: string;
-  magnetNum: number;
-  size: string;
-
-
-}
+// Use FragRackItem as BasketItem since basket items include stockQuantity
+type BasketItem = FragRackItem;
 
 const Page = () => {
   const router = useRouter() // may be null or a NextRouter instance
@@ -65,7 +48,7 @@ const Page = () => {
   function getItems() {
     setLoading(true)
 
-    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=6`)
+    fetch(`/api/getAllFragRacks?pageNumber=${currentPage}&pageSize=8`)
       .then(res => res.json())
       .then(data => {
         setItems(data.data.content)

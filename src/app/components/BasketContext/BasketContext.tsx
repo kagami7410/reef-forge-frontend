@@ -1,5 +1,10 @@
 'use client'
 import React, { useEffect, useState, createContext, useContext, ReactNode } from 'react'
+import type { FragRackItem } from '@/types'
+
+// Use FragRackItem as our BasketItem type since it has all required fields including stockQuantity
+type BasketItem = FragRackItem;
+
 const BasketContext = createContext<BasketContextData | undefined>(undefined);
 
 // Define the context data
@@ -22,18 +27,6 @@ export const useBasket = () => {
   }
   return context;
 };
-
-// Define a type for the item
-interface BasketItem {
-  id: number;
-  title: string;
-  price: number;
-  code: string;
-  quantity: number;
-  photoUrls: string[];
-  stockQuantity: number;
-
-}
 // Define the provider props type
 interface BasketProviderProps {
     children: ReactNode;

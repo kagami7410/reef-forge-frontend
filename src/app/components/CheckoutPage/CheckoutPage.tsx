@@ -13,17 +13,9 @@ import { useBasket } from '../BasketContext/BasketContext'
 import { verifyQuantity } from '@/lib/checkStockQuantity';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
-
-
-interface BasketItem {
-    id: number;
-    title: string;
-    price: number;
-    code: string;
-    quantity: number;
-    photoUrls: string[];
-
-}
+import type { BasketItem } from '@/types'
+import { getFullUrl } from '@/lib/env'
+import { AUTH } from '@/config'
 
 
 
@@ -195,14 +187,15 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
         if (result?.complete) {
             // Contains name, address, phone, etc.
             Cookies.set('user_address', JSON.stringify(result.value), {
-                expires: 3,
-                sameSite: 'lax'
+                expires: AUTH.USER_DATA_EXPIRY_DAYS,
+                sameSite: 'lax',
+                secure: process.env.NODE_ENV === 'production',
             })
 
             Cookies.set('user_email', (userEmail), {
-                expires: 3,
-
-                // setAddressDetails(result.value);
+                expires: AUTH.USER_DATA_EXPIRY_DAYS,
+                sameSite: 'lax',
+                secure: process.env.NODE_ENV === 'production',
             })
         } else {
             console.log('Address is incomplete');
@@ -224,10 +217,7 @@ const CheckoutPage = ({ userEmail, amount }: { userEmail: string, amount: number
                 elements,
                 clientSecret,
                 confirmParams: {
-                    return_url: `https://reef-forge.uk/confirmationPage?orderId=${orderId}`,
-                    // return_url: `http://localhost:3000/confirmationPage?orderId=${orderId}`,
-
-
+                    return_url: getFullUrl(`/confirmationPage?orderId=${orderId}`),
                 },
             })
 

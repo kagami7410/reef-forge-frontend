@@ -1,42 +1,33 @@
-import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { NextRequest } from 'next/server';
+import { getAuthenticatedUser } from '@/lib/auth-middleware';
+import { successResponse, unauthorizedResponse, handleApiError } from '@/lib/api-response';
+import logger from '@/lib/logger';
 
+/**
+ * GET /api/auth - Check if user is authenticated
+ * Returns user information if authenticated, 401 if not
+ */
 export async function GET(req: NextRequest) {
-
-  
-
-
-
-  const token = req.cookies.get('token')?.value;
-  console.log("token from client: " + token)
-  const secret_base64 = process.env.JWT_SECRET
-    if (!secret_base64) {
-  throw new Error('JWT_SECRET is not defined in environment variables');
-}
-const secretKey = Buffer.from(secret_base64, 'base64'); // 👈 important
-
-  // console.log("JWT Secret: ",  secret)
-
-  // if (!token) {
-  //   return NextResponse.json({ authenticated: false }, { status: 401 });
-  // }
-
   try {
-      // console.log("trying to decode token")
+    const user = getAuthenticatedUser(req);
 
-      if(token != undefined){
-    const decoded = jwt.verify(token, secretKey,  { algorithms: ['HS256'] });
+    if (!user) {
+      logger.debug('Auth check: No valid token');
+      return unauthorizedResponse('Not authenticated');
+    }
 
-    // console.log("decoded token: ", decoded)
+    logger.debug('Auth check: User authenticated', { email: user.email, role: user.role });
 
-    return NextResponse.json({
+    return successResponse({
       authenticated: true,
-      user: decoded,
+      user: {
+        email: user.email,
+        role: user.role,
+      },
     });
-      }
-
 
   } catch (err) {
-    return NextResponse.json({ err, authenticated: false }, { status: 401 });
+    logger.error('Auth check error', err);
+    return handleApiError(err);
   }
 }

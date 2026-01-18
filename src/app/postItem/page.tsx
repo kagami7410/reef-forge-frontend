@@ -17,6 +17,8 @@ import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 import { CSS } from '@dnd-kit/utilities';
 import Loading from '../components/Loading/Loading';
+import type { FragRackItem } from '@/types';
+import logger from '@/lib/logger';
 
 
 
@@ -38,25 +40,6 @@ type UploadObject = {
 
 
 const Page = () => {
-
-
-interface BasketItem {
-  id: number;
-  title: string;
-  price: number;
-  code: string;
-  quantity: number;
-  photoUrls: string[];
-
-}
-
-interface FragRackItem extends BasketItem {
-  colour: string;
-  magnetNum: number;
-  size: string;
-  stockQuantity: number;
-
-}
 
   const sensors = useSensors(useSensor(MouseSensor));
   const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
@@ -113,35 +96,34 @@ interface FragRackItem extends BasketItem {
 
 
     const checkAuth = async () => {
+  try {
+    const res = await fetch('/api/auth', {
+      credentials: 'include',
+    });
+    const response = await res.json();
 
-  try{
-      const res = await fetch('/api/auth', {
-    credentials: 'include',
-     })
-  const data = await res.json();
+    // Extract the actual data from the wrapped response
+    const data = response.data || response;
 
+    if (data.authenticated && data.user) {
+      logger.info('User is logged in on postItem page', { email: data.user.email });
 
-  if (data.authenticated) {
-    console.log('User is logged in');
-    console.log(data)
-    if (data.user.isAdmin === "true") {
-      setIsAdmin(true)
-
-      console.log('User is an admin');
-
-
+      // Check for admin role (updated from isAdmin field)
+      if (data.user.role === 'admin') {
+        setIsAdmin(true);
+        logger.info('Admin user detected on postItem page', { email: data.user.email });
+      } else {
+        setIsAdmin(false);
+        logger.warn('Non-admin user attempted to access postItem page', { email: data.user.email });
+      }
+    } else {
+      logger.debug("User not authenticated on postItem page");
+      setIsAdmin(false);
     }
+  } catch (error) {
+    logger.error('Auth check failed on postItem page', error);
+    setIsAdmin(false);
   }
-  else{
-    console.log("user not authenticated")
-  }
-
-  }
-  catch(error){
-    console.log(error)
-
-  }
-
 };
 
   const removeItem = async(itemId:number) => {

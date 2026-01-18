@@ -1,29 +1,9 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-// import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
-// import Loading from '../Loading/Loading';
+import type { FragRackItem } from '@/types';
+
 const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
 
-
-
-
-interface BasketItem {
-  id: number;
-  title: string;
-  price: number;
-  code: string;
-  quantity: number;
-  photoUrls: string[];
-
-}
-
-interface FragRackItem extends BasketItem {
-  colour: string;
-  magnetNum: number;
-  size: string;
-  stockQuantity: number;
-
-}
 const RecommendedItems = () => {
   const [isMobile, setIsMobile] = useState(false)
   const [screenSize, setScreenSize] = useState(0);

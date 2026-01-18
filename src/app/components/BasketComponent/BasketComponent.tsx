@@ -1,9 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
+import { useBasket } from '@/app/components/BasketContext/BasketContext';
 import { useRouter } from 'next/navigation'
 import Loading from '../Loading/Loading';
 import Link from 'next/link';
+import type { FragRackItem } from '@/types';
+import { PRICING } from '@/config';
+
+// Use FragRackItem as it includes all basket item fields including stockQuantity
+type BasketItem = FragRackItem;
 
 
 // type Props = {
@@ -15,19 +20,8 @@ const BasketComponent = ({ allowEditQuantity, discount }: {
   discount: number;
 }) => {
   const image_url = `${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}/All`;
-const shippingPrice = process.env.NEXT_PUBLIC_SHIPPING_PRICE??2.95;
+  const shippingPrice = PRICING.SHIPPING_PRICE;
 
-  // Define a type for the item
-  interface BasketItem {
-    id: number;
-    title: string;
-    price: number;
-    code: string;
-    quantity: number;
-    photoUrls: string[];
-    stockQuantity: number;
-
-  }
   const { basket, removeItemInBasket, getBasketTotal, getBasketCount, addSingleItemToBasket, removeAllQuantityitem } = useBasket();
   const [noItems, setNoItems] = useState(false);
   const [itemExistsInBasket, setItemExistsInBasket] = useState(false)

@@ -31,12 +31,13 @@ const [loading, setLoading] = useState(false)
         })
 
         if (res.status === 200) {
-             const data = await res.json()
-
-            console.log("Token received:", data.token)
             console.log("logged in successfully!")
-            
-            window.location.reload()
+
+            // Small delay to ensure cookie is set before reload
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            // Navigate to home page instead of reload to ensure clean state
+            window.location.href = '/';
 
         }
         else {

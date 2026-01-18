@@ -5,20 +5,15 @@ import { useBasket } from "../BasketContext/BasketContext";
 import { useRouter } from 'next/navigation'
 import { verifyQuantity } from '@/lib/checkStockQuantity';
 import Loading from '../Loading/Loading';
+import type { FragRackItem } from '@/types';
+import { AUTH } from '@/config';
+import logger from '@/lib/logger';
+
+// Use FragRackItem as BasketItem type
+type BasketItem = FragRackItem;
 
 
 const NavBar = () => {
-
-interface BasketItem {
-  id: number;
-  title: string;
-  price: number;
-  code: string;
-  quantity: number;
-  photoUrls: string[];
-  stockQuantity: number;
-
-}
 
 
   const image_url =`${process.env.NEXT_PUBLIC_GS_IMAGE_URL_FRAG_RACKS}`;
@@ -38,7 +33,32 @@ interface BasketItem {
       checkAuth()
        setIsMounted(true);
 
+      // Re-check auth when window gains focus or becomes visible
+      const handleFocus = () => {
+        checkAuth();
+      };
 
+      const handleVisibilityChange = () => {
+        if (document.visibilityState === 'visible') {
+          checkAuth();
+        }
+      };
+
+      // Re-check auth every time the page loads or navigates
+      const handleRouteChange = () => {
+        checkAuth();
+      };
+
+      window.addEventListener('focus', handleFocus);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      // Listen for storage events (in case auth happens in another tab)
+      window.addEventListener('storage', handleRouteChange);
+
+      return () => {
+        window.removeEventListener('focus', handleFocus);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        window.removeEventListener('storage', handleRouteChange);
+      };
   },[])
 
 
@@ -92,11 +112,10 @@ interface BasketItem {
   }
 
 
-      // console.log("loading:" + loading)
       const addItemToBasket = (item: BasketItem) => {
         setLoading(true)
         const basketItem = basket.find((itemToFind) => item.id === itemToFind.id)
-        console.log("basketItem: ", basketItem)
+        logger.debug("Adding item to basket in NavBar", { itemId: item.id, basketItem })
         if (basketItem != null) {
     
           verifyQuantity(item.id, basketItem?.quantity+1)
@@ -149,39 +168,36 @@ interface BasketItem {
       }
     
 const checkAuth = async () => {
+  try {
+    const res = await fetch('/api/auth', {
+      credentials: 'include',
+    });
+    const response = await res.json();
 
-  try{
-      const res = await fetch('/api/auth', {
-    credentials: 'include',
-     })
-  const data = await res.json();
+    // Extract the actual data from the wrapped response
+    const data = response.data || response;
 
+    if (data.authenticated && data.user) {
+      logger.info('User authenticated in NavBar', { email: data.user.email });
+      setSignedIn(true);
 
-  if (data.authenticated) {
-    console.log('User is logged in');
-    // console.log(data)
-    setSignedIn(true)
-    if (data.user.isAdmin === "true") {
-      setIsAdmin(true)
-
-      console.log('User is an admin');
-      setSignedIn(true)
-
-
+      // Check if user has admin role
+      if (data.user.role === AUTH.ADMIN_ROLE) {
+        setIsAdmin(true);
+        logger.info('Admin user detected in NavBar', { email: data.user.email });
+      } else {
+        setIsAdmin(false);
+      }
+    } else {
+      logger.debug('User not authenticated in NavBar');
+      setSignedIn(false);
+      setIsAdmin(false);
     }
-
-
+  } catch (error) {
+    logger.error('Auth check failed in NavBar', error);
+    setSignedIn(false);
+    setIsAdmin(false);
   }
-  else{
-    console.log("user not authenticated")
-  }
-
-  }
-  catch(error){
-    console.log(error)
-
-  }
-
 };
   const routeToCheckout = () => {
     if (basket.length > 0) {
@@ -420,7 +436,7 @@ const checkAuth = async () => {
               </a>
             </li>
             {/* <li><a>Settings</a></li> */}
-            {signedIn ? <li><button onClick={logout}>Sign out</button></li> : <li><a href='/SignInPage'>Sign in</a></li>}
+            <li><button onClick={logout}>Sign out</button></li>
           </ul>
         </div>:<div className="dropdown dropdown-end p-0 m-0  w-1/2 bg-slate-100 flex align-middle shadow-xl justify-center rounded-lg ml-2">
           <div tabIndex={0} role="button" className="btn btn-ghost p-2 m-0">
@@ -440,7 +456,7 @@ const checkAuth = async () => {
               </a>
             </li>
             {/* <li><a>Settings</a></li> */}
-            {signedIn ? <li><button onClick={logout}>Sign out</button></li> : <li><a href='/SignInPage'>Sign in</a></li>}
+            <li><a href='/SignInPage'>Sign in</a></li>
           </ul>
         </div>}
       </div>

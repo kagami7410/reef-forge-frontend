@@ -1,35 +1,15 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useBasket } from '@/src/app/components/BasketContext/BasketContext';
-import Loading from '@/src/app/components/Loading/Loading';
+import { useBasket } from '@/app/components/BasketContext/BasketContext';
+import Loading from '@/app/components/Loading/Loading';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { verifyQuantity } from '@/lib/checkStockQuantity';
 import RecommendedItems from '../../components/RecommendedItems/RecommendedItems';
+import type { FragRackItem } from '@/types';
 
-
-interface BasketItem {
-  id: number;
-  title: string;
-  price: number;
-  code: string;
-  quantity: number;
-  photoUrls: string[];
-  stockQuantity: number;
-
-}
-
-interface FragRackItem extends BasketItem {
-  colour: string;
-  magnetNum: number;
-  size: string;
-  stockQuantity: number;
-  description: string;
-
-}
-
-
-
+// Use FragRackItem as BasketItem since basket items include stockQuantity
+type BasketItem = FragRackItem;
 
 export default function ItemPage ({singleItem}:{singleItem:FragRackItem}){
   const [isClient, setIsClient] = useState(false);
@@ -48,12 +28,13 @@ export default function ItemPage ({singleItem}:{singleItem:FragRackItem}){
   const [basketItem, setBasketItem] = useState<BasketItem>({
     id: 0,
     title: "",
+    description: "",
     price: 0,
     code: "",
+    colour: "",
     quantity: 0,
     photoUrls: [],
     stockQuantity: 0
-
   });
   const { addSingleItemToBasket, basket, removeItemInBasket, getBasketTotal, removeAllQuantityitem } = useBasket();
 //   const { itemId } = React.use(params)

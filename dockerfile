@@ -29,8 +29,6 @@ RUN npm install --only=production
 # Copy the built application from the builder stage
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.cjs ./
-COPY --from=builder /app/next.config.ts ./
 COPY --from=builder /app/lib ./
 
 
